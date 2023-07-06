@@ -1,0 +1,44 @@
+server:
+  servlet:
+    session:
+      cookie:
+        name: ion-session
+        path: /
+        same-site: strict
+        http-only: true
+        secure: true
+  error:
+    include-stacktrace: never
+    include-exception: false
+    whitelabel:
+      enabled: false
+  port: 3001
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+  session:
+    redis:
+      namespace: ion:session
+    timeout: 168h
+
+  thymeleaf:
+    prefix: classpath:/static/
+
+  datasource:
+    url:
+    username:
+    password:
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    show-sql: false
+
+  data:
+    redis:
+      host: localhost
+      port: 8435
