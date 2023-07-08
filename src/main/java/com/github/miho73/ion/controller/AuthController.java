@@ -5,9 +5,8 @@ import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.service.AuthService;
 import com.github.miho73.ion.service.SessionService;
 import com.github.miho73.ion.service.UserService;
-import com.github.miho73.ion.utils.Encoding;
 import com.github.miho73.ion.utils.RestResponse;
-import jakarta.servlet.http.Cookie;
+import com.github.miho73.ion.utils.Validation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -47,7 +46,7 @@ public class AuthController {
             @RequestBody Map<String, String> body,
             HttpSession session
     ) {
-        if(!body.containsKey("id") || !body.containsKey("pwd")) {
+        if(!Validation.checkKeys(body, "id", "pwd")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST);
         }
@@ -75,15 +74,10 @@ public class AuthController {
                 ident.put("ccd", user.getGrade()+user.getClas()+user.getScode());
                 String msg = ident.toJSONString(JSONStyle.LT_COMPRESS);
 
-                Cookie iden = new Cookie("ion-iden", Encoding.Base64Encode(msg));
-                iden.setAttribute("SameSite", "Strict");
-                iden.setPath("/");
-                iden.setSecure(true);
-                response.addCookie(iden);
-
                 session.setAttribute("login", true);
                 session.setAttribute("uid", user.getUid());
                 session.setAttribute("id", user.getId());
+                session.setAttribute("name", user.getName());
                 session.setAttribute("priv", user.getPrivilege());
 
                 return RestResponse.restResponse(HttpStatus.OK, 0);
@@ -110,19 +104,22 @@ public class AuthController {
             value = "signout",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public String Signout(HttpSession session, @CookieValue("ion-iden") String ident, HttpServletResponse response) {
+    public String Signout(HttpSession session, HttpServletResponse response) {
         if(sessionService.isLoggedIn(session)) {
             session.setAttribute("login", false);
-            Cookie iden = new Cookie("ion-iden", ident);
-            iden.setAttribute("SameSite", "Strict");
-            iden.setPath("/");
-            iden.setSecure(true);
-            iden.setMaxAge(0);
-            response.addCookie(iden);
             return RestResponse.restResponse(HttpStatus.OK);
         }
         else {
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping(
+            value = "/authorize",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String checkAuth(HttpSession session) {
+        boolean login = sessionService.isLoggedIn(session);
+        return RestResponse.restResponse(HttpStatus.OK, login);
     }
 }

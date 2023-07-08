@@ -6,6 +6,7 @@ import com.github.miho73.ion.service.StudentCodeRecordService;
 import com.github.miho73.ion.service.UserService;
 import com.github.miho73.ion.utils.RestResponse;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,7 @@ public class UserController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @Transactional
     public String createUser(@Valid @RequestBody User user, HttpServletResponse response) {
         user.setPwd(passwordEncoder.encode(user.getPwd()));
         User created = userService.createUser(user);

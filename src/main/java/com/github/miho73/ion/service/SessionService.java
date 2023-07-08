@@ -1,10 +1,16 @@
 package com.github.miho73.ion.service;
 
+import com.github.miho73.ion.exceptions.IonException;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class SessionService {
+    public static int USER_PRIVILEGE = 1;
+    public static int ROOT_PRIVILEGE = 3;
+
     public enum PRIVILEGES {
         USER,
         ROOT
@@ -19,9 +25,17 @@ public class SessionService {
 
     public boolean isLoggedIn(HttpSession session) {
         if(session == null) return false;
+        Object login = session.getAttribute("login");
+        if(login == null) return false;
         return (boolean)session.getAttribute("login");
     }
 
+    /**
+     * check if user has sufficient privilege
+     * @param session session of user to check
+     * @param privilege privilege that expect to have
+     * @return true when user has sufficient privilege
+     */
     public boolean checkPrivilege(HttpSession session, int privilege) {
         if(session == null) return false;
         Integer sp = (Integer)session.getAttribute("priv");
@@ -36,5 +50,16 @@ public class SessionService {
             privilege /= 2;
         } while (sp != 0 || privilege != 0);
         return flag;
+    }
+
+    public int getUid(HttpSession session) throws IonException {
+        if(session == null) throw new IonException();
+        Object uid = session.getAttribute("uid");
+        if(uid == null) throw new IonException();
+        return (int)uid;
+    }
+
+    public String getName(HttpSession session) {
+        return session.getAttribute("name").toString();
     }
 }

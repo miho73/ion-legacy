@@ -15,6 +15,10 @@ server:
   port: 3001
 
 spring:
+  devtools:
+    livereload:
+      enabled: true
+
   mvc:
     static-path-pattern: /**
 
@@ -44,4 +48,4 @@ spring:
   data:
     redis:
       host: localhost
-      port: 8435
+      port: 8735
