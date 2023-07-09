@@ -71,6 +71,7 @@ public class NsController {
      *  2: insufficient parameters
      *  3: invalid session
      *  4: user already requested
+     *  5: seat already reserved
      */
     @PostMapping(
             value = "/nsr/create",
@@ -99,7 +100,7 @@ public class NsController {
             NsRecord.NS_TIME nsTime = NsRecord.NS_TIME.valueOf(body.get("time"));
 
             // if user already has request on same time
-            if(nsService.existsAlready(uuid, nsTime)) {
+            if(nsService.existsNsByUuid(uuid, nsTime)) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
             }
@@ -109,6 +110,10 @@ public class NsController {
 
             if(lnsReq) {
                 LnsReservation lnsRev = nsService.saveLnsReservation(uuid, nsTime, body.get("lnsSeat"));
+                if(lnsRev == null) {
+                    response.setStatus(400);
+                    return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
+                }
 
                 lnsReqUid = lnsRev.getUid();
             }
@@ -137,21 +142,46 @@ public class NsController {
             HttpSession session,
             HttpServletResponse response,
             @RequestParam("time") NsRecord.NS_TIME time
-    ) throws IonException {
+    ) {
         if(!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
-        int uuid = sessionService.getUid(session);
+        try {
+            int uuid = sessionService.getUid(session);
 
-        if(nsService.existsAlready(uuid, time)) {
-            nsService.deleteNs(uuid, time);
-            return RestResponse.restResponse(HttpStatus.OK, 0);
-        }
-        else {
-            response.setStatus(400);
+            if(nsService.existsNsByUuid(uuid, time)) {
+                nsService.deleteNs(uuid, time);
+                return RestResponse.restResponse(HttpStatus.OK, 0);
+            }
+            else {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+            }
+        } catch (IonException e) {
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
+    }
+
+    /**
+     *  [data]: success
+     *  1: invalid session
+     */
+    @GetMapping(
+            value = "/lns/get",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getLnsSeatState(
+            HttpSession session,
+            HttpServletResponse response
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        JSONArray ist = nsService.getLnsSeat();
+        return RestResponse.restResponse(HttpStatus.OK, ist);
     }
 }

@@ -5,7 +5,7 @@ import React, { useState } from 'react';
  * @returns 
  */
 function LnsSeatSelect(props) {
-    let str = '', tstr = '', bstr = '';
+    let str = '', tstr = '';
     if(props.value) {
         str = ' bg-secondary border-secondary';
         tstr=' text-light';
@@ -14,17 +14,17 @@ function LnsSeatSelect(props) {
     return (
         <>
             {!props.rev &&
-                <button type='button' className={'btn btn-outline-dark'+str} style={{width: '60px', height: '60px'}} onClick={props.onSelected}>
+                <button type='button' className={'btn btn-outline-dark lns-seat '+str} onClick={props.onSelected}>
                     <span className={'fs-4 p-2'+tstr}>{props.sn}</span>
                 </button>
             }
             {props.rev &&
-                <button type='button' className='btn btn-outline-dark' style={{width: '60px', height: '60px'}} disabled>            
-                    <div className='vstack'>
-                        <span>{props.revScd}</span>
-                        <span>{props.revName}</span>
+                <div className='btn btn-outline-dark p-0 lns-seat'>
+                    <div className='h-100 d-flex flex-column justify-content-center align-content-center'>
+                        <span className='sel-seat fw-bold'>{props.revScd}</span>
+                        <span className='sel-seat fw-bold'>{props.revName}</span>
                     </div>
-                </button>
+                </div>
             }
         </>
     )

@@ -61,4 +61,12 @@ public class NsRecord {
         N1,
         N2
     }
+
+    public static int nsTimeToInt(NsRecord.NS_TIME nsTime) {
+        return switch (nsTime) {
+            case N8 -> 0;
+            case N1 -> 1;
+            case N2 -> 2;
+        };
+    }
 }

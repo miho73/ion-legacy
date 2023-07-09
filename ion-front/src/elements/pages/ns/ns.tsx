@@ -33,6 +33,9 @@ function Ns() {
     const [deleting, setDeleting] = useState(false);
     const [deleteResult, setDeleteResult] = useState(-1);
 
+    const [seatLst, setSeatLst] = useState<any[]>([]);
+    const [lnsError, setLnsError] = useState(0);
+
     const navigate = useNavigate();
 
     const [loginState, setLoginState] = useState(-1);
@@ -40,6 +43,10 @@ function Ns() {
         isLogin(setLoginState);
         loadNsReqs();
     }, []);
+
+    useEffect(() => {
+        loadLns();
+    }, [lnsRoomRequired]);
 
     if(loginState === -1) {
         return <></>;
@@ -89,7 +96,7 @@ function Ns() {
     else {
         rr.push(
             <tr>
-                <td className='table-danger'>면불 신청 리스트를 받지 못했습니다.</td>
+                <td className='table-danger' colSpan={7}>면불 신청 리스트를 받지 못했습니다.</td>
             </tr>
         )
     }
@@ -140,14 +147,17 @@ function Ns() {
                 lnsReq: lnsRoomRequired,
                 lnsSeat: lns,
             }).then(res => {
-                const code = res.data['result'];
                 setSError(0);
                 loadNsReqs();
+                loadLns();
             }).catch(err => {
                 const code = err.response.data['result'];
                 switch(code) {
                     case 4:
                         setSError(2);
+                        break;
+                    case 5:
+                        setSError(3);
                         break;
                     default:
                         setSError(1);
@@ -168,6 +178,7 @@ function Ns() {
         .then(res => {
             closeDeleteConfirm();
             loadNsReqs();
+            loadLns();
         })
         .catch(err => {
             setDeleteResult(1);
@@ -176,6 +187,33 @@ function Ns() {
     function closeDeleteConfirm() {
         setDeleteModalShow(false);
         setDeleteResult(-1);
+    }
+
+    function loadLns() {
+        if(lnsRoomRequired) {
+            axios.get('/ns/api/lns/get')
+            .then(res => {
+                const dat = res.data['result'];
+                const tset: any[] = [];
+                dat.forEach(ns => {
+                    let rp = {};
+                    ns.forEach(e => {
+                        if(e['v']) {
+                            rp[e['sn']] = {
+                                name: e['name'],
+                                scode: e['scode']
+                            };
+                        }
+                    });
+                    tset.push(rp);
+                });
+                setSeatLst(tset);
+                setLnsError(1);
+            })
+            .catch(err => {
+                setLnsError(2);
+            });
+        }
     }
 
     return (
@@ -233,7 +271,12 @@ function Ns() {
                     {lnsRoomRequired &&
                         <div className='mx-4 my-3 border p-3'>
                             <h5>노면실 자리 예약</h5>
-                            <LnsRoomSelect selected={lnsSelected} setSelected={(x) => setLnsSelected(x)}/>
+                            {revTime === -1 &&
+                                <p className='my-0'>면불 시간을 선택해주세요.</p>
+                            }
+                            {revTime !== -1 &&
+                                <LnsRoomSelect selected={lnsSelected} setSelected={(x) => setLnsSelected(x)} nst={revTime} lnsState={lnsError} seatLst={seatLst}/>
+                            }
                         </div>
                     }
                     <div className='row mx-1 my-4'>
@@ -252,6 +295,11 @@ function Ns() {
                     {sErrorState === 2 &&
                         <div className='alert alert-danger'>
                             <p className='my-0'>이미 신청한 시간입니다.</p>
+                        </div>
+                    }
+                    {sErrorState === 3 &&
+                        <div className='alert alert-danger'>
+                            <p className='my-0'>이미 신청된 자리입니다.</p>
                         </div>
                     }
                 </form>

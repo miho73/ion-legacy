@@ -2,12 +2,16 @@ package com.github.miho73.ion.service.ns;
 
 import com.github.miho73.ion.dto.LnsReservation;
 import com.github.miho73.ion.dto.NsRecord;
+import com.github.miho73.ion.dto.User;
+import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.repository.LnsRepository;
 import com.github.miho73.ion.repository.NsRepository;
+import com.github.miho73.ion.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -24,6 +28,9 @@ public class NsService {
 
     @Autowired
     LnsRepository lnsRepository;
+
+    @Autowired
+    UserRepository userRepository;
 
     public void saveNsRequest(int uuid, NsRecord.NS_TIME nsTime, boolean lnsReq, int lnsReqUid, Map<String, String> body) {
         NsRecord nsRecord = new NsRecord();
@@ -71,6 +78,10 @@ public class NsService {
     }
 
     public LnsReservation saveLnsReservation(int uuid, NsRecord.NS_TIME nsTime, String seat) {
+        if(existsLnsBySeat(nsTime, seat)) {
+            return null;
+        }
+
         LnsReservation lnsRev = new LnsReservation();
         lnsRev.setLnsDate(LocalDate.now());
         lnsRev.setLnsTime(nsTime);
@@ -80,11 +91,57 @@ public class NsService {
         return lnsRepository.save(lnsRev);
     }
 
-    public boolean existsAlready(int uuid, NsRecord.NS_TIME nsTime) {
-        return !nsRepository.findByUuidAndNsDateAndNsTime(uuid, LocalDate.now(), nsTime).isEmpty();
+    public boolean existsLnsBySeat(NsRecord.NS_TIME nsTime, String seat) {
+        return !lnsRepository.findByLnsTimeAndSeatAndLnsDate(nsTime, seat, LocalDate.now()).isEmpty();
     }
 
-    public void deleteNs(int uuid, NsRecord.NS_TIME time) {
-        nsRepository.deleteByUuidAndNsTime(uuid, time);
+    public boolean existsNsByUuid(int uuid, NsRecord.NS_TIME nsTime) {
+        return nsRepository.findByUuidAndNsDateAndNsTime(uuid, LocalDate.now(), nsTime).isPresent();
+    }
+
+    public void deleteNs(int uuid, NsRecord.NS_TIME time) throws IonException {
+        Optional<NsRecord> nsRecord = nsRepository.findByUuidAndNsDateAndNsTime(uuid, LocalDate.now(), time);
+        if(nsRecord.isPresent()) {
+            NsRecord toDel = nsRecord.get();
+            if(toDel.isLnsReq()) {
+                lnsRepository.deleteById(toDel.getLnsReqUid());
+            }
+            nsRepository.deleteByUuidAndNsTimeAndNsDate(uuid, time, LocalDate.now());
+        }
+        else {
+            throw new IonException();
+        }
+    }
+
+    public JSONArray getLnsSeat() {
+        List<LnsReservation> lrev = lnsRepository.findByLnsDate(LocalDate.now());
+
+        JSONArray[] byNsTime = new JSONArray[3];
+
+        byNsTime[0] = new JSONArray();
+        byNsTime[1] = new JSONArray();
+        byNsTime[2] = new JSONArray();
+
+        lrev.forEach(e -> {
+            JSONObject rev = new JSONObject();
+            Optional<User> reserver = userRepository.findById(e.getUuid());
+            if(reserver.isEmpty()) {
+                rev.put("v", false);
+            }
+            else {
+                User user = reserver.get();
+                rev.put("v", true);
+                rev.put("name", user.getName());
+                rev.put("scode", user.getGrade()*1000+user.getClas()*100+user.getScode());
+                rev.put("sn", e.getSeat());
+                byNsTime[NsRecord.nsTimeToInt(e.getLnsTime())].add(rev);
+            }
+        });
+
+        JSONArray ret = new JSONArray();
+        ret.add(byNsTime[0]);
+        ret.add(byNsTime[1]);
+        ret.add(byNsTime[2]);
+        return ret;
     }
 }
