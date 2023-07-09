@@ -14,8 +14,6 @@ function LoggedInIndex() {
 
 function Index() {
     const [loginState, setLoginState] = useState(-1);
-
-    const navigate = useNavigate();
     
     useEffect(() => {
         isLogin(setLoginState);

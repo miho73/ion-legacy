@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button } from 'react-bootstrap';
 
 /**
  * @param props sn: Seat number(1-6) rev: Reserved(true/false) revName: Name(str) revScd: sCode(int)
@@ -10,13 +11,16 @@ function LnsSeatSelect(props) {
         str = ' bg-secondary border-secondary';
         tstr=' text-light';
     }
+    else if(props.common) {
+        tstr = ' text-primary fw-bold';
+    }
 
     return (
         <>
             {!props.rev &&
-                <button type='button' className={'btn btn-outline-dark lns-seat '+str} onClick={props.onSelected}>
+                <Button variant='outline-dark' className={'lns-seat '+str} onClick={props.onSelected}>
                     <span className={'fs-4 p-2'+tstr}>{props.sn}</span>
-                </button>
+                </Button>
             }
             {props.rev &&
                 <div className='btn btn-outline-dark p-0 lns-seat'>

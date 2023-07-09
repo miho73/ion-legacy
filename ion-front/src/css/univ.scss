@@ -75,3 +75,8 @@ table {
         font-size: 0.9rem;
     }
 }
+
+.w-fit {
+    width: -moz-fit-content;
+    width: fit-content !important;
+}

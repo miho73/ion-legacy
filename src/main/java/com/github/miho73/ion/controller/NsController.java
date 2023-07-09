@@ -57,6 +57,7 @@ public class NsController {
             JSONObject reply = new JSONObject();
             reply.put("reqs", ret);
             reply.put("name", sessionService.getName(session));
+            reply.put("id", sessionService.getId(session));
             reply.put("date", LocalDate.now().format(dtf));
             return RestResponse.restResponse(HttpStatus.OK, reply);
         } catch (IonException e) {

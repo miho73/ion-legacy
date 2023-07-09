@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import LnsSeat from './lns-seat';
-import axios from 'axios';
+import { changeBit, getBit } from '../../../service/bitmask';
+import { Button, Form, Stack } from 'react-bootstrap';
 
 const sigMapping = ['A', 'B', 'C', 'D', 'E', 'F']
 
 function LnsRoomSelect(props) {
+    const [findCommon, setFindCommon] = useState(0);
+
+    function changeFCF(place) {
+        setFindCommon(changeBit(findCommon, place));
+    }
+
     if(props.lnsState === 2) {
         return (
-            <p>노트북 면불실 자리를 확인하지 못했습니다.</p>
+            <Stack>
+                <p className='mb-2'>노트북 면불실 자리를 확인하지 못했습니다.</p>
+                <Button variant='outline-primary' className='w-fit' onClick={props.reloadFunc}>다시 시도</Button>
+            </Stack>
         );
     }
     else if(props.lnsState === 0) {
@@ -16,6 +26,24 @@ function LnsRoomSelect(props) {
 
     const pLst = props.seatLst;
     const selected = pLst[props.nst];
+
+    let commonOk: string[] = [];
+    // find common pre-process
+    if(findCommon != 0) {
+        let n8 = getBit(findCommon, 0), n1 = getBit(findCommon, 1), n2 = getBit(findCommon, 2);
+
+        for(let a=0; a<6; a++) {
+            for(let s=1; s<=6; s++) {
+                let code = sigMapping[a]+s;
+                let ok =
+                    (!(n8 && pLst[0].hasOwnProperty(code))) &&
+                    (!(n1 && pLst[1].hasOwnProperty(code))) &&
+                    (!(n2 && pLst[2].hasOwnProperty(code)));
+                
+                if(ok) commonOk.push(code);
+            }
+        }
+    }
 
     let map: any[] = [];
     map.push(
@@ -50,16 +78,17 @@ function LnsRoomSelect(props) {
                             key={key}
                             value={key===props.selected}
                             onSelected={() => props.setSelected(key)}
+                            common={commonOk.includes(cp)}
                         />
                     );
                 }
             }
             row.push(
-                <div className='hstack mx-4'>
+                <Stack direction='horizontal' className='mx-4'>
                     <div className='vstack row btn-group-vertical'>{seat.slice(0, 3)}</div>
                     <div className='p-5 m-0 border border-dark rounded fs-4 h-100 d-flex align-items-center mx-4'>{sigMapping[i*2+j-1]}</div>
                     <div className='vstack row btn-group-vertical'>{seat.splice(3, 6)}</div>
-                </div>
+                </Stack>
             )
         }
         map.push(
@@ -67,7 +96,19 @@ function LnsRoomSelect(props) {
         )
     }
     return (
-        <>{map}</>
+        <>
+            {map}
+            <Stack className='mt-3'>
+                <div className='border p-2'>
+                    <p className='mb-1 fw-bold'>공통자리 찾기</p>
+                    <Stack direction='horizontal' gap={3}>
+                        <Form.Check id='csf8' checked={getBit(findCommon, 0) === 1} onChange={() => changeFCF(0)} label='8면'/>
+                        <Form.Check id='csf1' checked={getBit(findCommon, 1) === 1} onChange={() => changeFCF(1)} label='1면'/>
+                        <Form.Check id='csf2' checked={getBit(findCommon, 2) === 1} onChange={() => changeFCF(2)} label='2면'/>
+                    </Stack>
+                </div>
+            </Stack>
+        </>
     )
 }
 

@@ -62,4 +62,8 @@ public class SessionService {
     public String getName(HttpSession session) {
         return session.getAttribute("name").toString();
     }
+
+    public Object getId(HttpSession session) {
+        return session.getAttribute("id").toString();
+    }
 }

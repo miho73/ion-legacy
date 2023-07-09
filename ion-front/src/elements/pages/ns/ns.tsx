@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import {isLogin} from '../../service/auth'
 import CannotAuthorize from '../auth/cannotAuth';
 
-import { Button, Modal } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Form, Modal, Row, Table } from 'react-bootstrap';
 import NsState from './nsState';
 
 function Ns() {
@@ -36,6 +36,9 @@ function Ns() {
     const [seatLst, setSeatLst] = useState<any[]>([]);
     const [lnsError, setLnsError] = useState(0);
 
+    const [autoFill, setAutoFill] = useState(false);
+    const [id, setId] = useState('');
+
     const navigate = useNavigate();
 
     const [loginState, setLoginState] = useState(-1);
@@ -47,6 +50,25 @@ function Ns() {
     useEffect(() => {
         loadLns();
     }, [lnsRoomRequired]);
+
+    useEffect(() => {
+        if(id === '') return;
+
+        let nsaf = localStorage.getItem('nsaf');
+        if(nsaf === null) {
+            nsaf = '{}';
+            localStorage.setItem('nsaf', '{}');
+        }
+
+        let parsed = JSON.parse(nsaf);
+        if(parsed.hasOwnProperty(id)) {
+            setAutoFill(true);
+            let me = parsed[id];
+            setRevPlace(me['at']);
+            setRevSup(me['sup']);
+            setRevRes(me['rea']);
+        }
+    }, [id]);
 
     if(loginState === -1) {
         return <></>;
@@ -67,6 +89,7 @@ function Ns() {
             setUName(reqs['name']);
             setDate(reqs['date']);
             setNsLst(reqs['reqs']);
+            setId(reqs['id']);
         })
         .catch(err => {
             setNsErr(true);
@@ -216,11 +239,31 @@ function Ns() {
         }
     }
 
+    function changeAf(state) {
+        setAutoFill(state);
+        let cs = localStorage.getItem('nsaf') as string;
+        let pa = JSON.parse(cs);
+
+        if(state) {
+            let obj = {
+                at: revPlace,
+                sup: revSup,
+                rea: revRes
+            };
+            pa[id] = obj;
+            localStorage.setItem('nsaf', JSON.stringify(pa));
+        }
+        else {
+            delete pa[id];
+            localStorage.setItem('nsaf', JSON.stringify(pa));
+        }
+    }
+
     return (
-        <main className='container mt-4'>
-            <div className='row'>
+        <Container className='mt-4'>
+            <Row>
                 <h4>{uName}님의 면불 신청</h4>
-                <table className='m-auto table'>
+                <Table className='m-auto'>
                     <thead>
                         <tr>
                             <th>면학</th>
@@ -233,41 +276,72 @@ function Ns() {
                         </tr>
                     </thead>
                     <tbody>{rr}</tbody>
-                </table>
+                </Table>
                 <p>{date}</p>
-            </div>
+            </Row>
             <div className='mt-4'>
                 <h4>면불 신청</h4>
-                <form className='mx-3'>
-                    <div className='row my-2'>
-                        <fieldset className='mb-3 col'>
-                            <label htmlFor='time' className='form-label'>면학</label>
-                            <select className={'form-select'+(getBit(formState, 0) ? ' is-invalid' : '')} id='time' aria-label='면학 시간' disabled={working} value={revTime} onChange={e => setRevTime(Number.parseInt(e.target.value))}>
+                <Form className='mx-3'>
+                    <Row className='mt-2'>
+                        <Form.Group as={Col} className='mb-3'>
+                            <Form.Label htmlFor='time' className='form-label'>면학</Form.Label>
+                            <Form.Select isInvalid={getBit(formState, 0) === 1} aria-label='면학 시간' disabled={working} value={revTime} onChange={e => setRevTime(Number.parseInt(e.target.value))}>
                                 <option value={-1}>면학 시간</option>
                                 <option value={0}>8면</option>
                                 <option value={1}>1면</option>
                                 <option value={2}>2면</option>
-                            </select>
-                        </fieldset>
-                        <fieldset className='mb-3 col'>
-                            <label htmlFor='place' className='form-label'>장소</label>
-                            <input type='text' className={'form-control'+(getBit(formState, 1) ? ' is-invalid' : '')} id='place' value={revPlace} disabled={working} onChange={e => setRevPlace(e.target.value)}/>
-                        </fieldset>
-                        <fieldset className='mb-3 col'>
-                            <label htmlFor='superviser' className='form-label'>담당교사</label>
-                            <input type='text' className={'form-control'+(getBit(formState, 2) ? ' is-invalid' : '')} id='superviser' value={revSup} disabled={working} onChange={e => setRevSup(e.target.value)}/>
-                        </fieldset>
-                        <fieldset className='mb-3 col'>
-                            <label htmlFor='reason' className='form-label'>신청사유</label>
-                            <input type='text' className={'form-control'+(getBit(formState, 3) ? ' is-invalid' : '')} id='reason' value={revRes} disabled={working} onChange={e => setRevRes(e.target.value)}/>
-                        </fieldset>
-                    </div>
-                    <div className='row mx-3 my-2'>
-                        <fieldset className='form-check'>
-                            <input className={'form-check-input'+(getBit(formState, 4) ? ' is-invalid' : '')} type='checkbox' value='' disabled={working} checked={lnsRoomRequired} id='lnsRr' onChange={e => setLnsRoomRequired(e.target.checked)}/>
-                            <label className='form-check-label' htmlFor='lnsRr'>노면실 자리를 예약해야 합니다.</label>
-                        </fieldset>
-                    </div>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group as={Col} className='mb-3'>
+                            <Form.Label htmlFor='place' className='form-label'>장소</Form.Label>
+                            <Form.Control
+                                type='text'
+                                isInvalid={getBit(formState, 1) === 1}
+                                value={revPlace}
+                                disabled={working}
+                                onChange={e => setRevPlace(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} className='mb-3'>
+                            <Form.Label htmlFor='superviser' className='form-label'>담당교사</Form.Label>
+                            <Form.Control
+                                type='text'
+                                isInvalid={getBit(formState, 2) === 1}
+                                value={revSup}
+                                disabled={working}
+                                onChange={e => setRevSup(e.target.value)}
+                            />
+                        </Form.Group>
+                        <Form.Group as={Col} className='mb-3'>
+                            <Form.Label htmlFor='reason' className='form-label'>신청사유</Form.Label>
+                            <Form.Control
+                                type='text'
+                                isInvalid={getBit(formState, 3) === 1}
+                                value={revRes}
+                                disabled={working}
+                                onChange={e => setRevRes(e.target.value)}
+                            />
+                        </Form.Group>
+                    </Row>
+                    <Row className='mx-3 mb-3'>
+                        <Form.Check
+                            label='자동완성'
+                            id='autofill'
+                            type='switch'
+                            disabled={id === ''}
+                            checked={autoFill}
+                            onChange={(e) => changeAf(e.target.checked)}
+                        />
+                    </Row>
+                    <Row className='mx-3 my-3'>
+                        <Form.Check
+                            label='노면실 자리를 예약해야 합니다.'
+                            isInvalid={getBit(formState, 4) == 1}
+                            disabled={working} checked={lnsRoomRequired}
+                            id='lnsRr'
+                            onChange={e => setLnsRoomRequired(e.target.checked)}
+                        />
+                    </Row>
                     {lnsRoomRequired &&
                         <div className='mx-4 my-3 border p-3'>
                             <h5>노면실 자리 예약</h5>
@@ -275,34 +349,40 @@ function Ns() {
                                 <p className='my-0'>면불 시간을 선택해주세요.</p>
                             }
                             {revTime !== -1 &&
-                                <LnsRoomSelect selected={lnsSelected} setSelected={(x) => setLnsSelected(x)} nst={revTime} lnsState={lnsError} seatLst={seatLst}/>
+                                <LnsRoomSelect
+                                    selected={lnsSelected}
+                                    setSelected={(x) => setLnsSelected(x)} nst={revTime}
+                                    lnsState={lnsError}
+                                    seatLst={seatLst}
+                                    reloadFunc={loadLns}
+                                />
                             }
                         </div>
                     }
-                    <div className='row mx-1 my-4'>
-                        <Button type='button' className='w-auto' disabled={working} onClick={submit}>제출</Button>
-                    </div>
+                    <Row className='mx-1 my-4'>
+                        <Button className='w-auto' disabled={working} onClick={submit}>제출</Button>
+                    </Row>
                     {sErrorState === 0 &&
-                        <div className='alert alert-success'>
+                        <Alert variant='success'>
                             <p className='my-0'>신청되었습니다.</p>
-                        </div>
+                        </Alert>
                     }
                     {sErrorState === 1 &&
-                        <div className='alert alert-danger'>
+                        <Alert variant='danger'>
                             <p className='my-0'>신청하지 못했습니다.</p>
-                        </div>
+                        </Alert>
                     }
                     {sErrorState === 2 &&
-                        <div className='alert alert-danger'>
+                        <Alert variant='danger'>
                             <p className='my-0'>이미 신청한 시간입니다.</p>
-                        </div>
+                        </Alert>
                     }
                     {sErrorState === 3 &&
-                        <div className='alert alert-danger'>
+                        <Alert variant='danger'>
                             <p className='my-0'>이미 신청된 자리입니다.</p>
-                        </div>
+                        </Alert>
                     }
-                </form>
+                </Form>
             </div>
 
             <Modal show={deleteModalShow} onHide={closeDeleteConfirm} dialogClassName='modal-dialog-centered'>
@@ -337,7 +417,7 @@ function Ns() {
                     }
                 </Modal.Footer>
             </Modal>
-        </main>
+        </Container>
     )
 }
 
