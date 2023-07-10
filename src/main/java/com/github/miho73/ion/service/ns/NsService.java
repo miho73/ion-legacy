@@ -144,4 +144,39 @@ public class NsService {
         ret.add(byNsTime[2]);
         return ret;
     }
+
+    public JSONArray getNsBySupervisor(String sname) {
+        List<NsRecord> rec = nsRepository.findByNsDateAndNsSupervisorOrderByNsStateAsc(LocalDate.now(), sname);
+        JSONArray lst = new JSONArray();
+        rec.forEach(r -> {
+            Optional<User> pla = userRepository.findById(r.getUuid());
+            JSONObject e = new JSONObject();
+            if(pla.isPresent()) {
+                User u = pla.get();
+                e.put("id", r.getUid());
+                e.put("time", r.getNsTime());
+                e.put("name", u.getName());
+                e.put("rscode", u.getGrade()*1000+u.getClas()+u.getScode());
+                e.put("place", r.getNsPlace());
+                e.put("super", r.getNsSupervisor());
+                e.put("reason", r.getNsReason());
+                e.put("status", r.getNsState());
+                e.put("v", true);
+            }
+            else {
+                e.put("v", false);
+            }
+            lst.add(e);
+        });
+        return lst;
+    }
+
+    public void acceptNs(int id, boolean accept) {
+        int ns = accept ? 1 : 2;
+        nsRepository.updateAccept(id, ns);
+    }
+
+    public boolean existsNsById(int id) {
+        return nsRepository.existsById(id);
+    }
 }

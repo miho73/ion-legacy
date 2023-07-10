@@ -9,6 +9,7 @@ import com.github.miho73.ion.utils.RestResponse;
 import com.github.miho73.ion.utils.Validation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONObject;
 import net.minidev.json.JSONStyle;
@@ -41,6 +42,7 @@ public class AuthController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
+    @Transactional
     public String performLogin(
             HttpServletResponse response,
             @RequestBody Map<String, String> body,
@@ -66,13 +68,7 @@ public class AuthController {
             if(active == 0) {
                 log.info("login success: "+user.getId());
 
-                JSONObject ident = new JSONObject();
-                ident.put("uid", user.getUid());
-                ident.put("id", user.getId());
-                ident.put("priv", user.getPrivilege());
-                ident.put("name", user.getName());
-                ident.put("ccd", user.getGrade()+user.getClas()+user.getScode());
-                String msg = ident.toJSONString(JSONStyle.LT_COMPRESS);
+                userService.updateLastLogin(user.getUid());
 
                 session.setAttribute("login", true);
                 session.setAttribute("uid", user.getUid());

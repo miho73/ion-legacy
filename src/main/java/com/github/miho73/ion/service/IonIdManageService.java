@@ -1,6 +1,5 @@
 package com.github.miho73.ion.service;
 
-import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

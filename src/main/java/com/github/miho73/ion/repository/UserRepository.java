@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
@@ -31,5 +32,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void updatePrivilegeById(
             @Param("id") String id,
             @Param("privilege") int privilege
+    );
+
+    @Modifying
+    @Query(
+            value = "UPDATE users.users SET last_login=:ll WHERE uid=:uid",
+            nativeQuery = true
+    )
+    void updateLastLogin(
+            @Param("uid") int uid,
+            @Param("ll") Timestamp ll
     );
 }

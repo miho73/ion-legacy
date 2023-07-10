@@ -35,4 +35,8 @@ public class UserService {
     public void updatePrivilege(String id, int privilege) {
         userRepository.updatePrivilegeById(id, privilege);
     }
+
+    public void updateLastLogin(int uid) {
+        userRepository.updateLastLogin(uid, new Timestamp(System.currentTimeMillis()));
+    }
 }

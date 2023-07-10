@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Modal, ModalHeader, Tab, Tabs } from "react-bootstrap";
 import IonIdManage from "./ionid/ionid";
+import NsManage from "./ns/ns";
 
 function ManagementPage() {
     const [showModal, setShowModal] = useState(false);
@@ -21,7 +22,7 @@ function ManagementPage() {
                         <IonIdManage/>
                     </Tab>
                     <Tab eventKey='ns' title='면불'>
-                        NS
+                        <NsManage/>
                     </Tab>
                 </Tabs>
             </Container>

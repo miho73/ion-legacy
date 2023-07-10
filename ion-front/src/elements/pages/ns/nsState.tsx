@@ -30,7 +30,7 @@ const NsState = function(props) {
     }
 
     return (
-        <tr className={cla}>
+        <tr>
             <th>{time}</th>
             <td>{props.place}</td>
             <td>{props.superviser}</td>
@@ -41,7 +41,7 @@ const NsState = function(props) {
             {!props.lnsReq &&
                 <td>-</td>
             }
-            <td>{props.status}</td>
+            <td className={cla}>{props.status}</td>
             <td>
                 <button type='button' className='btn btn-outline-secondary d-flex align-content-center p-2' title='삭제' onClick={deleteNs}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">

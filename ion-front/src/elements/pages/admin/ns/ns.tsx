@@ -1,0 +1,181 @@
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Alert, Button, ButtonGroup, Container, ListGroup, ListGroupItem, Table } from "react-bootstrap";
+
+function NsReq(props) {
+    const id = props.id;
+
+    const accept = props.accept;
+    const deny = props.deny;
+
+    let cc;
+    if(props.status === 'APPROVED') cc = 'table-success';
+    if(props.status === 'DENIED') cc = 'table-danger';
+
+    return (
+        <tr>
+            <td>{props.name}</td>
+            <td>{props.scode}</td>
+            <td>{props.time}</td>
+            <td>{props.place}</td>
+            <td>{props.super}</td>
+            <td>{props.reason}</td>
+            <td className={cc}>{props.status}</td>
+            <td>
+                <ButtonGroup>
+                    <Button variant='outline-success' onClick={() => accept(id)}>승인</Button>
+                    <Button variant='outline-danger' onClick={() => deny(id)}>거절</Button>
+                </ButtonGroup>
+            </td>
+        </tr>
+    );
+}
+
+function NsManage() {
+    const [ws, setWs] = useState(0);
+    const [nsLst, setNsLst] = useState([]);
+    const [date, setDate] = useState('');
+
+    function loadNs() {
+        axios.get('/manage/api/ns/get')
+        .then(res => {
+            const data = res.data['result'];
+            setDate(data['date']);
+            setNsLst(data['nss']);
+        })
+        .catch(err => {
+            switch(err.response.data['result']) {
+                case 1:
+                    setWs(1);
+                    break;
+                default:
+                    setWs(-1);
+                    break;
+            }
+        })
+    }
+
+    function ctrl(id, accept) {
+        axios.patch('/manage/api/ns/accept', {
+            id: id,
+            ac: accept
+        })
+        .then(res => {
+            loadNs();
+        })
+        .catch(err => {
+            switch(err.response.data['result']) {
+                case 1:
+                    setWs(1);
+                    break;
+                case 2:
+                    setWs(2);
+                    break;
+                case 3:
+                    setWs(3);
+                    break;
+                default:
+                    setWs(-1);
+                    break;
+            }
+        });
+    }
+
+    useEffect(() => {
+        loadNs();
+    }, []);
+
+    const rLst: any[] = [];
+    if(ws === -1) {
+        rLst.push(
+            <tr className='table-danger'>
+                <td colSpan={8}>작업을 처리하지 못했습니다.</td>
+            </tr>
+        );
+    }
+    else if(ws === 1) {
+        rLst.push(
+            <tr className='table-danger'>
+                <td colSpan={8}>작업에 필요한 권한이 없습니다.</td>
+            </tr>
+        );
+    }
+    else if(nsLst.length === 0) {
+        rLst.push(
+            <tr>
+                <td colSpan={8}>신청된 면불이 없습니다.</td>
+            </tr>
+        );
+    }
+    else {
+        nsLst.forEach(e => {
+            if(e['v']) {
+                rLst.push(
+                <NsReq
+                    id={e['id']}
+                    name={e['name']}
+                    time={e['time']}
+                    scode={e['rscode']}
+                    place={e['place']}
+                    super={e['super']}
+                    reason={e['reason']}
+                    status={e['status']}
+                    accept={(id) => ctrl(id, true)}
+                    deny={(id) => ctrl(id, false)}
+                />
+                );
+            }
+            else {
+                rLst.push(
+                    <tr className='table-warning'>
+                        <td colSpan={8}>유효하지 않은 신청입니다.</td>
+                    </tr>
+                )
+            }
+        });
+    }
+
+    return (
+        <>
+            <Container className="p-3">
+                <div className="row my-3">
+                    <h2 className="mb-3">면불 승인</h2>
+                    <p>나에게 요청된 면불만 확인할 수 있습니다.</p>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>이름</th>
+                                <th>학번</th>
+                                <th>면학</th>
+                                <th>장소</th>
+                                <th>담당교사</th>
+                                <th>사유</th>
+                                <th>상태</th>
+                                <th>승인</th>
+                            </tr>
+                        </thead>
+                        <tbody>{rLst}</tbody>
+                    </Table>
+                    <Button variant='outline-primary w-fit' onClick={loadNs}>새로고침</Button>
+                    <p className='my-2'>{date}</p>
+                    {ws === 2 &&
+                        <Alert variant='danger'>필수 파라미터가 없습니다.</Alert>
+                    }
+                    {ws === 3 &&
+                        <Alert variant='danger'>수정하고자 하는 면불이 존재하지 않습니다.</Alert>
+                    }
+                    {ws === -1 &&
+                        <Alert variant='danger'>작업을 처리하지 못했습니다.</Alert>
+                    }
+                </div>
+                <hr/>
+                <div className="row my-3">
+                    <h2 className="mb-3">면불 추가</h2>
+                    
+                </div>
+            </Container>
+        </>
+    );
+}
+
+export default NsManage;

@@ -18,5 +18,3 @@ public class MainController {
         return "index";
     }
 }
-
-// TODO: update 'last login' when login
