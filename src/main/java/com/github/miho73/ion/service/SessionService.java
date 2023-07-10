@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SessionService {
     public static int USER_PRIVILEGE = 1;
-    public static int ROOT_PRIVILEGE = 3;
+    public static int FACULTY_PRIVILEGE = 3;
+    public static int ROOT_PRIVILEGE = 5;
 
     public enum PRIVILEGES {
         USER,
+        FACULTY,
         ROOT
     }
 
@@ -37,7 +39,7 @@ public class SessionService {
      * @return true when user has sufficient privilege
      */
     public boolean checkPrivilege(HttpSession session, int privilege) {
-        if(session == null) return false;
+        if(!isLoggedIn(session)) return false;
         Integer sp = (Integer)session.getAttribute("priv");
         if(sp == null) return false;
         boolean flag = true;
@@ -63,7 +65,12 @@ public class SessionService {
         return session.getAttribute("name").toString();
     }
 
-    public Object getId(HttpSession session) {
+    public String getId(HttpSession session) {
         return session.getAttribute("id").toString();
+    }
+
+    public int getGrade(HttpSession session) {
+        Object val = session.getAttribute("grade");
+        return (int)val;
     }
 }

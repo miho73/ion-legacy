@@ -76,8 +76,8 @@ public class NsService {
         return ret;
     }
 
-    public LnsReservation saveLnsReservation(int uuid, NsRecord.NS_TIME nsTime, String seat) {
-        if(existsLnsBySeat(nsTime, seat)) {
+    public LnsReservation saveLnsReservation(int uuid, NsRecord.NS_TIME nsTime, int grade, String seat) {
+        if(existsLnsBySeat(nsTime, seat, grade)) {
             return null;
         }
 
@@ -86,12 +86,13 @@ public class NsService {
         lnsRev.setLnsTime(nsTime);
         lnsRev.setUuid(uuid);
         lnsRev.setSeat(seat);
+        lnsRev.setGrade(grade);
 
         return lnsRepository.save(lnsRev);
     }
 
-    public boolean existsLnsBySeat(NsRecord.NS_TIME nsTime, String seat) {
-        return !lnsRepository.findByLnsTimeAndSeatAndLnsDate(nsTime, seat, LocalDate.now()).isEmpty();
+    public boolean existsLnsBySeat(NsRecord.NS_TIME nsTime, String seat, int grade) {
+        return !lnsRepository.findByLnsTimeAndSeatAndLnsDateAndGrade(nsTime, seat, LocalDate.now(), grade).isEmpty();
     }
 
     public boolean existsNsByUuid(int uuid, NsRecord.NS_TIME nsTime) {
@@ -112,8 +113,8 @@ public class NsService {
         }
     }
 
-    public JSONArray getLnsSeat() {
-        List<LnsReservation> lrev = lnsRepository.findByLnsDate(LocalDate.now());
+    public JSONArray getLnsSeat(int grade) {
+        List<LnsReservation> lrev = lnsRepository.findByLnsDateAndGrade(LocalDate.now(), grade);
 
         JSONArray[] byNsTime = new JSONArray[3];
 

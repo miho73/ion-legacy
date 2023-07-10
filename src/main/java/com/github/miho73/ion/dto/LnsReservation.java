@@ -1,6 +1,8 @@
 package com.github.miho73.ion.dto;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
@@ -29,4 +31,9 @@ public class LnsReservation {
 
     @Column(name = "uuid", nullable = false)
     private int uuid;
+
+    @Min(value = 1, message = "grade not in range")
+    @Max(value = 3, message = "grade not in range")
+    @Column(name = "grade", nullable = false)
+    private int grade;
 }

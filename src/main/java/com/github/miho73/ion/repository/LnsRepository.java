@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface LnsRepository extends JpaRepository<LnsReservation, Integer> {
-    List<LnsReservation> findByLnsDate(LocalDate lnsDate);
+    List<LnsReservation> findByLnsDateAndGrade(LocalDate lnsDate, int grade);
 
-    List<LnsReservation> findByLnsTimeAndSeatAndLnsDate(NsRecord.NS_TIME lnsTime, String seat, LocalDate lnsDate);
+    List<LnsReservation> findByLnsTimeAndSeatAndLnsDateAndGrade(NsRecord.NS_TIME lnsTime, String seat, LocalDate lnsDate, int grade);
 }

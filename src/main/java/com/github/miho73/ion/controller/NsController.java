@@ -58,6 +58,7 @@ public class NsController {
             reply.put("reqs", ret);
             reply.put("name", sessionService.getName(session));
             reply.put("id", sessionService.getId(session));
+            reply.put("grade", sessionService.getGrade(session));
             reply.put("date", LocalDate.now().format(dtf));
             return RestResponse.restResponse(HttpStatus.OK, reply);
         } catch (IonException e) {
@@ -110,7 +111,8 @@ public class NsController {
             int lnsReqUid = -1;
 
             if(lnsReq) {
-                LnsReservation lnsRev = nsService.saveLnsReservation(uuid, nsTime, body.get("lnsSeat"));
+                int grade = sessionService.getGrade(session);
+                LnsReservation lnsRev = nsService.saveLnsReservation(uuid, nsTime, grade, body.get("lnsSeat"));
                 if(lnsRev == null) {
                     response.setStatus(400);
                     return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
@@ -182,7 +184,7 @@ public class NsController {
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
-        JSONArray ist = nsService.getLnsSeat();
+        JSONArray ist = nsService.getLnsSeat(sessionService.getGrade(session));
         return RestResponse.restResponse(HttpStatus.OK, ist);
     }
 }

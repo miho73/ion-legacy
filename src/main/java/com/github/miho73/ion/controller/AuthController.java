@@ -78,6 +78,7 @@ public class AuthController {
                 session.setAttribute("uid", user.getUid());
                 session.setAttribute("id", user.getId());
                 session.setAttribute("name", user.getName());
+                session.setAttribute("grade", user.getGrade());
                 session.setAttribute("priv", user.getPrivilege());
 
                 return RestResponse.restResponse(HttpStatus.OK, 0);

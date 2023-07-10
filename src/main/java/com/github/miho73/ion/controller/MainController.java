@@ -11,7 +11,8 @@ public class MainController {
             "/",
             "/auth/signup", "/auth/login",
             "/docs/**",
-            "/ns"
+            "/ns",
+            "/manage"
     })
     public String index() {
         return "index";
@@ -19,4 +20,3 @@ public class MainController {
 }
 
 // TODO: update 'last login' when login
-// TODO: create /auth/state that shows ionid state

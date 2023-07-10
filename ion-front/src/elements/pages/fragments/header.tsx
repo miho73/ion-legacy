@@ -6,7 +6,7 @@ function Header() {
         <>
             <nav className="d-flex flex-shrink-0 bg-light nav">
                 <Link to="/">
-                    <img className="w-100" src="https://images.squarespace-cdn.com/content/v1/51cdafc4e4b09eb676a64e68/77771c78-82f6-43bb-bc3d-bfbf7c410b5a/logo.jpg?format=1500w" alt="home"/>
+                    <img className="w-100" src="logo.png" alt="home"/>
                 </Link>
                 <hr/>
                 <ul className="nav nav-pills">

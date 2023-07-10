@@ -31,4 +31,8 @@ public class UserService {
         user.setScodeCFlag(false);
         return userRepository.save(user);
     }
+
+    public void updatePrivilege(String id, int privilege) {
+        userRepository.updatePrivilegeById(id, privilege);
+    }
 }
