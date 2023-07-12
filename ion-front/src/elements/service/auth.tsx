@@ -18,4 +18,23 @@ function isLogin(setLogin) {
     });
 }
 
-export { isLogin };
+function checkPrivilege(setLogin) {
+    setLogin(0);
+    return;
+
+    axios.get("/auth/api/authorize-e", {
+        params: {"priv": 3}
+    })
+    .then(res => {
+        if(res.data['result']) {
+            setLogin(0);
+        }
+        else setLogin(1);
+    })
+    .catch(err => {
+        console.error(err);
+        setLogin(2);
+    });
+}
+
+export { isLogin, checkPrivilege };

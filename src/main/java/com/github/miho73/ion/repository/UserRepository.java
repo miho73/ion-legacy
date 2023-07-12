@@ -49,4 +49,13 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByGradeAndClasAndScode(int grade, int clas, int scode);
 
     List<User> findByGradeOrderByClasAscScodeAsc(int grade);
+
+    @Modifying
+    @Query(
+            value = "UPDATE users.users SET grade=0, clas=0, scode=0 WHERE uid=:uid",
+            nativeQuery = true
+    )
+    void resetGradeByUid(
+            @Param("uid") int uid
+    );
 }

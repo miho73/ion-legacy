@@ -123,7 +123,7 @@ function IonIdChangPrivilege(props) {
             <ListGroup className="mt-3">
                 <ListGroup.Item><span className="fw-bold">USER</span>: IonID 사용</ListGroup.Item>
                 <ListGroup.Item><span className="fw-bold">FACULTY</span>: IonID 활성화 / 면불 승인</ListGroup.Item>
-                <ListGroup.Item><span className="fw-bold">ROOT</span>: IonID 권한 수정</ListGroup.Item>
+                <ListGroup.Item><span className="fw-bold">ROOT</span>: IonID 권한 수정 / 교사로 등록</ListGroup.Item>
             </ListGroup>
         </Form>
     );

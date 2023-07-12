@@ -144,6 +144,43 @@ public class ManageController {
     }
 
     /**
+     *  0: ok
+     *  1: invalid session
+     *  2: insufficient parameter
+     *  3: user not found
+     */
+    @PatchMapping(
+            value = "/ionid/eliminate",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public String removeGrade(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestBody Map<String, String> body
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+        if(!Validation.checkKeys(body, "id")) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        }
+        String id = body.get("id");
+
+        User user;
+        try {
+            user = userService.getUserById(id);
+        } catch (IonException e) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+        }
+        userService.resetGrade(user.getUid());
+        return RestResponse.restResponse(HttpStatus.OK);
+    }
+
+    /**
      *  [data]: success
      *  1: invalid session
      *  2: no user with such id

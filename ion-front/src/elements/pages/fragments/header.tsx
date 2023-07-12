@@ -6,7 +6,7 @@ function Header() {
         <>
             <nav className="d-flex flex-shrink-0 bg-light nav">
                 <Link to="/">
-                    <img className="w-100" src="logo.png" alt="home"/>
+                    <img className="w-100" src="/logo.png" alt="home"/>
                 </Link>
                 <hr/>
                 <ul className="nav nav-pills">

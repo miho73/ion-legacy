@@ -13,17 +13,15 @@ server:
     whitelabel:
       enabled: false
   port: 3001
+  ssl:
+    key-store: keystore.p12
+    key-store-type: PKCS12
+    key-store-password: ENC(31pZKVK5oi/ZFpZcTqSudkpIeetLZCbAE9ZqBVRnyE4KWU9E1E0Rn+YPzOa3J0e7rIsC7pMoYQBBrns/e8dyQCm4kJY0YwKsaXDq9r9uzNs=)
 
 spring:
   devtools:
     livereload:
       enabled: true
-
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 100MB
-      max-request-size: 100MB
 
   session:
     redis:
@@ -34,9 +32,9 @@ spring:
     prefix: classpath:/static/
 
   datasource:
-    url: ENC(DQGYORlprHUEi8S5zMHGitMHQzvQldOhKe1xsev0bbg+E3gikPwm2MvHZCrmDAWnZSwHw63JzG/uoC8Y4t10agFXP8/tN65EYouznHZ0Xeo=)
-    username: ENC(yNvPSEVbCFa9gaB0JFBUit0qsC+h72WvBIy+wKjX3jRJFZ3A5mhciWcTfmI1a51y)
-    password: ENC(0UM1VBHwNnY6UmtpfubQDS+KdlSLPBqGJR1SdvMSL1AUmPoYsExe1KbClUxk7VknSxsqU139IXp74kIIBMJIjHMFKjGSYS+tNlMuxqmvhUQ=)
+    url: ENC(2nE60HY2+lBYeWJ0pTIX6V0HSZUeJtdA4Lc1mCXnp40ax+S2Oh6Pv/HIZmBEXeUr8wzt+y5aN3Z71i1A+bZ3pCnMRpBZXGyqUDOxMWZlcv8=)
+    username: ENC(HDLfzgnQEVV6VfxrYUHdhe3712/9W3O7quPTo29HEowV3FB/t+3V5YOWBy0aXJ5o)
+    password: ENC(k9f+ClZCk5uqd/zWOudFQ5naUEbK/7t4S6+5AbcQt+vsBzaDIf70u+cTUQ7mqPQvHNljd1TrvkKY3tVr825BTjETXuc9ZlOIYkVWC0TAsOY=)
     driver-class-name: org.postgresql.Driver
 
   jpa:

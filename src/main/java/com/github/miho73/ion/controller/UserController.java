@@ -45,6 +45,11 @@ public class UserController {
     )
     @Transactional
     public String createUser(@Valid @RequestBody User user, HttpServletResponse response) {
+        if(user.getGrade() == 0 || user.getScode() == 0 || user.getClas() == 0) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, "on grade/class/code");
+        }
+
         user.setPwd(passwordEncoder.encode(user.getPwd()));
         User created = userService.createUser(user);
         StudentCodeRecord scr = new StudentCodeRecord();

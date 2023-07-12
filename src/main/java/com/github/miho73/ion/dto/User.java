@@ -23,17 +23,17 @@ public class User {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Min(value = 1, message = "grade not in range")
+    @Min(value = 0, message = "grade not in range")
     @Max(value = 3, message = "grade not in range")
     @Column(name = "grade", nullable = false)
     private int grade;
 
-    @Min(value = 1, message = "class not in range")
+    @Min(value = 0, message = "class not in range")
     @Max(value = 4, message = "class not in range")
     @Column(name = "clas", nullable = false)
     private int clas;
 
-    @Min(value = 1, message = "scode not in range")
+    @Min(value = 0, message = "scode not in range")
     @Max(value = 24, message = "scode not in range")
     @Column(name = "scode", nullable = false)
     private int scode;

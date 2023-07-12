@@ -117,4 +117,12 @@ public class AuthController {
         boolean login = sessionService.isLoggedIn(session);
         return RestResponse.restResponse(HttpStatus.OK, login);
     }
+    @GetMapping(
+            value = "/authorize-e",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String checkAuthAndPrivilege(HttpSession session, @RequestParam("priv") int priv) {
+        boolean login = sessionService.checkPrivilege(session, priv);
+        return RestResponse.restResponse(HttpStatus.OK, login);
+    }
 }

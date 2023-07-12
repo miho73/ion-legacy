@@ -20,12 +20,6 @@ server:
     key-store-password: ENC(lOWKOlRL4xM8SgMyUN3MKphm+uSL7XD1530CL9USrVklJ818/aTSptJy0dIs2rx5OYND2nm1AlQFpAhGzbkvVubGqFrHwizthuOP23fCEdE=)
 
 spring:
-  servlet:
-    multipart:
-      enabled: true
-      max-file-size: 100MB
-      max-request-size: 100MB
-
   session:
     redis:
       namespace: ion:session
