@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { isLogin } from '../../service/auth';
 import CannotAuthorize from '../auth/cannotAuth';
-import { useNavigate } from 'react-router-dom';
 import { LoginPage } from '../auth/login';
 
 function LoggedInIndex() {

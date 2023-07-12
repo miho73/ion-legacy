@@ -156,7 +156,7 @@ public class NsService {
                 e.put("id", r.getUid());
                 e.put("time", r.getNsTime());
                 e.put("name", u.getName());
-                e.put("rscode", u.getGrade()*1000+u.getClas()+u.getScode());
+                e.put("rscode", u.getGrade()*1000+u.getClas()*100+u.getScode());
                 e.put("place", r.getNsPlace());
                 e.put("super", r.getNsSupervisor());
                 e.put("reason", r.getNsReason());
@@ -178,5 +178,9 @@ public class NsService {
 
     public boolean existsNsById(int id) {
         return nsRepository.existsById(id);
+    }
+
+    public List<NsRecord> findByUuid(int uuid) {
+        return nsRepository.findByUuidAndNsDateAndNsStateOrderByNsTimeAsc(uuid, LocalDate.now(), NsRecord.NS_STATE.APPROVED);
     }
 }

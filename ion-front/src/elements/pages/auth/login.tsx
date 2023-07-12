@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { inRange } from '../../service/checker';
 import { changeBit, getBit } from '../../service/bitmask';
 import axios from 'axios';

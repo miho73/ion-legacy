@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import LnsSeat from './lns-seat';
 import { changeBit, getBit } from '../../../service/bitmask';
 import { Button, Form, Stack } from 'react-bootstrap';
@@ -29,7 +29,7 @@ function LnsRoomSelect(props) {
 
     let commonOk: string[] = [];
     // find common pre-process
-    if(findCommon != 0) {
+    if(findCommon !== 0) {
         let n8 = getBit(findCommon, 0), n1 = getBit(findCommon, 1), n2 = getBit(findCommon, 2);
 
         for(let a=0; a<6; a++) {

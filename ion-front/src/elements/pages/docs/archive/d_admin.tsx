@@ -1,9 +1,9 @@
 import React from 'react';
 
-function Deula() {
+function Dadmin() {
     return (
         <></>
     );
 }
 
-export default Deula
+export default Dadmin

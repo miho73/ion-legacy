@@ -55,10 +55,6 @@ function Ns() {
         if(id === '') return;
 
         let nsaf = localStorage.getItem('nsaf');
-        if(nsaf === null) {
-            nsaf = '{}';
-            localStorage.setItem('nsaf', '{}');
-        }
 
         let parsed = JSON.parse(nsaf);
         if(parsed.hasOwnProperty(id)) {
@@ -111,7 +107,17 @@ function Ns() {
         }
         else {
             cNsLst.forEach(req => {
-                let row = <NsState name={req.time} place={req.place} superviser={req.supervisor} reason={req.reason} seat={req.lnsSeat} lnsReq={req.lnsReq} status={req.status} showDeleteConfirm={() => setDeleteModalShow(true)} setTargetNs={setTargetNs}/>
+                let row = <NsState
+                            name={req.time}
+                            place={req.place}
+                            superviser={req.supervisor}
+                            reason={req.reason}
+                            seat={req.lnsSeat}
+                            lnsReq={req.lnsReq}
+                            status={req.status}
+                            showDeleteConfirm={() => setDeleteModalShow(true)}
+                            setTargetNs={setTargetNs}
+                        />
                 rr.push(row);
             });
         }
@@ -285,7 +291,13 @@ function Ns() {
                     <Row className='mt-2'>
                         <Form.Group as={Col} className='mb-3'>
                             <Form.Label htmlFor='time' className='form-label'>면학</Form.Label>
-                            <Form.Select isInvalid={getBit(formState, 0) === 1} aria-label='면학 시간' disabled={working} value={revTime} onChange={e => setRevTime(Number.parseInt(e.target.value))}>
+                            <Form.Select
+                                isInvalid={getBit(formState, 0) === 1}
+                                aria-label='면학 시간' 
+                                disabled={working} 
+                                value={revTime}
+                                onChange={e => setRevTime(Number.parseInt(e.target.value))}>
+                                    
                                 <option value={-1}>면학 시간</option>
                                 <option value={0}>8면</option>
                                 <option value={1}>1면</option>
@@ -336,7 +348,7 @@ function Ns() {
                     <Row className='mx-3 my-3'>
                         <Form.Check
                             label='노면실 자리를 예약해야 합니다.'
-                            isInvalid={getBit(formState, 4) == 1}
+                            isInvalid={getBit(formState, 4) === 1}
                             disabled={working} checked={lnsRoomRequired}
                             id='lnsRr'
                             onChange={e => setLnsRoomRequired(e.target.checked)}
@@ -382,6 +394,11 @@ function Ns() {
                             <p className='my-0'>이미 신청된 자리입니다.</p>
                         </Alert>
                     }
+                    {sErrorState === 3 &&
+                        <Alert variant='danger'>
+                            <p className='my-0'>신청하지 못했습니다.</p>
+                        </Alert>
+                    }
                 </Form>
             </div>
 
@@ -391,7 +408,7 @@ function Ns() {
                 </Modal.Header>
                 <Modal.Body>
                     {deleteResult === -1 &&
-                        <p>{targetNs[1]} 면불 신청을 삭제할까요?</p>
+                        <p>{targetNs[1]}에 신청된 면불 신청을 삭제할까요?</p>
                     }
                     {deleteResult === 1 &&
                         <p className='bg-danger text-white p-3 rounded'>삭제하지 못했습니다.</p>

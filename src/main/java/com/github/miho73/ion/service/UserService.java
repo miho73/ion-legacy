@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -38,5 +39,20 @@ public class UserService {
 
     public void updateLastLogin(int uid) {
         userRepository.updateLastLogin(uid, new Timestamp(System.currentTimeMillis()));
+    }
+
+    public Optional<User> getUserByScode(int scode) {
+        int s = scode;
+        int code = s % 100;
+        s = (s - code)/100;
+        int clas = s % 10;
+        s = (s - clas) / 10;
+        int grade = s;
+
+        return userRepository.findByGradeAndClasAndScode(grade, clas, code);
+    }
+
+    public List<User> getUserByGrade(int grade) {
+        return userRepository.findByGradeOrderByClasAscScodeAsc(grade);
     }
 }

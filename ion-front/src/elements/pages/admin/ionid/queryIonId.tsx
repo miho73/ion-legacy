@@ -16,7 +16,7 @@ function QueryIonId() {
             setUsr([
                 r['ui'],
                 r['na'],
-                ''+r['gr']+r['cl']+r['sc'],
+                r['gr']*1000+r['cl']*100+r['sc'],
                 r['sf'],
                 r['id'],
                 r['ll'],
@@ -91,6 +91,9 @@ function QueryIonId() {
                 <Alert variant="danger">IonID가 존재하지 않습니다.</Alert>
             }
             { gs === 4 &&
+                <Alert variant="danger">작업을 처리하지 못했습니다.</Alert>
+            }
+            { gs === 5 &&
                 <Alert variant="danger">작업을 처리하지 못했습니다.</Alert>
             }
         </Form>

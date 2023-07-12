@@ -1,5 +1,6 @@
 package com.github.miho73.ion.controller;
 
+import com.github.miho73.ion.dto.NsRecord;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.service.IonIdManageService;
@@ -16,11 +17,16 @@ import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -46,7 +52,11 @@ public class ManageController {
      *  4: no user with such id
      *  5: no self modify
      */
-    @PatchMapping("/ionid/active/patch")
+    @PatchMapping(
+            value = "/ionid/active/patch",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     @Transactional
     public String activePath(
             HttpServletResponse response,
@@ -96,7 +106,10 @@ public class ManageController {
      *  1: invalid session
      *  2: no user with such id
      */
-    @GetMapping("/ionid/get")
+    @GetMapping(
+            value = "/ionid/get",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public String getUser(
             HttpSession session,
             HttpServletResponse response,
@@ -135,7 +148,10 @@ public class ManageController {
      *  1: invalid session
      *  2: no user with such id
      */
-    @GetMapping("/privilege/get")
+    @GetMapping(
+            value = "/privilege/get",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public String getPrivilege(
             HttpSession session,
             HttpServletResponse response,
@@ -161,7 +177,11 @@ public class ManageController {
      *  2: no user with such id
      *  3: no self modify
      */
-    @PatchMapping("/privilege/patch")
+    @PatchMapping(
+            value = "/privilege/patch",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     @Transactional
     public String setPrivilege(
             HttpSession session,
@@ -203,7 +223,10 @@ public class ManageController {
      *  [data]: success
      *  1: invalid session
      */
-    @GetMapping("/ns/get")
+    @GetMapping(
+            value = "/ns/get",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public String getNs(
             HttpSession session,
             HttpServletResponse response
@@ -227,7 +250,11 @@ public class ManageController {
      *  2: insufficient parameter
      *  3: no ns with such id
      */
-    @PatchMapping("/ns/accept")
+    @PatchMapping(
+            value = "/ns/accept",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     @Transactional
     public String changeAccept(
             HttpSession session,
@@ -253,5 +280,168 @@ public class ManageController {
 
         nsService.acceptNs(id, accept);
         return RestResponse.restResponse(HttpStatus.OK);
+    }
+
+    /**
+     *  [data]: success
+     *  1: invalid session
+     *  2: ionid not found
+     */
+    @GetMapping(
+            value = "/ns/get-user",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getUserNs(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestParam("code") int scode
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        Optional<User> userOptional = userService.getUserByScode(scode);
+        if(userOptional.isEmpty()) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        }
+        JSONArray ret = nsService.getNsList(userOptional.get().getUid());
+
+        JSONObject reply = new JSONObject();
+        reply.put("reqs", ret);
+        reply.put("date", LocalDate.now().format(dtf));
+        return RestResponse.restResponse(HttpStatus.OK, reply);
+    }
+
+    /**
+     *  0: ok
+     *  1: invalid session
+     *  2: insufficient property
+     *  3: no user with such scode
+     *  4: already requested
+     */
+    @PostMapping(
+            value = "/ns/create",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String createNs(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestBody Map<String, String> body
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        if(!Validation.checkKeys(body, "scode", "time", "place", "reason")) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        }
+
+        int scode = Integer.parseInt(body.get("scode"));
+        NsRecord.NS_TIME nsTime = NsRecord.NS_TIME.valueOf(body.get("time"));
+
+        Optional<User> userOptional = userService.getUserByScode(scode);
+        if(userOptional.isEmpty()) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+        }
+        User user = userOptional.get();
+
+        if(nsService.existsNsByUuid(user.getUid(), nsTime)) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
+        }
+
+        body.put("supervisor", sessionService.getName(session));
+        nsService.saveNsRequest(user.getUid(), nsTime, false, -1, body);
+
+        response.setStatus(201);
+        return RestResponse.restResponse(HttpStatus.CREATED, 0);
+    }
+
+    /**
+     *  0: ok
+     *  1: invalid session
+     *  2: insufficient property
+     *  3: no user with such scode
+     *  4: no ns found
+     */
+    @DeleteMapping(
+            value = "/ns/delete",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public String deleteNs(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestParam("code") int scode,
+            @RequestParam("time") NsRecord.NS_TIME nsTime
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        Optional<User> userOptional = userService.getUserByScode(scode);
+        if(userOptional.isEmpty()) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+        }
+        User user = userOptional.get();
+
+        try {
+            nsService.deleteNs(user.getUid(), nsTime);
+            return RestResponse.restResponse(HttpStatus.OK, 0);
+        } catch (IonException e) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
+        }
+    }
+
+    /**
+     *  [data]: ok
+     *  1: invalid session
+     */
+    @GetMapping(
+            value = "/ns/print",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getPrintData(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestParam("grade") int grade
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        List<User> users = userService.getUserByGrade(grade);
+        JSONArray ret = new JSONArray();
+        users.forEach(e -> {
+            List<NsRecord> records = nsService.findByUuid(e.getUid());
+            JSONObject element = new JSONObject();
+            element.put("code", e.getGrade()*1000+e.getClas()*100+e.getScode());
+            element.put("name", e.getName());
+            records.forEach(s -> {
+                String str = s.getNsPlace()+"/"+s.getNsSupervisor()+"/"+s.getNsReason();
+                if(s.getNsTime() == NsRecord.NS_TIME.N8) element.put("n8", str);
+                if(s.getNsTime() == NsRecord.NS_TIME.N1) element.put("n1", str);
+                if(s.getNsTime() == NsRecord.NS_TIME.N2) element.put("n2", str);
+            });
+            if(!element.containsKey("n8")) element.put("n8", "");
+            if(!element.containsKey("n1")) element.put("n1", "");
+            if(!element.containsKey("n2")) element.put("n2", "");
+            ret.add(element);
+        });
+
+        JSONObject reply = new JSONObject();
+        reply.put("ns", ret);
+        reply.put("qtime", new SimpleDateFormat("yyyy.MM.dd HH.mm.ss").format(new Date()));
+        return RestResponse.restResponse(HttpStatus.OK, reply);
     }
 }

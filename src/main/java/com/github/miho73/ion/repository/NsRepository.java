@@ -29,4 +29,6 @@ public interface NsRepository extends JpaRepository<NsRecord, Integer> {
             @Param("uid") int uid,
             @Param("status") int status
     );
+
+    List<NsRecord> findByUuidAndNsDateAndNsStateOrderByNsTimeAsc(int uuid, LocalDate nsDate, NsRecord.NS_STATE nsState);
 }
