@@ -55,9 +55,9 @@ function Ns() {
         if(id === '') return;
 
         let nsaf = localStorage.getItem('nsaf');
-
         let parsed = JSON.parse(nsaf);
-        if(parsed.hasOwnProperty(id)) {
+
+        if(parsed === null || parsed.hasOwnProperty(id)) {
             setAutoFill(true);
             let me = parsed[id];
             setRevPlace(me['at']);
