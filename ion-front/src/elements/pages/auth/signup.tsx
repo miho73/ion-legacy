@@ -181,6 +181,7 @@ function SignupPage() {
                 <Link to='/' className='mt-4 text-muted text-decoration-none'>기존 IonID로 로그인</Link>
                 <div className='vstack'>
                     <p className='mt-5 mb-1 text-muted'>Ion by Changwoon Hyun</p>
+                    <p className='mb-3 text-muted'>Seungwon Lee and Nakyung Lee</p>
                     <p className='text-muted'>Look up <Link className='text-muted' to='https://github.com/miho73/ion' target='_blank'>GitHub</Link> repository of Ion project</p>
                 </div>
             </form>

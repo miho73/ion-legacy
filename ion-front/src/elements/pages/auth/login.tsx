@@ -18,7 +18,7 @@ function LoginPage() {
         if(!inRange(1, 30, pwd.length)) state = changeBit(state, 1);
         setFormState(state);
 
-        if(state != 0) return;
+        if(state !== 0) return;
 
         setBlock(true);
         axios.post('/auth/api/authenticate', {
@@ -72,6 +72,7 @@ function LoginPage() {
     
                 <div className='vstack'>
                     <p className='mt-5 mb-1 text-muted'>Ion by Changwoon Hyun</p>
+                    <p className='mb-3 text-muted'>Seungwon Lee and Nakyung Lee</p>
                     <p className='text-muted'>Look up <Link className='text-muted' to='https://github.com/miho73/ion' target='_blank'>GitHub</Link> repository of Ion project</p>
                 </div>
             </form>
