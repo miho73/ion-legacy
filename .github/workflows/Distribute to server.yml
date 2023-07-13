@@ -22,6 +22,7 @@ jobs:
         with:
           node-version: 18
           cache: 'npm'
+          cache-dependency-path: './ion-front/package-lock.json'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
