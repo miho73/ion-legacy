@@ -46,7 +46,7 @@ function PrintNs() {
             setWorkState(0);
         })
         .catch(err => {
-            switch(err.response.data['result']) {
+            switch(err.response?.data['result']) {
                 case 1:
                     setWorkState(1);
                     break;
@@ -116,5 +116,3 @@ export default PrintNs;
 
 // TODO: 장소별로 면불 보기 : 필터의 확장
 // TODO: navigation 위치에 따라 하이라이트되게 하기
-// TODO: Index 꾸미기
-// TODO: manage page 로 접속되는 경로 만들기

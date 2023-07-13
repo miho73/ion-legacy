@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Alert, Button, ButtonGroup, Form, InputGroup, ListGroup } from "react-bootstrap";
+import { Alert, Button, ButtonGroup, Form, ListGroup } from "react-bootstrap";
 import { changeBit, getBit } from "../../../service/bitmask";
 
 function IonIdChangPrivilege(props) {
@@ -20,7 +20,7 @@ function IonIdChangPrivilege(props) {
             setWs(1);
         })
         .catch(err => {
-            switch(err.response.data['result']) {
+            switch(err.response?.data['result']) {
                 case 1:
                     setWs(2);
                     break;
@@ -45,7 +45,7 @@ function IonIdChangPrivilege(props) {
             ])
         })
         .catch(err => {
-            switch(err.response.data['result']) {
+            switch(err.response?.data['result']) {
                 case 1:
                     setWs(2);
                     break;

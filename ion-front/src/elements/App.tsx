@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Index from './pages/main';
 import ErrorPage from './pages/etc/error';
@@ -7,7 +7,7 @@ import Ns from './pages/ns/ns';
 
 import '../css/univ.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { LoginPage, SignoutPage } from './pages/auth/login';
+import { SignoutPage } from './pages/auth/login';
 import SignupPage from './pages/auth/signup';
 import Docs from './pages/docs/docs';
 import Header from './pages/fragments/header';

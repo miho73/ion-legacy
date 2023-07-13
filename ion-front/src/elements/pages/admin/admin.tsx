@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Container, Modal, ModalHeader, Tab, Tabs } from "react-bootstrap";
+import { Container, Tab, Tabs } from "react-bootstrap";
 import IonIdManage from "./ionid/ionid";
 import NsManage from "./ns/ns";
-import { checkPrivilege, isLogin } from "../../service/auth";
+import { checkPrivilege } from "../../service/auth";
 import { useNavigate } from "react-router-dom";
 import CannotAuthorize from '../auth/cannotAuth';
 
@@ -19,6 +19,7 @@ function ManagementPage() {
     }
     if(loginState === 1) {
         navigate('/');
+        return <></>;
     }
     if(loginState === 2) {
         return <CannotAuthorize/>

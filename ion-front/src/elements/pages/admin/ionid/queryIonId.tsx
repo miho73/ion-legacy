@@ -27,7 +27,7 @@ function QueryIonId() {
             setGs(1);
         })
         .catch(err => {
-            switch(err.response.data['result']) {
+            switch(err.response?.data['result']) {
                 case 1:
                     setGs(2);
                     break;

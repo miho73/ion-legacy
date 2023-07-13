@@ -73,4 +73,9 @@ public class SessionService {
         Object val = session.getAttribute("grade");
         return (int)val;
     }
+
+    public int getPrivilege(HttpSession session) {
+        Integer sp = (Integer)session.getAttribute("priv");
+        return sp;
+    }
 }

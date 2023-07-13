@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Alert, Button, ButtonGroup, Form, InputGroup, ListGroup } from "react-bootstrap";
+import { Alert, Button, Form, InputGroup } from "react-bootstrap";
 
-function IonIdActivation(props) {
+function IonIdActivation() {
     const [id, setId] = useState('');
     const [result, setResult] = useState<any[]>([]);
 
@@ -20,7 +20,7 @@ function IonIdActivation(props) {
         })
         .catch(err => {
             let msg;
-            switch(err.response.data['result']) {
+            switch(err.response?.data['result']) {
                 case 1:
                     msg = '작업을 위한 권한이 부족합니다.'
                     break;
@@ -57,7 +57,7 @@ function IonIdActivation(props) {
                 <Button variant="success" onClick={() => setActiveState(1)}>Activate</Button>
                 <Button variant="danger" onClick={() => setActiveState(2)}>Ban</Button>
             </InputGroup>
-            {result[0] == 0 &&
+            {result[0] === 0 &&
                 <Alert variant="success">{result[1]}</Alert>
             }
             {result[0] === 1 &&

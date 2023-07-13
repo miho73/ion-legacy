@@ -26,7 +26,7 @@ function AddNs(props) {
 
         setFormState(state);
 
-        if(state != 0) return;
+        if(state !== 0) return;
 
         let time;
         switch(revTime) {
@@ -41,6 +41,7 @@ function AddNs(props) {
                 break;
         }
 
+        setWorking(true);
         axios.post('/manage/api/ns/create', {
             scode: scode,
             time: time,
@@ -51,7 +52,7 @@ function AddNs(props) {
             setWorkError(0);
         })
         .catch(err => {
-            const es = err.response.data['result'];
+            const es = err.response?.data['result'];
             switch(es) {
                 case 1:
                     setWorkError(1);
@@ -68,6 +69,9 @@ function AddNs(props) {
                 default:
                     setWorkError(6);
             }
+        })
+        .finally(() => {
+            setWorking(false);
         });
     }
 

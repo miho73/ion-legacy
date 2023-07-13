@@ -48,7 +48,7 @@ function AcceptNs() {
             setNsLst(data['nss']);
         })
         .catch(err => {
-            switch(err.response.data['result']) {
+            switch(err.response?.data['result']) {
                 case 1:
                     setWs(1);
                     break;
@@ -118,7 +118,7 @@ function AcceptNs() {
             loadNs();
         })
         .catch(err => {
-            switch(err.response.data['result']) {
+            switch(err.response?.data['result']) {
                 case 1:
                     setWs(1);
                     break;

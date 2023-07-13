@@ -14,7 +14,7 @@ function RemoveGrade() {
             setWorkState(0);
         })
         .catch(err => {
-            switch(err.response.data['result']) {
+            switch(err.response?.data['result']) {
                 case 1:
                     setWorkState(1);
                     break;

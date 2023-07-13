@@ -20,6 +20,9 @@ public class UserService {
         if(users.size() != 1) throw new IonException();
         return users.get(0);
     }
+    public Optional<User> getUserById(int id) {
+        return userRepository.findById(id);
+    }
 
     public boolean existsUserById(String id) {
         return userRepository.findById(id).isEmpty();

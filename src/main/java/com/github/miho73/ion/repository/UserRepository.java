@@ -1,6 +1,5 @@
 package com.github.miho73.ion.repository;
 
-import com.github.miho73.ion.dto.NsRecord;
 import com.github.miho73.ion.dto.User;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;

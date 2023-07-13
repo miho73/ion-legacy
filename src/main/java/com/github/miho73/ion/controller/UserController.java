@@ -2,13 +2,16 @@ package com.github.miho73.ion.controller;
 
 import com.github.miho73.ion.dto.StudentCodeRecord;
 import com.github.miho73.ion.dto.User;
+import com.github.miho73.ion.service.SessionService;
 import com.github.miho73.ion.service.StudentCodeRecordService;
 import com.github.miho73.ion.service.UserService;
 import com.github.miho73.ion.utils.RestResponse;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,6 +31,9 @@ public class UserController {
 
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    @Autowired
+    SessionService sessionService;
 
     @GetMapping(
             value = "/validation/id-duplication",
@@ -57,5 +63,23 @@ public class UserController {
         scr.setRecord("/");
         studentCodeRecordService.createRecord(scr);
         return RestResponse.restResponse(HttpStatus.CREATED, created.getId());
+    }
+
+    @GetMapping(
+            value = "/idx-iden",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getIdxIden(
+            HttpSession session
+    ) {
+        if(!sessionService.isLoggedIn(session)) {
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        JSONObject ret = new JSONObject();
+        ret.put("name", sessionService.getName(session));
+        ret.put("id", sessionService.getId(session));
+        ret.put("priv", sessionService.getPrivilege(session));
+        return RestResponse.restResponse(HttpStatus.OK, ret);
     }
 }

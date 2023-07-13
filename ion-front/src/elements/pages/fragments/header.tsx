@@ -11,10 +11,10 @@ function Header() {
                 <hr/>
                 <ul className="nav nav-pills">
                     <li className="nav-item">
-                        <Link to="/" className="nav-link active" aria-current="page">Home</Link>
+                        <Link to="/" className="nav-link">Home</Link>
                     </li>
                     <li>
-                        <Link to="/ns" className="nav-link link-dark">면불신청</Link>
+                        <Link to="/ns" className="nav-link">면불신청</Link>
                     </li>
                 </ul>
             </nav>

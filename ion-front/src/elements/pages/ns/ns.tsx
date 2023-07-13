@@ -74,6 +74,7 @@ function Ns() {
     }
     if(loginState === 1) {
         navigate('/');
+        return <></>;
     }
     if(loginState === 2) {
         return <CannotAuthorize/>
@@ -183,7 +184,7 @@ function Ns() {
                 loadNsReqs();
                 loadLns();
             }).catch(err => {
-                const code = err.response.data['result'];
+                const code = err.response?.data['result'];
                 switch(code) {
                     case 4:
                         setSError(2);

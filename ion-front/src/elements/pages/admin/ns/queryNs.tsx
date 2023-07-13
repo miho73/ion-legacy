@@ -24,7 +24,7 @@ function QueryNs(props) {
             setWorkError(0);
         })
         .catch(err => {
-            const cd = err.response.data['result'];
+            const cd = err.response?.data['result'];
             switch(cd) {
                 case 1:
                     setWorkError(1);
@@ -76,6 +76,7 @@ function QueryNs(props) {
     }
 
     function deleteNs() {
+        setDeleting(true);
         axios.delete('/manage/api/ns/delete', {
             params: {
                 code: scode,
@@ -88,6 +89,9 @@ function QueryNs(props) {
         })
         .catch(err => {
             setDeleteResult(1);
+        })
+        .finally(() => {
+            setDeleting(false);
         });
     }
     function closeDeleteConfirm() {
