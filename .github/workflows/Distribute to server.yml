@@ -30,7 +30,7 @@ jobs:
       - name: Build React Native App
         run: |
           cd ion-front
-          npm install
+          npm install --force
           npm run build
       - name: Prepare to sync
         run: |
