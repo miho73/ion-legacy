@@ -17,14 +17,26 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
           cache: gradle
+#      - name: Set up Node
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 18
+#          cache: 'npm'
+#          cache-dependency-path: './ion-front/package-lock.json'
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build --stacktrace
+#      - name: Build React Native App
+#        run: |
+#          cd ion-front
+#          npm install --force
+#          npm run build
       - name: Prepare to sync
         run: |
           mkdir to_be_sync
           cp -r ./build/libs/ion-1.0.0.jar ./to_be_sync
+          cp -r ./src/main/resources/static/static ./to_be_sync/static
           mv to_be_sync/ion-1.0.0.jar to_be_sync/ion.jar
       - name: Upload to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
