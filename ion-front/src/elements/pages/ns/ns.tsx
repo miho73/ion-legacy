@@ -270,7 +270,7 @@ function Ns() {
     }
 
     return (
-        <Container className='mt-4'>
+        <Container className='mt-5 nst'>
             <Row>
                 <h4>{uName}님의 면불 신청</h4>
                 <Table className='m-auto'>
@@ -289,7 +289,7 @@ function Ns() {
                 </Table>
                 <p>{date}</p>
             </Row>
-            <div className='mt-4'>
+            <Row>
                 <h4>면불 신청</h4>
                 <Form className='mx-3'>
                     <Row className='mt-2'>
@@ -404,7 +404,7 @@ function Ns() {
                         </Alert>
                     }
                 </Form>
-            </div>
+            </Row>
 
             <Modal show={deleteModalShow} onHide={closeDeleteConfirm} dialogClassName='modal-dialog-centered'>
                 <Modal.Header closeButton>

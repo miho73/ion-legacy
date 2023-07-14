@@ -1,4 +1,6 @@
-@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/mixins";
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
 
 * {
@@ -46,6 +48,9 @@ input[type="number"] {
 table {
     width: 75%;
 }
+.nst {
+    width: 70% !important;
+}
 @include media-breakpoint-down(lg) {
     table {
         width: 100% !important;
@@ -70,6 +75,9 @@ table {
                 width: auto;
             }
         }
+    }
+    .nst {
+        width: 90% !important;
     }
 }
 
@@ -123,3 +131,4 @@ table {
         box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
     }
 }
+

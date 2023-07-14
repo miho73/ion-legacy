@@ -3,6 +3,7 @@ import { inRange } from '../../service/checker';
 import { changeBit, getBit } from '../../service/bitmask';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { InputGroup, Form, FloatingLabel } from 'react-bootstrap';
 
 function SignupPage() {
     const [name, setName] = useState('');
@@ -11,6 +12,7 @@ function SignupPage() {
     const [sCode, setSCode] = useState(1);
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
+    const [pwdRe, setPWdRe] = useState('');
     const [eula, setEula] = useState(false);
 
     const [block, setBlock] = useState(false);
@@ -31,6 +33,7 @@ function SignupPage() {
         else if(page === 1) {
             if(!inRange(4, 30, id.length)) state = changeBit(state, 4);
             if(!inRange(6, 100, pwd.length)) state = changeBit(state, 7);
+            if(pwd !== pwdRe) state = changeBit(state, 9);
         }
         else return 0;
 
@@ -96,18 +99,20 @@ function SignupPage() {
 
     return (
         <main className='container mt-4'>
-            <form className='text-center d-flex justify-content-center m-auto flex-column form-signin'>
+            <Form className='text-center d-flex justify-content-center m-auto flex-column form-signin'>
                 <h1 className='h3 mt-3 mb-0 fw-normal'>IonID 만들기</h1>
                 <p className='mb-3 mt-0 fs-5'>Create IonID</p>
 
                 {page === 0 &&
                     <div id='page1' className='vstack gap-3 d-flex justify-content-center align-items-center'>
                         <div className='form-floating has-validation'>
-                            <input type='text' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')} disabled={block} id='name' placeholder='이름' autoComplete='name' aria-label='이름' value={name} onChange={e => setName(e.target.value)}/>
+                            <Form.Control type='text'
+                                          className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')}
+                                          disabled={block} id='name' placeholder='이름' autoComplete='name' aria-label='이름' value={name} onChange={e => setName(e.target.value)}/>
                             <label htmlFor='name'>이름</label>
                             <p className='invalid-feedback mb-0'>이름을 입력해주세요.</p>
                         </div>
-                        <div className='input-group'>
+                        <InputGroup>
                             <div className='form-floating'>
                                 <input type='number' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')} disabled={block} id='grade' placeholder='학년' aria-label='학년' value={grade} onChange={e => setGrade(Number.parseInt(e.target.value))}/>
                                 <label htmlFor='grade'>학년</label>
@@ -116,11 +121,18 @@ function SignupPage() {
                                 <input type='number' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 2) ? ' is-invalid' : '')} disabled={block} id='clas' placeholder='반' aria-label='반' value={clas} onChange={e => setClas(Number.parseInt(e.target.value))}/>
                                 <label htmlFor='clas'>반</label>
                             </div>
-                            <div className='form-floating'>
-                                <input type='number' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 3) ? ' is-invalid' : '')} disabled={block} id='scode' placeholder='번호' aria-label='번호' value={sCode} onChange={e => setSCode(Number.parseInt(e.target.value))}/>
-                                <label htmlFor='scode'>번호</label>
-                            </div>
-                        </div>
+                            <FloatingLabel label='번호'>
+                                <Form.Control type='number'
+                                              className={'pe-5 s-6 form-control-lg'+(getBit(formState, 3) ? ' is-invalid' : '')}
+                                              disabled={block}
+                                              placeholder='번호'
+                                              aria-label='번호'
+                                              value={sCode}
+                                              onChange={e => setSCode(Number.parseInt(e.target.value))}
+                                />
+                                <Form.Label htmlFor='scode'>번호</Form.Label>
+                            </FloatingLabel>
+                        </InputGroup>
                         {inRange(1, 3, grade) && inRange(1, 4, clas) && inRange(1, 24, sCode) && 
                             <div className='vstack'>
                                 <p className='my-0'>{yrs-1992-grade}기의 {''+grade+clas+(sCode<10 ? '0'+sCode : sCode)}입니다.</p>
@@ -131,9 +143,16 @@ function SignupPage() {
 
                 {page === 1 &&
                     <div id='page2' className='vstack gap-3 d-flex justify-content-center align-items-center'>
-                        <div className='form-floating'>
-                            <input type='text' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 4)||getBit(formState, 5)||getBit(formState, 6) ? ' is-invalid' : '')} disabled={block} id='ionid' placeholder='IonID' autoComplete='username' aria-label='IonID' value={id} onChange={e => setId(e.target.value)}/>
-                            <label htmlFor='ionid'>IonID</label>
+                        <FloatingLabel label='IonID'>
+                            <Form.Control type='text'
+                                          className={'pe-5 fs-6 form-control-lg'+(getBit(formState, 4)||getBit(formState, 5)||getBit(formState, 6) ? ' is-invalid' : '')}
+                                          disabled={block}
+                                          placeholder='IonID'
+                                          autoComplete='username'
+                                          aria-label='IonID'
+                                          value={id}
+                                          onChange={e => setId(e.target.value)}
+                            />
                             {getBit(formState, 4) === 1 &&
                                 <p className={'invalid-feedback mb-0'}>IonID는 4~30자로 골라주세요.</p>
                             }
@@ -143,12 +162,31 @@ function SignupPage() {
                             {getBit(formState, 6) === 1 &&
                                 <p className='invalid-feedback mb-0'>IonID 중복확인에 실패했어요.</p>
                             }
-                        </div>
-                        <div className='form-floating'>
-                            <input type='password' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 7) ? ' is-invalid' : '')} disabled={block} id='pwd' placeholder='Password' autoComplete='current-password' aria-label='Password' value={pwd} onChange={e => setPwd(e.target.value)}/>
-                            <label htmlFor='pwd'>Password</label>
+                        </FloatingLabel>
+                        <FloatingLabel label='Password'>
+                            <Form.Control type='password'
+                                          className={'pe-5 fs-6 form-control-lg'+(getBit(formState, 7) ? ' is-invalid' : '')}
+                                          disabled={block}
+                                          placeholder='Password'
+                                          autoComplete='new-password'
+                                          aria-label='Password'
+                                          value={pwd}
+                                          onChange={e => setPwd(e.target.value)}
+                            />
                             <p className='invalid-feedback mb-0'>암호는 6자 이상이어야 합니다.</p>
-                        </div>
+                        </FloatingLabel>
+                        <FloatingLabel label='Password Confirm'>
+                            <Form.Control type='password'
+                                          className={'pe-5 fs-6 form-control-lg'+(getBit(formState, 9) ? ' is-invalid' : '')}
+                                          disabled={block}
+                                          placeholder='Password Confirm'
+                                          autoComplete='new-password'
+                                          aria-label='Password Confirm'
+                                          value={pwdRe}
+                                          onChange={e => setPWdRe(e.target.value)}
+                            />
+                            <p className='invalid-feedback mb-0'>암호를 확인해주세요.</p>
+                        </FloatingLabel>
                     </div>
                 }
 
@@ -184,7 +222,7 @@ function SignupPage() {
                     <p className='mb-3 text-muted'>Seungwon Lee and Nakyung Lee</p>
                     <p className='text-muted'>Look up <Link className='text-muted' to='https://github.com/miho73/ion' target='_blank'>GitHub</Link> repository of Ion project</p>
                 </div>
-            </form>
+            </Form>
         </main>
     )
 }
