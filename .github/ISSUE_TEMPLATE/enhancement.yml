@@ -8,7 +8,7 @@ body:
 - type: markdown
   attributes:
     value: |
-      이슈를 제안하기 전에 [기존의 이슈들](https://github.com/miho73/IPU/issues)을 검색해주세요!
+      이슈를 제안하기 전에 [기존의 이슈](https://github.com/miho73/ion/issues)를 확인해주세요!
       
 - type: textarea
   attributes:
