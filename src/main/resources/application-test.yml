@@ -47,3 +47,7 @@ spring:
 
   mvc:
     static-path-pattern: /**
+
+ion:
+  apod:
+    api-key: ENC(F9RJLDmmQ410giRlINEAY9Gq3HpPuPevshQlXzjK3xhQpA9zBsbpvHUmocmNumoCSvNIKmOHZH35LybJQ50ULIKIz2WaSRZk3XVJj90Wbl8=)

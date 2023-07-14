@@ -6,7 +6,6 @@ import ErrorPage from './pages/etc/error';
 import Ns from './pages/ns/ns';
 
 import '../css/univ.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import { SignoutPage } from './pages/auth/login';
 import SignupPage from './pages/auth/signup';
 import Docs from './pages/docs/docs';
