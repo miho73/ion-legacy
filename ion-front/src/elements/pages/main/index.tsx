@@ -82,7 +82,7 @@ function Graphic() {
 }
 
 function LoggedInIndex() {
-    const [user, setUser] = useState({name: '예지', id: 'yeji', priv: 3});
+    const [user, setUser] = useState({name: '', id: '', priv: 0});
     const [workState, setWorkState] = useState(-1);
   
     useEffect(() => {

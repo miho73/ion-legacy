@@ -37,16 +37,23 @@ function LoginPage() {
         });
     }
 
+    function enterDown(e) {
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            submit();
+        }
+    }
+
     return (
         <main className='container mt-4'>
             <form className='vstack gap-3 d-flex justify-content-center align-items-center text-center form-signin'>
                 <h1 className='h3 my-3 fw-normal'>IonID</h1>
                 <div className='form-floating'>
-                    <input type='text' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')} disabled={block} id='ionid' placeholder='IonID' autoComplete='username' aria-label='IonID' value={id} onChange={e => setId(e.target.value)}/>
+                    <input type='text' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')} disabled={block} id='ionid' placeholder='IonID' autoComplete='username' aria-label='IonID' value={id} onChange={e => setId(e.target.value)} onKeyDown={enterDown}/>
                     <label htmlFor='ionid'>IonID</label>
                 </div>
                 <div className='form-floating'>
-                    <input type='password' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')} disabled={block} id='pwd' placeholder='암호' autoComplete='current-password' aria-label='암호' value={pwd} onChange={e => setPwd(e.target.value)}/>
+                    <input type='password' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')} disabled={block} id='pwd' placeholder='암호' autoComplete='current-password' aria-label='암호' value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={enterDown}/>
                     <label htmlFor='pwd'>Password</label>
                 </div>
                 <button className='btn btn-lg btn-primary fs-6' type='button' onClick={submit}>Sign in</button>

@@ -1,4 +1,9 @@
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css);
+
+* {
+    font-family: 'Spoqa Han Sans Neo', 'sans-serif'; 
+}
 
 html, body, div#root {
     height: 100%;
