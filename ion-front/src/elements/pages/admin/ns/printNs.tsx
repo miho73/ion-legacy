@@ -33,7 +33,7 @@ function PrintNs() {
             styles: { font: "SpoqaHanSansNeo", fontStyle: "normal" }
         });
 
-        doc.save(`면불일지 ${date}.pdf`);
+        doc.save(`면학 지도 일지 ${date}.pdf`);
     }
 
     function createTable() {
@@ -73,7 +73,7 @@ function PrintNs() {
 
     return (
         <Row className='my-3'>
-            <h2>면불 목록 출력</h2>
+            <h2>면학 불참 목록 출력</h2>
             <InputGroup className='w-25 mgw'>
                 <FormSelect value={grade} onChange={e => setGrade(Number.parseInt(e.target.value))}>
                     <option value={1}>1학년</option>
@@ -102,10 +102,10 @@ function PrintNs() {
                     </>
                 }
                 { workState === 1 &&
-                    <Alert variant='danger'>작업에 필요한 권한이 없습니다.</Alert>
+                    <Alert variant='danger'>권한이 부족합니다.</Alert>
                 }
                 { workState === 2 &&
-                    <Alert variant='danger'>작업을 처리하지 못했습니다.</Alert>
+                    <Alert variant='danger'>문제가 발생했습니다.</Alert>
                 }
             </Container>
         </Row>

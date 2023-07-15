@@ -7,7 +7,7 @@ import ErrorPage from '../etc/error';
 import axios from 'axios';
 
 function LoggedInIndex() {
-    const [user, setUser] = useState({name: '', id: '', priv: 0});
+    const [user, setUser] = useState({name: '', id: '', priv: 2});
     const [workState, setWorkState] = useState(-1);
     const [picture, setPicture] = useState({url: 'https://apod.nasa.gov/apod/image/1708/PerseidsoverPyreneesGraffand1024.jpg', type: 'image', title: 'Perseids over the Pyrénées'});
     const [apodSet, setApodSet] = useState(false);

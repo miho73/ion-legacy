@@ -63,21 +63,21 @@ function AcceptNs() {
     if(ws === -1) {
         rLst.push(
             <tr className='table-danger'>
-                <td colSpan={8}>작업을 처리하지 못했습니다.</td>
+                <td colSpan={8}>문제가 발생했습니다.</td>
             </tr>
         );
     }
     else if(ws === 1) {
         rLst.push(
             <tr className='table-danger'>
-                <td colSpan={8}>작업에 필요한 권한이 없습니다.</td>
+                <td colSpan={8}>권한이 부족합니다.</td>
             </tr>
         );
     }
     else if(nsLst.length === 0) {
         rLst.push(
             <tr>
-                <td colSpan={8}>신청된 면불이 없습니다.</td>
+                <td colSpan={8}>해당 면학 불참 신청이 존재하지 않습니다.</td>
             </tr>
         );
     }
@@ -137,8 +137,8 @@ function AcceptNs() {
 
     return (
         <Row className="my-3">
-            <h2 className="mb-3">면불 승인</h2>
-            <p>나에게 요청된 면불만 승인할 수 있습니다.</p>
+            <h2 className="mb-3">면학 불참 승인</h2>
+            <p>나에게 요청된 신청만 승인할 수 있습니다.</p>
             <Table>
                 <thead>
                     <tr>
@@ -157,10 +157,10 @@ function AcceptNs() {
             <Button variant='outline-primary w-fit' onClick={loadNs}>새로고침</Button>
             <p className='my-2'>{date}</p>
             {ws === 2 &&
-                <Alert variant='danger w-fit'>필수 파라미터가 없습니다.</Alert>
+                <Alert variant='danger w-fit'>문제가 발생했습니다.</Alert>
             }
             {ws === 3 &&
-                <Alert variant='danger w-fit'>수정하고자 하는 면불이 존재하지 않습니다.</Alert>
+                <Alert variant='danger w-fit'>해당 신청이 존재하지 않습니다.</Alert>
             }
         </Row>
     )

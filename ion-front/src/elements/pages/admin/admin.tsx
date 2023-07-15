@@ -35,7 +35,7 @@ function ManagementPage() {
                     <Tab eventKey='ionid' title='IonID'>
                         <IonIdManage/>
                     </Tab>
-                    <Tab eventKey='ns' title='면불 승인'>
+                    <Tab eventKey='ns' title='면학 불참'>
                         <NsManage/>
                     </Tab>
                 </Tabs>

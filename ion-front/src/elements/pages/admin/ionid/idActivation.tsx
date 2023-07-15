@@ -22,22 +22,16 @@ function IonIdActivation() {
             let msg;
             switch(err.response?.data['result']) {
                 case 1:
-                    msg = '작업을 위한 권한이 부족합니다.'
-                    break;
-                case 2:
-                    msg = '필수 파라미터가 없습니다.'
-                    break;
-                case 3:
-                    msg = '올바르지 않은 상태입니다.'
+                    msg = '권한이 부족합니다.'
                     break;
                 case 4:
-                    msg = 'IonID가 존재하지 않습니다.'
+                    msg = '해당 IonID가 없습니다.'
                     break;
                 case 5:
-                    msg = '자신은 수정할 수 없습니다.'
+                    msg = '자신은 상태는 수정할 수 없습니다.'
                     break;
                 default:
-                    msg = '작업을 처리하지 못했습니다.'
+                    msg = '문제가 발생했습니다.'
                     break;
             }
             setResult([1, msg])

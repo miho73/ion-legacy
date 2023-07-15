@@ -45,7 +45,7 @@ function QueryNs(props) {
             rr.push(
                 <tr>
                     <td colSpan={7}>
-                        <p className='my-2 fw-bold'>신청한 면불이 없습니다.</p>
+                        <p className='my-2 fw-bold'>면학 불참 신청이 없습니다.</p>
                     </td>
                 </tr>
             );
@@ -70,7 +70,7 @@ function QueryNs(props) {
     else {
         rr.push(
             <tr>
-                <td className='table-danger' colSpan={7}>면불 신청 리스트를 받지 못했습니다.</td>
+                <td className='table-danger' colSpan={7}>면학 불참 신청 목록을 받지 못했습니다.</td>
             </tr>
         )
     }
@@ -102,7 +102,7 @@ function QueryNs(props) {
     return (
         <>
         <Row className='my-3'>
-            <h2 className="mb-3">면불 확인</h2>
+            <h2 className="mb-3">면학 불참 확인</h2>
             <Form.Group as={Col}>
                 <InputGroup className='w-25 mb-3 mgw'>
                     <InputGroup.Text>학번</InputGroup.Text>
@@ -115,13 +115,13 @@ function QueryNs(props) {
                     <Button onClick={exe}>확인</Button>
                 </InputGroup>
                 { workError === 1 &&
-                    <Alert variant='danger w-fit'>작업에 필요한 권한이 없습니다.</Alert>
+                    <Alert variant='danger w-fit'>권한이 부족합니다.</Alert>
                 }
                 { workError === 2 &&
                     <Alert variant='danger w-fit'>해당 IonID가 없습니다.</Alert>
                 }
                 { workError === 3 &&
-                    <Alert variant='danger w-fit'>작업을 처리하지 못했습니다.</Alert>
+                    <Alert variant='danger w-fit'>문제가 발생했습니다.</Alert>
                 }
                 { workError === 0 &&
                     <Table className='m-auto'>
@@ -143,11 +143,11 @@ function QueryNs(props) {
         </Row>
         <Modal show={deleteModalShow} onHide={closeDeleteConfirm} dialogClassName='modal-dialog-centered'>
                 <Modal.Header closeButton>
-                    <Modal.Title>면불 신청 삭제</Modal.Title>
+                    <Modal.Title>면학 불참 신청 삭제</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {deleteResult === -1 &&
-                        <p>{scode}의 {targetNs[1]}에 신청된 면불 신청을 삭제할까요?</p>
+                        <p>{scode}의 {targetNs[1]}에 신청된 면학 불참 신청을 삭제할까요?</p>
                     }
                     {deleteResult === 1 &&
                         <p className='bg-danger text-white p-3 rounded'>삭제하지 못했습니다.</p>

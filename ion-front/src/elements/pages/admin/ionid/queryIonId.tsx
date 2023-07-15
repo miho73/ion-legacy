@@ -85,16 +85,13 @@ function QueryIonId() {
                 </Table>
             }
             { gs === 2 &&
-                <Alert variant="danger">작업을 위한 권한이 부족합니다.</Alert>
+                <Alert variant="danger">권한이 부족합니다.</Alert>
             }
             { gs === 3 &&
-                <Alert variant="danger">IonID가 존재하지 않습니다.</Alert>
+                <Alert variant="danger">해당 IonID가 없습니다.</Alert>
             }
-            { gs === 4 &&
-                <Alert variant="danger">작업을 처리하지 못했습니다.</Alert>
-            }
-            { gs === 5 &&
-                <Alert variant="danger">작업을 처리하지 못했습니다.</Alert>
+            { (gs === 4 || gs === 5) &&
+                <Alert variant="danger">문제가 발생했습니다.</Alert>
             }
         </Form>
         </>

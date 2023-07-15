@@ -77,7 +77,7 @@ function AddNs(props) {
 
     return (
         <Row className="my-3">
-            <h2 className="mb-3">면불 추가</h2>
+            <h2 className="mb-3">면학 불참 추가</h2>
             <Form>
                 <Row className='mt-1'>
                     <Form.Group as={Col} className='mb-3'>
@@ -123,23 +123,24 @@ function AddNs(props) {
                             <Button onClick={exe}>등록</Button>
                         </InputGroup>
                     </Form.Group>
+                    <p>이 면학 불참의 담당교사는 면학 불참을 추가한 본인이 됩니다.</p>
                     {workError === 0 &&
-                        <Alert variant="success">면불을 추가했습니다.</Alert>
+                        <Alert variant="success">면학 불참을 추가했습니다.</Alert>
                     }
                     {workError === 1 &&
-                        <Alert variant="danger">작업을 하기 위한 권한이 부족합니다.</Alert>
+                        <Alert variant="danger">권한이 부족합니다.</Alert>
                     }
                     {workError === 2 &&
                         <Alert variant="danger">요청이 올바르지 않습니다.</Alert>
                     }
                     {workError === 3 &&
-                        <Alert variant="danger">IonID를 찾지 못했습니다.</Alert>
+                        <Alert variant="danger">해당 IonID가 없습니다.</Alert>
                     }
                     {workError === 4 &&
-                        <Alert variant="danger">이미 해당 시간에 신청된 면불이 있습니다.</Alert>
+                        <Alert variant="danger">이미 해당 시간에 신청된 면학 불참이 있습니다.</Alert>
                     }
                     {workError === 6 &&
-                        <Alert variant="danger">면불을 추가하지 못했습니다.</Alert>
+                        <Alert variant="danger">문제가 발생했습니다.</Alert>
                     }
                 </Row>
             </Form>

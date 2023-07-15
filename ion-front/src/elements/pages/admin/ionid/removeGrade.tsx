@@ -37,16 +37,16 @@ function RemoveGrade() {
             <p className='my-1'>이 작업은 해당 IonID의 학년, 반, 번호 정보를 제거하여 학생으로 인식되지 않도록 합니다.</p>
             <p className='my-1 fst-italic fw-bold'>이 작업은 비가역적입니다.</p>
             {workState === 0 &&
-                <Alert variant='success'>작업에 성공했습니다.</Alert>
+                <Alert variant='success'>학년/반/번호를 삭제했습니다.</Alert>
             }
             {workState === 1 &&
-                <Alert variant='danger'>작업을 위한 권한이 부족합니다.</Alert>
+                <Alert variant='danger'>권한이 부족합니다.</Alert>
             }
             {workState === 2 &&
-                <Alert variant='danger'>IonID가 존재하지 않습니다.</Alert>
+                <Alert variant='danger'>해당 IonID가 없습니다..</Alert>
             }
             {workState === 3 &&
-                <Alert variant='danger'>작업을 처리하지 못했습니다.</Alert>
+                <Alert variant='danger'>문제가 발생했습니다.</Alert>
             }
         </>
     );

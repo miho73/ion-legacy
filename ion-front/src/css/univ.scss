@@ -64,6 +64,18 @@ table {
 .nst {
     width: 70% !important;
 }
+.bdf {
+    -webkit-backdrop-filter: brightness(40%);
+    backdrop-filter: brightness(40%);
+    padding: 4rem 6rem;
+    border-radius: 10px;
+    & a {
+        color: $light !important;
+        &:hover {
+            background-color: #8884;
+        }
+    }
+}
 @include media-breakpoint-down(lg) {
     table {
         width: 100% !important;
@@ -99,6 +111,15 @@ table {
 @include media-breakpoint-down(md) {
     .nst {
         width: 100% !important;
+    }
+}
+@include media-breakpoint-down(sm) {
+    .bdf {
+        padding: 2rem 3rem;
+        width: 80%;
+        ul {
+            flex-direction: column;
+        }
     }
 }
 
@@ -173,15 +194,13 @@ table {
         font-size: 0.9rem;
     }
 }
-.bdf {
-    -webkit-backdrop-filter: brightness(40%);
-    backdrop-filter: brightness(40%);
-    padding: 4rem 6rem;
-    border-radius: 10px;
-    & a {
-        color: $light !important;
-        &:hover {
-            background-color: #8884;
+.nav {
+    a {
+        text-align: center;
+        img {
+            max-height: 64px;
+            width: auto;
+            height: auto;
         }
     }
 }
