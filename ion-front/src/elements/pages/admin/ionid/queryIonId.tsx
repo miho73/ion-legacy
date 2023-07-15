@@ -43,7 +43,7 @@ function QueryIonId() {
 
     return (
         <>
-        <Form className="w-25">
+        <Form className="w-25 mgw">
             <InputGroup className="mb-3">
                 <InputGroup.Text>IonID</InputGroup.Text>
                 <Form.Control

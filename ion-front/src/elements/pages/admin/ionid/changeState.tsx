@@ -62,7 +62,7 @@ function IonIdChangPrivilege(props) {
     }
 
     return (
-        <Form className="w-50">
+        <Form className="w-50 mgw">
             <Form.Group className="mb-2">
                 <Form.Control
                     type="text"

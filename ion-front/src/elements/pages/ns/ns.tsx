@@ -329,7 +329,7 @@ function Ns() {
                             />
                         </Form.Group>
                         <Form.Group as={Col} className='mb-3'>
-                            <Form.Label htmlFor='reason' className='form-label'>신청사유</Form.Label>
+                            <Form.Label htmlFor='reason' className='form-label'>신청</Form.Label>
                             <Form.Control
                                 type='text'
                                 isInvalid={getBit(formState, 3) === 1}

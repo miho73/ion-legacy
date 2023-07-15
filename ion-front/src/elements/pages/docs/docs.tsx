@@ -14,7 +14,14 @@ const DOC_REGISTRY = {
 function Docs() {
     const curl = window.location.href;
     const ptr = curl.split('/');
-    const docCode = ptr[ptr.length - 1]
+    if(ptr.length === 4) {
+        return (
+            <h1>Ion Documentation</h1>
+        );
+    }
+    const docCode = ptr[ptr.length - 1];
+    if(docCode === undefined) {
+    }
 
     return (
         <>

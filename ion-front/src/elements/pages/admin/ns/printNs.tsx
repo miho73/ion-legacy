@@ -74,7 +74,7 @@ function PrintNs() {
     return (
         <Row className='my-3'>
             <h2>면불 목록 출력</h2>
-            <InputGroup className='w-25'>
+            <InputGroup className='w-25 mgw'>
                 <FormSelect value={grade} onChange={e => setGrade(Number.parseInt(e.target.value))}>
                     <option value={1}>1학년</option>
                     <option value={2}>2학년</option>

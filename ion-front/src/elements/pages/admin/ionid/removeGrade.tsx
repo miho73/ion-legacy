@@ -29,7 +29,7 @@ function RemoveGrade() {
 
     return (
         <>
-            <InputGroup className='w-25'>
+            <InputGroup className='w-25 mgw'>
                 <InputGroup.Text>IonID</InputGroup.Text>
                 <FormControl type='text' placeholder='IonID' value={ionId} onChange={e => setIonId(e.target.value)}/>
                 <Button onClick={exe}>확인</Button>

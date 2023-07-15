@@ -92,6 +92,14 @@ table {
     .nst {
         width: 90% !important;
     }
+    .mgw {
+        width: 100% !important;
+    }
+}
+@include media-breakpoint-down(md) {
+    .nst {
+        width: 100% !important;
+    }
 }
 
 .lns-seat {

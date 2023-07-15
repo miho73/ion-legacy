@@ -104,7 +104,7 @@ function QueryNs(props) {
         <Row className='my-3'>
             <h2 className="mb-3">면불 확인</h2>
             <Form.Group as={Col}>
-                <InputGroup className='w-25 mb-3'>
+                <InputGroup className='w-25 mb-3 mgw'>
                     <InputGroup.Text>학번</InputGroup.Text>
                     <Form.Control
                         type='number'

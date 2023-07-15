@@ -43,7 +43,7 @@ function LoggedInIndex() {
         <>
             <main className='d-flex flex-column justify-content-center align-items-center h-100 text-center'>
                 <div className='bdf'>
-                    <h1 className='mb-0 text-white'>Hi {user.name}</h1>
+                    <h1 className='mb-3 text-white'>Hi {user.name}</h1>
                     <ul className="nav col-md-auto justify-content-center mb-md-0 gap-2">
                         <li><Link to="/ns" className="nav-link px-2 rounded fs-5">면불 신청</Link></li>
                         {user.priv > 1 &&

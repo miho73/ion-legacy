@@ -45,7 +45,7 @@ function IonIdActivation() {
     }
 
     return (
-        <Form className="w-50">
+        <Form className="w-50 mgw">
             <InputGroup className="mb-3">
                 <Form.Control
                     type="text"

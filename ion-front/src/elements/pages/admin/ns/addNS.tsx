@@ -100,7 +100,7 @@ function AddNs(props) {
                         />
                     </Form.Group>
                     <Form.Group as={Col} className='mb-3'>
-                        <Form.Label htmlFor='reason' className='form-label'>신청사유</Form.Label>
+                        <Form.Label htmlFor='reason' className='form-label'>사유</Form.Label>
                         <Form.Control
                             type='text'
                             isInvalid={getBit(formState, 3) === 1}
@@ -112,7 +112,7 @@ function AddNs(props) {
                 </Row>
                 <Row>
                     <Form.Group as={Col} className="mb-3">
-                        <InputGroup className='w-25'>
+                        <InputGroup className='w-25 mgw'>
                             <InputGroup.Text>학번</InputGroup.Text>
                             <Form.Control
                                 type='number'
