@@ -34,6 +34,7 @@ nav {
 }
 
 .mct {
+    overflow-x: hidden;
     overflow-y: auto;
 }
 
@@ -76,6 +77,16 @@ table {
         }
     }
 }
+.nav {
+    a {
+        text-align: center;
+        img {
+            max-height: 64px;
+            width: auto;
+            height: auto;
+        }
+    }
+}
 @include media-breakpoint-down(lg) {
     table {
         width: 100% !important;
@@ -88,17 +99,24 @@ table {
         height: 80px;
         flex-direction: row;
         align-items: center;
-        padding: 0.5rem !important;
-        gap: 50px;
+        justify-content: space-between;
+        padding: 0.7rem !important;
         a {
-            width: 20%;
+            width: 20% !important;
+            img {
+                height: 55px !important;
+            }
         }
         ul {
             flex-direction: row;
+            justify-content: end;
             width: 50%;
             li a {
-                width: auto;
+                width: 100% !important;
             }
+        }
+        hr {
+            display: none;
         }
     }
     .nst {
@@ -111,6 +129,16 @@ table {
 @include media-breakpoint-down(md) {
     .nst {
         width: 100% !important;
+    }
+    .mct {
+        padding: 1rem 12px !important;
+    }
+    .lnst {
+        margin: 1rem 0 !important;
+    }
+    .stack-flow {
+        flex-direction: column;
+        gap: 0 !important;
     }
 }
 @include media-breakpoint-down(sm) {
@@ -192,15 +220,5 @@ table {
         padding: 0.3rem 0.6rem;
         border-radius: 5px;
         font-size: 0.9rem;
-    }
-}
-.nav {
-    a {
-        text-align: center;
-        img {
-            max-height: 64px;
-            width: auto;
-            height: auto;
-        }
     }
 }

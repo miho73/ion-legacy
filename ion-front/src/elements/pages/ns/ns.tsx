@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import {isLogin} from '../../service/auth'
 import CannotAuthorize from '../auth/cannotAuth';
 
-import { Alert, Button, Col, Container, Form, Modal, Row, Table } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Form, Modal, Row, Stack, Table } from 'react-bootstrap';
 import NsState from './nsState';
 
 function Ns() {
@@ -293,51 +293,57 @@ function Ns() {
                 <h4>면불 신청</h4>
                 <Form className='mx-3'>
                     <Row className='mt-2'>
-                        <Form.Group as={Col} className='mb-3'>
-                            <Form.Label htmlFor='time' className='form-label'>면학</Form.Label>
-                            <Form.Select
-                                isInvalid={getBit(formState, 0) === 1}
-                                aria-label='면학 시간' 
-                                disabled={working} 
-                                value={revTime}
-                                onChange={e => setRevTime(Number.parseInt(e.target.value))}>
-                                    
-                                <option value={-1}>면학 시간</option>
-                                <option value={0}>8면</option>
-                                <option value={1}>1면</option>
-                                <option value={2}>2면</option>
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group as={Col} className='mb-3'>
-                            <Form.Label htmlFor='place' className='form-label'>장소</Form.Label>
-                            <Form.Control
-                                type='text'
-                                isInvalid={getBit(formState, 1) === 1}
-                                value={revPlace}
-                                disabled={working}
-                                onChange={e => setRevPlace(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} className='mb-3'>
-                            <Form.Label htmlFor='superviser' className='form-label'>담당교사</Form.Label>
-                            <Form.Control
-                                type='text'
-                                isInvalid={getBit(formState, 2) === 1}
-                                value={revSup}
-                                disabled={working}
-                                onChange={e => setRevSup(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Form.Group as={Col} className='mb-3'>
-                            <Form.Label htmlFor='reason' className='form-label'>신청</Form.Label>
-                            <Form.Control
-                                type='text'
-                                isInvalid={getBit(formState, 3) === 1}
-                                value={revRes}
-                                disabled={working}
-                                onChange={e => setRevRes(e.target.value)}
-                            />
-                        </Form.Group>
+                        <Stack direction='horizontal' gap={4} className='stack-flow'>
+                            <Stack direction='horizontal' gap={4}>
+                                <Form.Group as={Col} className='mb-3'>
+                                    <Form.Label htmlFor='time' className='form-label'>면학</Form.Label>
+                                    <Form.Select
+                                        isInvalid={getBit(formState, 0) === 1}
+                                        aria-label='면학 시간' 
+                                        disabled={working} 
+                                        value={revTime}
+                                        onChange={e => setRevTime(Number.parseInt(e.target.value))}>
+
+                                        <option value={-1}>면학 시간</option>
+                                        <option value={0}>8면</option>
+                                        <option value={1}>1면</option>
+                                        <option value={2}>2면</option>
+                                    </Form.Select>
+                                </Form.Group>
+                                <Form.Group as={Col} className='mb-3'>
+                                    <Form.Label htmlFor='place' className='form-label'>장소</Form.Label>
+                                    <Form.Control
+                                        type='text'
+                                        isInvalid={getBit(formState, 1) === 1}
+                                        value={revPlace}
+                                        disabled={working}
+                                        onChange={e => setRevPlace(e.target.value)}
+                                    />
+                                </Form.Group>
+                            </Stack>
+                            <Stack direction='horizontal' gap={4}>
+                                <Form.Group as={Col} className='mb-3'>
+                                    <Form.Label htmlFor='superviser' className='form-label'>담당교사</Form.Label>
+                                    <Form.Control
+                                        type='text'
+                                        isInvalid={getBit(formState, 2) === 1}
+                                        value={revSup}
+                                        disabled={working}
+                                        onChange={e => setRevSup(e.target.value)}
+                                    />
+                                </Form.Group>
+                                <Form.Group as={Col} className='mb-3'>
+                                    <Form.Label htmlFor='reason' className='form-label'>신청 사유</Form.Label>
+                                    <Form.Control
+                                        type='text'
+                                        isInvalid={getBit(formState, 3) === 1}
+                                        value={revRes}
+                                        disabled={working}
+                                        onChange={e => setRevRes(e.target.value)}
+                                    />
+                                </Form.Group>
+                            </Stack>
+                        </Stack>
                     </Row>
                     <Row className='mx-3 mb-3'>
                         <Form.Check
@@ -359,7 +365,7 @@ function Ns() {
                         />
                     </Row>
                     {lnsRoomRequired &&
-                        <div className='mx-4 my-3 border p-3'>
+                        <div className='mx-4 my-3 border p-3 lnst'>
                             <h5>노면실 자리 예약</h5>
                             {revTime === -1 &&
                                 <p className='my-0'>면불 시간을 선택해주세요.</p>
@@ -376,7 +382,7 @@ function Ns() {
                         </div>
                     }
                     <Row className='mx-1 my-4'>
-                        <Button className='w-auto' disabled={working} onClick={submit}>제출</Button>
+                        <Button className='w-auto' disabled={working} onClick={submit}>신청</Button>
                     </Row>
                     {sErrorState === 0 &&
                         <Alert variant='success'>
