@@ -7,10 +7,11 @@ import ErrorPage from '../etc/error';
 import axios from 'axios';
 
 function LoggedInIndex() {
-    const [user, setUser] = useState({name: '', id: '', priv: 2});
+    const [user, setUser] = useState({name: '', id: '', priv: 0});
     const [workState, setWorkState] = useState(-1);
-    const [picture, setPicture] = useState({url: 'https://apod.nasa.gov/apod/image/1708/PerseidsoverPyreneesGraffand1024.jpg', type: 'image', title: 'Perseids over the Pyrénées'});
+    const [picture, setPicture] = useState({url: 'https://apod.nasa.gov/apod/image/1708/PerseidsoverPyreneesGraffand1024.jpg', type: 'image', title: 'Perseids over the Pyrénées', exp: `This mountain and night skyscape stretches across the French Pyrenees National Park on August 12, near the peak of the annual Perseid meteor shower. The multi-exposure panoramic view was composed from the Col d'Aubisque, a mountain pass, about an hour before the bright gibbous moon rose. Centered is a misty valley and lights from the region's Gourette ski station toward the south. Taken over the following hour, frames capturing some of the night's long bright perseid meteors were aligned against the backdrop of stars and Milky Way.`, cpy: 'Jean-Francois\nGraffand'});
     const [apodSet, setApodSet] = useState(false);
+    const [apodDetail, setApodDetail] = useState(false);
 
     useEffect(() => {
         axios.get('/user/api/idx-iden')
@@ -41,6 +42,25 @@ function LoggedInIndex() {
 
     return (
         <>
+            {picture.type === 'image' && apodSet &&
+                <div className='w-100 h-100 pict' style={{backgroundImage: ('url('+picture.url+')')}}>
+                    <div onClick={() => setApodDetail(!apodDetail)} title='Details'>
+                        <p className='m-0 tit'>{picture.title}</p>
+                        { apodDetail &&
+                            <>
+                                <hr className='my-2'/>
+                                <p className='m-0'>{picture.exp}</p>
+                                {picture.cpy !== '' &&
+                                    <p className='my-1'>Copyright: {picture.cpy}</p>
+                                }
+                            </>
+                        }
+                    </div>
+                </div>
+            }
+            { !apodSet &&
+                <div className='w-100 h-100 pict'/>
+            }
             <main className='d-flex flex-column justify-content-center align-items-center h-100 text-center'>
                 <div className='bdf'>
                     <h1 className='mb-3 text-white'>Hi {user.name}</h1>
@@ -53,14 +73,6 @@ function LoggedInIndex() {
                     </ul>
                 </div>
             </main>
-            {picture.type === 'image' && apodSet &&
-                <div className='w-100 h-100 pict' style={{backgroundImage: ('url('+picture.url+')')}}>
-                    <p className='m-0 fs-6'>{picture.title}</p>
-                </div>
-            }
-            { !apodSet &&
-                <div className='w-100 h-100 pict'/>
-            }
         </>
     );
 }

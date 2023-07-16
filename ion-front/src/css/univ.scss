@@ -86,6 +86,41 @@ table {
             height: auto;
         }
     }
+    z-index: 1;
+}
+.pict {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #333334;
+    z-index: 0;
+    div {
+        cursor: pointer;
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        color: white;
+        background-color: #0a0a0a50;
+        max-width: 700px;
+        padding: 0.3rem 0.6rem;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        -webkit-user-select: none;
+        user-select: none;
+        -webkit-transition: background-color .2s linear;
+        -moz-transition: background-color .1s linear;
+        -o-transition: background-color .1s linear;
+        transition: background-color .1s linear;
+        &:hover {
+            background-color: #0005;
+        }
+        .tit {
+            font-size: 0.9rem;
+        };
+    }
 }
 @include media-breakpoint-down(lg) {
     table {
@@ -149,6 +184,13 @@ table {
             flex-direction: column;
         }
     }
+    .pict div {
+        max-width: 75%;
+        font-size: 0.6rem;
+        .tit {
+            font-size: 0.8rem;
+        }
+    }
 }
 
 .lns-seat {
@@ -189,36 +231,4 @@ table {
 }
 .nav-link:hover {
     background-color: $gray-400;
-}
-.home-lnk {
-    width: 200px;
-    height: 70px;
-    -webkit-transition: box-shadow .2s linear;
-    -moz-transition: box-shadow .2s linear;
-    -o-transition: box-shadow .2s linear;
-    transition: box-shadow .2s linear;
-    &:hover {
-        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
-    }
-}
-
-.pict {
-    position: absolute;
-    left: 0;
-    top: 0;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    z-index: -1;
-    background-color: #333334;
-    p {
-        position: absolute;
-        bottom: 10px;
-        right: 10px;
-        color: white;
-        background-color: #0005;
-        padding: 0.3rem 0.6rem;
-        border-radius: 5px;
-        font-size: 0.9rem;
-    }
 }
