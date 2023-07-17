@@ -48,7 +48,7 @@ function SignupPage() {
             if(st === 0 && inRange(0, 2, page)) setPage(page);
         }
         else {
-            if(getBit(st, 4)) {
+            if(getBit(st, 4) || getBit(st, 7) || getBit(st, 9)) {
                 setFormState(st);
             }
             else {

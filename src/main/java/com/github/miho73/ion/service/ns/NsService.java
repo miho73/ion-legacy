@@ -181,6 +181,6 @@ public class NsService {
     }
 
     public List<NsRecord> findByUuid(int uuid) {
-        return nsRepository.findByUuidAndNsDateAndNsStateOrderByNsTimeAsc(uuid, LocalDate.now(), NsRecord.NS_STATE.APPROVED);
+        return nsRepository.findByUuidAndNsDateOrderByNsTimeAsc(uuid, LocalDate.now());
     }
 }

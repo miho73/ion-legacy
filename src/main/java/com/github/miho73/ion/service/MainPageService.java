@@ -1,6 +1,7 @@
 package com.github.miho73.ion.service;
 
 import com.github.miho73.ion.exceptions.IonException;
+import com.github.miho73.ion.utils.Requests;
 import com.github.miho73.ion.utils.RestResponse;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
@@ -47,22 +48,7 @@ public class MainPageService {
         }
 
         try {
-            URL url = new URL("https://api.nasa.gov/planetary/apod?thumbs=true&api_key="+APOD_KEY);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestMethod("GET");
-
-            int status = connection.getResponseCode();
-            if(status != 200) throw new IOException();
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream()));
-            String inputLine;
-            StringBuilder content = new StringBuilder();
-            while ((inputLine = in.readLine()) != null) {
-                content.append(inputLine);
-            }
-            in.close();
-            connection.disconnect();
-            String res = content.toString();
+            String res = Requests.sendGetRequest("https://api.nasa.gov/planetary/apod?thumbs=true&api_key="+APOD_KEY);
             JSONObject r = (JSONObject) new JSONParser().parse(res);
             JSONObject k = new JSONObject();
             k.put("url", r.get("url"));

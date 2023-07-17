@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { Alert, Button, Container, FormSelect, InputGroup, Row, Table } from 'react-bootstrap';
+import { Alert, Button, Container, Form, FormCheck, FormGroup, FormSelect, InputGroup, Row, Table } from 'react-bootstrap';
 import axios from 'axios';
 import font from '../../../types/SpoqaHanSansNeo-normal';
 
@@ -9,6 +9,7 @@ function PrintNs() {
     const [data, setData] = useState<any[]>([]);
     const [grade, setGrade] = useState(1);
     const [date, setDate] = useState('d');
+    const [includeDenied, setIncludeDenied ] = useState(false);
     const [workState, setWorkState] = useState(-1);
 
     function exportPdf() {
@@ -63,9 +64,50 @@ function PrintNs() {
                 <tr>
                     <td>{e.code}</td>
                     <td>{e.name}</td>
-                    <td>{e.n8}</td>
-                    <td>{e.n1}</td>
-                    <td>{e.n2}</td>
+                    { includeDenied &&
+                        <>
+                            { e.n8 !== null &&
+                                <td className={e.n8.a ? 'table-success' : 'table-danger'}>{e.n8.c}</td>
+                            }
+                            { e.n8 === null &&
+                                <td></td>
+                            }
+                            { e.n1 !== null &&
+                                <td className={e.n1.a ? 'table-success' : 'table-danger'}>{e.n1.c}</td>
+                            }
+                            { e.n1 === null &&
+                                <td></td>
+                            }
+                            { e.n2 !== null &&
+                                <td className={e.n2.a ? 'table-success' : 'table-danger'}>{e.n2.c}</td>
+                            }
+                            { e.n2 === null &&
+                                <td></td>
+                            }
+                        </>
+                    }
+                    { !includeDenied &&
+                        <>
+                            { (e.n8 !== null && e.n8.a) &&
+                                <td>{e.n8.c}</td>
+                            }
+                            { (e.n8 === null || !e.n8.a) &&
+                                <td></td>
+                            }
+                            { (e.n1 !== null && e.n1.a) &&
+                                <td>{e.n1.c}</td>
+                            }
+                            { (e.n1 === null || !e.n1.a) &&
+                                <td></td>
+                            }
+                            { (e.n2 !== null && e.n2.a) &&
+                                <td>{e.n2.c}</td>
+                            }
+                            { (e.n2 === null || !e.n2.a) &&
+                                <td></td>
+                            }
+                        </>
+                    }
                 </tr>
             )
         });
@@ -73,16 +115,25 @@ function PrintNs() {
 
     return (
         <Row className='my-3'>
-            <h2>면학 불참 목록 출력</h2>
-            <InputGroup className='w-25 mgw'>
-                <FormSelect value={grade} onChange={e => setGrade(Number.parseInt(e.target.value))}>
-                    <option value={1}>1학년</option>
-                    <option value={2}>2학년</option>
-                    <option value={3}>3학년</option>
-                </FormSelect>
-                <Button onClick={createTable}>로드</Button>
-                <Button onClick={exportPdf} disabled={workState !== 0}>인쇄</Button>
-            </InputGroup>
+            <h2>면학 불참 목록</h2>
+            <FormGroup>
+                <InputGroup className='w-25 mgw'>
+                    <FormSelect value={grade} onChange={e => setGrade(Number.parseInt(e.target.value))}>
+                        <option value={1}>1학년</option>
+                        <option value={2}>2학년</option>
+                        <option value={3}>3학년</option>
+                    </FormSelect>
+                    <Button onClick={createTable}>로드</Button>
+                    <Button onClick={exportPdf} disabled={workState !== 0 || includeDenied}>인쇄</Button>
+                </InputGroup>
+                <Form.Check
+                    label='승인되지 않은 요청 포함'
+                    className='mt-1'
+                    id='drq'
+                    checked={includeDenied}
+                    onChange={e => setIncludeDenied(e.target.checked)}
+                />
+            </FormGroup>
             <Container className='my-3'>
                 { workState === 0 &&
                     <>

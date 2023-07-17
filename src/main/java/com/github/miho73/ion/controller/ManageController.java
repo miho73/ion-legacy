@@ -466,13 +466,17 @@ public class ManageController {
             element.put("name", e.getName());
             records.forEach(s -> {
                 String str = s.getNsPlace()+"/"+s.getNsSupervisor()+"/"+s.getNsReason();
-                if(s.getNsTime() == NsRecord.NS_TIME.N8) element.put("n8", str);
-                if(s.getNsTime() == NsRecord.NS_TIME.N1) element.put("n1", str);
-                if(s.getNsTime() == NsRecord.NS_TIME.N2) element.put("n2", str);
+                boolean aprv = ( s.getNsState() == NsRecord.NS_STATE.APPROVED );
+                JSONObject pt = new JSONObject();
+                pt.put("c", str);
+                pt.put("a", aprv);
+                if(s.getNsTime() == NsRecord.NS_TIME.N8) element.put("n8", pt);
+                if(s.getNsTime() == NsRecord.NS_TIME.N1) element.put("n1", pt);
+                if(s.getNsTime() == NsRecord.NS_TIME.N2) element.put("n2", pt);
             });
-            if(!element.containsKey("n8")) element.put("n8", "");
-            if(!element.containsKey("n1")) element.put("n1", "");
-            if(!element.containsKey("n2")) element.put("n2", "");
+            if(!element.containsKey("n8")) element.put("n8", null);
+            if(!element.containsKey("n1")) element.put("n1", null);
+            if(!element.containsKey("n2")) element.put("n2", null);
             ret.add(element);
         });
 
