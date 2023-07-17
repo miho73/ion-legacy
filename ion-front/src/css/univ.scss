@@ -232,3 +232,12 @@ table {
 .nav-link:hover {
     background-color: $gray-400;
 }
+
+.docs {
+    h3 {
+        margin-top: 20px;
+    }
+    p, li {
+        margin: 5px 0;
+    }
+}

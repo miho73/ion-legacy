@@ -27,7 +27,9 @@ function Docs() {
         <>
             <h1>{DOC_REGISTRY[docCode][0]}</h1>
             <hr/>
-            {DOC_REGISTRY[docCode][1]}
+            <div className='nst'>
+                {DOC_REGISTRY[docCode][1]}
+            </div>
         </>
     )
 }
