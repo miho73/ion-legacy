@@ -23,10 +23,11 @@ public class MainController {
 
     @GetMapping({
             "/",
-            "/auth/signup", "/auth/login",
+            "/auth/signup",
             "/docs/**",
             "/ns",
-            "/manage"
+            "/manage",
+            "/etc/temperature/hangang", "/etc/temperature/incheon"
     })
     public String index() {
         return "index";

@@ -1,5 +1,8 @@
 server:
   servlet:
+    encoding:
+      charset: UTF-8
+      force: true
     session:
       cookie:
         name: ion-session
@@ -48,3 +51,6 @@ spring:
 ion:
   apod:
     api-key: ENC(3QZkAH0Ix/yZcu/PqcH7BfozuxWLuYN6Caa1uR+8xQMiC9TccN+AGxoF4ThpgKLTOFyon99g5ZuNXTokAJ8BIcciGNnsR6VFf97YDUNLiSc=)
+  temperature:
+    seoul-api-key: ENC(qqjBTl4Bk0scIg3TaT3TgZc+pulzthBxFqB1Tvo6ZNjwd2z12uMjCvmy93mTDU7L73cnDmE4VgKJQyFhsoC6Tg==)
+    incheon-api-key: ENC(1ukRQaT8hPj1GhDYJYvn15aXXwc7AcJPmIOX4xwNfWlHawzgaMOtV7kZBWp+QgSyxCEF2afldDb5zPj69ciiug==)
