@@ -146,7 +146,7 @@ public class NsService {
     }
 
     public JSONArray getNsBySupervisor(String sname) {
-        List<NsRecord> rec = nsRepository.findByNsDateAndNsSupervisorOrderByNsStateAsc(LocalDate.now(), sname);
+        List<NsRecord> rec = nsRepository.findByNsDateAndNsSupervisorContainsOrderByNsStateAsc(LocalDate.now(), sname);
         JSONArray lst = new JSONArray();
         rec.forEach(r -> {
             Optional<User> pla = userRepository.findById(r.getUuid());
