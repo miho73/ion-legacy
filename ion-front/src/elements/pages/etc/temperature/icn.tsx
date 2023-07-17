@@ -23,7 +23,7 @@ function Incheon() {
     }, []);
 
     return (
-        <div className="cover hangang d-flex align-items-center" style={{backgroundImage: 'url("/assets/icn.jpg")'}}>
+        <div className="cover hangang d-flex align-items-center" style={{backgroundImage: 'url("/static/temp/icn.jpg")'}}>
             <div className="w-50 m-auto">
                 {set &&
                     <>

@@ -23,7 +23,7 @@ function Hangang() {
     }, []);
 
     return (
-        <div className="cover hangang d-flex align-items-center" style={{backgroundImage: 'url("/assets/seoul.jpg")'}}>
+        <div className="cover hangang d-flex align-items-center" style={{backgroundImage: 'url("/static/temp/seoul.jpg")'}}>
             <div className="w-50 m-auto">
                 {set &&
                     <>
