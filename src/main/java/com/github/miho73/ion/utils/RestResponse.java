@@ -1,7 +1,6 @@
 package com.github.miho73.ion.utils;
 
-import net.minidev.json.JSONObject;
-import net.minidev.json.JSONStyle;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -11,12 +10,12 @@ public class RestResponse {
         JSONObject res = new JSONObject();
         res.put("status", status.value());
         res.put("result", result);
-        return res.toJSONString(JSONStyle.LT_COMPRESS);
+        return res.toString();
     }
 
     public static String restResponse(HttpStatus status) {
         JSONObject res = new JSONObject();
         res.put("status", status.value());
-        return res.toJSONString(JSONStyle.LT_COMPRESS);
+        return res.toString();
     }
 }

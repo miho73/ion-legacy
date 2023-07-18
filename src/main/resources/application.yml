@@ -54,3 +54,5 @@ ion:
   temperature:
     seoul-api-key: ENC(qqjBTl4Bk0scIg3TaT3TgZc+pulzthBxFqB1Tvo6ZNjwd2z12uMjCvmy93mTDU7L73cnDmE4VgKJQyFhsoC6Tg==)
     incheon-api-key: ENC(1ukRQaT8hPj1GhDYJYvn15aXXwc7AcJPmIOX4xwNfWlHawzgaMOtV7kZBWp+QgSyxCEF2afldDb5zPj69ciiug==)
+  meal:
+    api-key: ENC(J1J9FrDCTjbzn3DKq5a3XxPTDwurIXTXTvNz1PQ863zGvPJnpBsQUTkcmtrG21nisD5M68vYDIZ2kilAtZOJyIf5AKyH/DJwRPiCyiAp85A=)

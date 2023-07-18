@@ -1,26 +1,13 @@
 package com.github.miho73.ion.service;
 
-import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.utils.Requests;
-import com.github.miho73.ion.utils.RestResponse;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
-import net.minidev.json.parser.ParseException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.time.LocalDate;
 
 @Service
@@ -49,13 +36,13 @@ public class MainPageService {
 
         try {
             String res = Requests.sendGetRequest("https://api.nasa.gov/planetary/apod?thumbs=true&api_key="+APOD_KEY);
-            JSONObject r = (JSONObject) new JSONParser().parse(res);
+            JSONObject r = new JSONObject(res);
             JSONObject k = new JSONObject();
             k.put("url", r.get("url"));
             k.put("type", r.get("media_type"));
             k.put("title", r.get("title"));
             k.put("exp", r.get("explanation"));
-            k.put("cpy", r.getOrDefault("copyright", ""));
+            k.put("cpy", r.has("copyright") ? r.get("copyright") : "");
             image = k;
             pictureDate = LocalDate.now();
             log.info("updated APOD for "+pictureDate);
@@ -63,8 +50,6 @@ public class MainPageService {
         } catch (IOException e) {
             log.error("Failed to update APOD picture", e);
             return fallBack;
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
         }
     }
 }

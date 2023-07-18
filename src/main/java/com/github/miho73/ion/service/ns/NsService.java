@@ -8,8 +8,8 @@ import com.github.miho73.ion.repository.LnsRepository;
 import com.github.miho73.ion.repository.NsRepository;
 import com.github.miho73.ion.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,7 +71,7 @@ public class NsService {
                 if(lr.isEmpty()) ele.put("lnsSeat", "No Record");
                 else ele.put("lnsSeat", lr.get().getSeat());
             }
-            ret.add(ele);
+            ret.put(ele);
         }
         return ret;
     }
@@ -134,14 +134,14 @@ public class NsService {
                 rev.put("name", user.getName());
                 rev.put("scode", user.getGrade()*1000+user.getClas()*100+user.getScode());
                 rev.put("sn", e.getSeat());
-                byNsTime[NsRecord.nsTimeToInt(e.getLnsTime())].add(rev);
+                byNsTime[NsRecord.nsTimeToInt(e.getLnsTime())].put(rev);
             }
         });
 
         JSONArray ret = new JSONArray();
-        ret.add(byNsTime[0]);
-        ret.add(byNsTime[1]);
-        ret.add(byNsTime[2]);
+        ret.put(byNsTime[0]);
+        ret.put(byNsTime[1]);
+        ret.put(byNsTime[2]);
         return ret;
     }
 
@@ -166,7 +166,7 @@ public class NsService {
             else {
                 e.put("v", false);
             }
-            lst.add(e);
+            lst.put(e);
         });
         return lst;
     }

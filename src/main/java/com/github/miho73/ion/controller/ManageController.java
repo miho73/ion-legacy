@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -474,10 +474,10 @@ public class ManageController {
                 if(s.getNsTime() == NsRecord.NS_TIME.N1) element.put("n1", pt);
                 if(s.getNsTime() == NsRecord.NS_TIME.N2) element.put("n2", pt);
             });
-            if(!element.containsKey("n8")) element.put("n8", null);
-            if(!element.containsKey("n1")) element.put("n1", null);
-            if(!element.containsKey("n2")) element.put("n2", null);
-            ret.add(element);
+            if(!element.has("n8")) element.put("n8", JSONObject.NULL);
+            if(!element.has("n1")) element.put("n1", JSONObject.NULL);
+            if(!element.has("n2")) element.put("n2", JSONObject.NULL);
+            ret.put(element);
         });
 
         JSONObject reply = new JSONObject();
