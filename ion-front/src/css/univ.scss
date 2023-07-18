@@ -122,6 +122,23 @@ table {
         };
     }
 }
+.hangang {
+    background-color: #333;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #f2f2f2;
+    width: 50%;
+    .tmp {
+        font-size: 5rem;
+        font-weight: 900;
+    }
+    .quote {
+        font-size: 1.7rem;
+        font-weight: 400;
+    }
+}
+
 @include media-breakpoint-down(lg) {
     table {
         width: 100% !important;
@@ -174,6 +191,9 @@ table {
     .stack-flow {
         flex-direction: column;
         gap: 0 !important;
+    }
+    .hangang div {
+        width: 80%;
     }
 }
 @include media-breakpoint-down(sm) {
@@ -248,19 +268,4 @@ table {
     z-index: 1;
     width: 100%;
     height: 100%;
-}
-.hangang {
-    background-color: #333;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
-    color: #f2f2f2;
-    .tmp {
-        font-size: 5rem;
-        font-weight: 900;
-    }
-    .quote {
-        font-size: 1.7rem;
-        font-weight: 400;
-    }
 }

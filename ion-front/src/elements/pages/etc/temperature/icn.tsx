@@ -35,7 +35,7 @@ function Incheon() {
                 }
                 {!set &&
                     <>
-                        <p className="tmp mb-0">불러오는중</p>
+                        <p className="quote">불러오는중</p>
                     </>
                 }
             </div>

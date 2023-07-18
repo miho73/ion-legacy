@@ -24,7 +24,7 @@ function Hangang() {
 
     return (
         <div className="cover hangang d-flex align-items-center" style={{backgroundImage: 'url("/static/temp/seoul.jpg")'}}>
-            <div className="w-50 m-auto">
+            <div className="m-auto">
                 {set &&
                     <>
                         <p className="tmp mb-0">{data.tem}&deg;C</p>
@@ -35,7 +35,7 @@ function Hangang() {
                 }
                 {!set &&
                     <>
-                        <p className="tmp mb-0">불러오는중</p>
+                        <p className="quote">불러오는중</p>
                     </>
                 }
             </div>
