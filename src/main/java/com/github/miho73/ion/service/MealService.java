@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -52,6 +54,7 @@ public class MealService {
             JSONObject rex = new JSONObject();
             rex.put("data", ret);
             rex.put("ok", true);
+            log.info("Meal data was updated");
             return rex;
         } catch (IOException | JSONException e) {
             log.error("Failed to update meal", e);

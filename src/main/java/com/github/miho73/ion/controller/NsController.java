@@ -123,6 +123,7 @@ public class NsController {
 
             nsService.saveNsRequest(uuid, nsTime, lnsReq, lnsReqUid, body);
 
+            log.info("created ns req uuid="+uuid+", time="+nsTime);
             response.setStatus(201);
             return RestResponse.restResponse(HttpStatus.CREATED, 0);
         } catch (IonException e) {
@@ -156,6 +157,7 @@ public class NsController {
 
             if(nsService.existsNsByUuid(uuid, time)) {
                 nsService.deleteNs(uuid, time);
+                log.info("deleted ns req uuid="+uuid+", time="+time);
                 return RestResponse.restResponse(HttpStatus.OK, 0);
             }
             else {

@@ -59,3 +59,6 @@ ion:
     incheon-api-key: ENC(vtYujzHczjPoOSznDwirL0NC/LoI5pWu6yeuej0NxPhLrAZCgGxcskt7a7+jqs+sC74VfCTCs/2JUohACDgU8A==)
   meal:
     api-key: ENC(tFx5sxSAI0KT9JAT5xfUqdfadzHwjKUvqdrZuZLatMKA4dEWiSnnqB03sFD8Z2cH0UQ2gKW61wEr4e8NKNnEcqwdYBHc5Ox6DsAtbZfE900=)
+  recaptcha:
+    project-id: elemention
+    site-key: 6LdsNjInAAAAAJByk1stdHinRzoNZqcN4wl_CFXR

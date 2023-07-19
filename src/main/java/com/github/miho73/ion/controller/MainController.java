@@ -27,7 +27,8 @@ public class MainController {
             "/docs/**",
             "/ns",
             "/manage",
-            "/etc/temperature/hangang", "/etc/temperature/incheon"
+            "/etc/temperature/hangang", "/etc/temperature/incheon",
+            "/etc/meal"
     })
     public String index() {
         return "index";

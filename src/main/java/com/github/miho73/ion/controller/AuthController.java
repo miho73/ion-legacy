@@ -1,8 +1,10 @@
 package com.github.miho73.ion.controller;
 
+import com.github.miho73.ion.dto.RecaptchaReply;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.service.AuthService;
+import com.github.miho73.ion.service.RecaptchaService;
 import com.github.miho73.ion.service.SessionService;
 import com.github.miho73.ion.service.UserService;
 import com.github.miho73.ion.utils.RestResponse;
@@ -16,7 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -32,8 +36,17 @@ public class AuthController {
     @Autowired
     SessionService sessionService;
 
+    @Autowired
+    RecaptchaService reCaptchaAssessment;
+
     /**
-     * 0: ok. 1: user not found. 2: inactivated. 3: banned. 4: incorrect passcode
+     * 0: ok.
+     * 1: user not found.
+     * 2: inactivated.
+     * 3: banned.
+     * 4: incorrect passcode
+     * 5: recaptcha failed
+     * 6: client recaptcha failed
      */
     @PostMapping(
             value = "authenticate",
@@ -46,52 +59,70 @@ public class AuthController {
             @RequestBody Map<String, String> body,
             HttpSession session
     ) {
-        if(!Validation.checkKeys(body, "id", "pwd")) {
+        if(!Validation.checkKeys(body, "id", "pwd", "ctoken")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST);
         }
 
-        User user;
+        Optional<User> userOptional;
         try {
-            user = userService.getUserById(body.get("id"));
-        } catch (IonException e) {
-            log.info("login failed: user not found");
-            return RestResponse.restResponse(HttpStatus.OK, 1);
-        }
-
-        boolean auth = authService.authenticate(body.get("pwd"), user);
-        int active = authService.checkActiveStatus(user);
-
-        if(auth) {
-            if(active == 0) {
-                log.info("login success: "+user.getId());
-
-                userService.updateLastLogin(user.getUid());
-
-                session.setAttribute("login", true);
-                session.setAttribute("uid", user.getUid());
-                session.setAttribute("id", user.getId());
-                session.setAttribute("name", user.getName());
-                session.setAttribute("grade", user.getGrade());
-                session.setAttribute("priv", user.getPrivilege());
-
-                return RestResponse.restResponse(HttpStatus.OK, 0);
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "login");
+            if(!recaptchaReply.isOk()) {
+                return RestResponse.restResponse(HttpStatus.OK, 6);
             }
-            else if (active == 1) {
-                log.info("login blocked(inactive): "+user.getId());
-                return RestResponse.restResponse(HttpStatus.OK, 2);
+            //TODO: make action by score
+            log.info(recaptchaReply.getAssessmentName()+"/"+recaptchaReply.getScore()+"/"+recaptchaReply.getReasons().size());
+
+            userOptional = userService.getUserById(body.get("id"));
+            if(userOptional.isEmpty()) {
+                log.info("login failed: user not found");
+                reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
+                return RestResponse.restResponse(HttpStatus.OK, 1);
             }
-            else if(active == 2) {
-                log.info("login blocked(banned): "+user.getId());
-                return RestResponse.restResponse(HttpStatus.OK, 3);
+
+            User user = userOptional.get();
+            boolean auth = authService.authenticate(body.get("pwd"), user);
+            int active = authService.checkActiveStatus(user);
+
+            if(auth) {
+                if(active == 0) {
+                    log.info("login success. id="+user.getId());
+                    reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), true);
+                    userService.updateLastLogin(user.getUid());
+
+                    session.setAttribute("login", true);
+                    session.setAttribute("uid", user.getUid());
+                    session.setAttribute("id", user.getId());
+                    session.setAttribute("name", user.getName());
+                    session.setAttribute("grade", user.getGrade());
+                    session.setAttribute("priv", user.getPrivilege());
+
+                    return RestResponse.restResponse(HttpStatus.OK, 0);
+                }
+                else if (active == 1) {
+                    log.info("login blocked(inactive). id="+user.getId());
+                    reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
+                    return RestResponse.restResponse(HttpStatus.OK, 2);
+                }
+                else if(active == 2) {
+                    log.info("login blocked(banned). id="+user.getId());
+                    reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
+                    return RestResponse.restResponse(HttpStatus.OK, 3);
+                }
+                else {
+                    log.info("login blocked(unknown status). id="+user.getId());
+                    reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
+                    return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+                }
             }
             else {
-                log.info("login blocked(unknown status): "+user.getId());
-                return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+                reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
+                return RestResponse.restResponse(HttpStatus.OK, 4);
             }
-        }
-        else {
-            return RestResponse.restResponse(HttpStatus.OK, 4);
+        } catch (IOException e) {
+            log.error("recaptcha failed(IOException).", e);
+            response.setStatus(500);
+            return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR, 5);
         }
     }
 

@@ -121,26 +121,26 @@ public class ManageController {
         }
 
         User user;
-        try {
-            user = userService.getUserById(id);
-
-            JSONObject ret = new JSONObject();
-            ret.put("ui", user.getUid());
-            ret.put("na", user.getName());
-            ret.put("gr", user.getGrade());
-            ret.put("cl", user.getClas());
-            ret.put("sc", user.getScode());
-            ret.put("sf", user.isScodeCFlag());
-            ret.put("id", user.getId());
-            ret.put("ll", user.getLastLogin() == null ? "N/A" : user.getLastLogin().toString());
-            ret.put("jd", user.getJoinDate().toString());
-            ret.put("st", user.getStatus());
-            ret.put("pr", user.getPrivilege());
-            return RestResponse.restResponse(HttpStatus.OK, ret);
-        } catch (IonException e) {
+        Optional<User> userOptional = userService.getUserById(id);
+        if(userOptional.isEmpty()) {
             response.setStatus(400);
-            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 2);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
+
+        user = userOptional.get();
+        JSONObject ret = new JSONObject();
+        ret.put("ui", user.getUid());
+        ret.put("na", user.getName());
+        ret.put("gr", user.getGrade());
+        ret.put("cl", user.getClas());
+        ret.put("sc", user.getScode());
+        ret.put("sf", user.isScodeCFlag());
+        ret.put("id", user.getId());
+        ret.put("ll", user.getLastLogin() == null ? "N/A" : user.getLastLogin().toString());
+        ret.put("jd", user.getJoinDate().toString());
+        ret.put("st", user.getStatus());
+        ret.put("pr", user.getPrivilege());
+        return RestResponse.restResponse(HttpStatus.OK, ret);
     }
 
     /**
@@ -169,13 +169,12 @@ public class ManageController {
         }
         String id = body.get("id");
 
-        User user;
-        try {
-            user = userService.getUserById(id);
-        } catch (IonException e) {
+        Optional<User> userOptional = userService.getUserById(id);
+        if(userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
+        User user = userOptional.get();
         userService.resetGrade(user.getUid());
         return RestResponse.restResponse(HttpStatus.OK);
     }
@@ -199,13 +198,12 @@ public class ManageController {
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
-        try {
-            User user = userService.getUserById(id);
-            return RestResponse.restResponse(HttpStatus.OK, user.getPrivilege());
-        } catch (IonException e) {
+        Optional<User> userOptional = userService.getUserById(id);
+        if(userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
+        return RestResponse.restResponse(HttpStatus.OK, userOptional.get().getPrivilege());
     }
 
     /**

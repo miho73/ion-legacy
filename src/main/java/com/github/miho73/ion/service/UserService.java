@@ -3,6 +3,7 @@ package com.github.miho73.ion.service;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,16 +12,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User getUserById(String id) throws IonException {
-        List<User> users = userRepository.findById(id);
-        if(users.size() != 1) throw new IonException();
-        return users.get(0);
-    }
-    public Optional<User> getUserById(int id) {
+    public Optional<User> getUserById(String id) {
         return userRepository.findById(id);
     }
 
@@ -37,6 +34,7 @@ public class UserService {
     }
 
     public void updatePrivilege(String id, int privilege) {
+        log.info("IonID set privilege. id="+id+", priv="+privilege);
         userRepository.updatePrivilegeById(id, privilege);
     }
 
@@ -60,6 +58,7 @@ public class UserService {
     }
 
     public void resetGrade(int uid) {
+        log.info("IonID reset grade. uid="+uid);
         userRepository.resetGradeByUid(uid);
     }
 }

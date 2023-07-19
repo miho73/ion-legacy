@@ -4,6 +4,7 @@ import { changeBit, getBit } from '../../service/bitmask';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { ready } from '../../service/recaptcha';
 
 function LoginPage() {
     const [id, setId] = useState('');
@@ -21,19 +22,22 @@ function LoginPage() {
         if(state !== 0) return;
 
         setBlock(true);
-        axios.post('/auth/api/authenticate', {
-            id: id,
-            pwd: pwd
-        }).then(res => {
-            let re = res.data['result'];
-            if(re === 0) {
-                window.location.reload();
-            }
-            else setLoginError(re);
-        }).catch(err => {
-            setLoginError(-1);
-        }).finally(() => {
-            setBlock(false);
+        ready('login', token => {
+            axios.post('/auth/api/authenticate', {
+                id: id,
+                pwd: pwd,
+                ctoken: token
+            }).then(res => {
+                let re = res.data['result'];
+                if(re === 0) {
+                    window.location.reload();
+                }
+                else setLoginError(re);
+            }).catch(err => {
+                setLoginError(-1);
+            }).finally(() => {
+                setBlock(false);
+            });
         });
     }
 
@@ -71,6 +75,9 @@ function LoginPage() {
                         }
                         {loginError === 3 &&
                             <p className='mb-0'>이 IonID로 로그인 할 수 없습니다.</p>
+                        }
+                        {loginError === 6 &&
+                            <p className='mb-0'>reCAPTCHA를 검증하지 못했습니다.</p>
                         }
                     </div>
                 }

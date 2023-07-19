@@ -138,7 +138,11 @@ table {
         font-weight: 400;
     }
 }
-
+.meal {
+    div {
+        height: 300px;
+    }
+}
 @include media-breakpoint-down(lg) {
     table {
         width: 100% !important;
@@ -194,6 +198,13 @@ table {
     }
     .hangang div {
         width: 80%;
+    }
+    .meal {
+        flex-direction: column;
+        div {
+            height: auto;
+            width: 100%;
+        }
     }
 }
 @include media-breakpoint-down(sm) {

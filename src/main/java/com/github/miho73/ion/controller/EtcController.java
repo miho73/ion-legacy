@@ -42,7 +42,6 @@ public class EtcController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public String getMeal() {
-        log.info(mealService.get().toString());
         return RestResponse.restResponse(HttpStatus.OK, mealService.get());
     }
 }

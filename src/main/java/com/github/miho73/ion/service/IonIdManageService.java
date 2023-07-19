@@ -12,6 +12,7 @@ public class IonIdManageService {
     UserRepository userRepository;
 
     public void updateActiveState(String id, int status) {
+        log.info("IonID set status. id="+id+", status="+status);
         userRepository.updateActiveById(id, status);
     }
 }

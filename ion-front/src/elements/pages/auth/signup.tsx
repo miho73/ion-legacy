@@ -4,6 +4,7 @@ import { changeBit, getBit } from '../../service/bitmask';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { InputGroup, Form, FloatingLabel } from 'react-bootstrap';
+import { ready } from '../../service/recaptcha';
 
 function SignupPage() {
     const [name, setName] = useState('');
@@ -80,18 +81,23 @@ function SignupPage() {
             return;
         }
         setBlock(true);
-        axios.post('/user/api/create', {
-            name: name,
-            grade: grade,
-            clas: clas,
-            scode: sCode,
-            id: id,
-            pwd: pwd
-        }).then(res => {
-            navigate('/docs/activation');
-        }).catch(err => {
-            console.error(err);
-            setCreateError(1);
+        ready('signup', token => {
+            axios.post('/user/api/create', {
+                name: name,
+                grade: grade,
+                clas: clas,
+                scode: sCode,
+                id: id,
+                pwd: pwd,
+                ctoken: token
+            }).then(res => {
+                navigate('/docs/activation');
+            }).catch(err => {
+                console.error(err);
+                setCreateError(1);
+            }).finally(() => {
+                setBlock(false);
+            });
         });
     }
 
@@ -202,13 +208,13 @@ function SignupPage() {
 
                 <div className='btn-group mt-3 mx-auto'>
                     {page !== 0 &&
-                        <button type='button' className='btn btn-outline-primary' onClick={() => sPg(page-1, page)}>이전</button>
+                        <button type='button' className='btn btn-outline-primary' disabled={block} onClick={() => sPg(page-1, page)}>이전</button>
                     }
                     {page !== 2 &&
-                        <button type='button' className='btn btn-outline-primary' onClick={() => sPg(page+1, page)}>다음</button>
+                        <button type='button' className='btn btn-outline-primary' disabled={block} onClick={() => sPg(page+1, page)}>다음</button>
                     }
                     {page === 2 &&
-                        <button type='button' className='btn btn-outline-primary fs-6' onClick={submit}>회원가입</button>
+                        <button type='button' className='btn btn-outline-primary fs-6' disabled={block} onClick={submit}>회원가입</button>
                     }
                 </div>
                 { createError === 1 &&

@@ -16,6 +16,9 @@ function Header() {
                     <li>
                         <Link to="/ns" className="nav-link">면불신청</Link>
                     </li>
+                    <li>
+                        <Link to="/etc/meal" className="nav-link">급식</Link>
+                    </li>
                 </ul>
             </nav>
         </>

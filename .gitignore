@@ -5,6 +5,7 @@ build/
 logs/
 .run/
 !gradle/wrapper/gradle-wrapper.jar
+elemention-379e349592d1.json
 !**/src/main/**/build/
 !**/src/test/**/build/
 
