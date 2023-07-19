@@ -20,7 +20,7 @@ function PrintNs() {
         doc.setFont("SpoqaHanSansNeo");
 
         doc.setFontSize(20);
-        doc.text('면불 일지', 10, 20);
+        doc.text('면학 지도 일지', 10, 20);
         doc.setFontSize(8);
         doc.text(date, 15, 26);
 
@@ -142,9 +142,9 @@ function PrintNs() {
                                 <tr>
                                     <th>학번</th>
                                     <th>이름</th>
-                                    <th>8면</th>
-                                    <th>1면</th>
-                                    <th>2면</th>
+                                    <th>8면학</th>
+                                    <th>1면학</th>
+                                    <th>2면학</th>
                                 </tr>
                             </thead>
                             <tbody>{rr}</tbody>

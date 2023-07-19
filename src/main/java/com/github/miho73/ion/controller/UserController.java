@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,6 +45,9 @@ public class UserController {
     @Autowired
     RecaptchaService reCaptchaAssessment;
 
+    @Value("${ion.recaptcha.block-threshold}")
+    float CAPTCHA_THRESHOLD;
+
     @GetMapping(
             value = "/validation/id-duplication",
             produces = MediaType.APPLICATION_JSON_VALUE
@@ -58,7 +62,7 @@ public class UserController {
      * 1 : insufficient parameter
      * 2 : invalid parameter(s)
      * 3 : captcha failed
-     * 4 : captcha error
+     * 4 : too low captcha score
      */
     @PostMapping(
             value = "/create",
@@ -92,12 +96,16 @@ public class UserController {
             RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "signup");
             if (!recaptchaReply.isOk()) {
                 response.setStatus(400);
-                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 6);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+            }
+            if(recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
             }
         } catch (IOException e) {
             log.error("recaptcha failed(IOException).", e);
             response.setStatus(500);
-            return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR, 5);
+            return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR, 3);
         }
 
         user.setPwd(passwordEncoder.encode(user.getPwd()));

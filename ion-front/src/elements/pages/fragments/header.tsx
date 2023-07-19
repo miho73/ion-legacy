@@ -9,7 +9,7 @@ function Header() {
                     <img src="/logo.png" alt="home"/>
                 </Link>
                 <hr/>
-                <ul className="nav nav-pills gap-2">
+                <ul className="nav nav-pills gap-1">
                     <li>
                         <Link to="/" className="nav-link">Home</Link>
                     </li>

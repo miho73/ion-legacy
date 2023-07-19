@@ -95,8 +95,18 @@ function SignupPage() {
             }).then(res => {
                 navigate('/docs/activation');
             }).catch(err => {
-                console.error(err);
-                setCreateError(1);
+                switch(err.response?.data['result']) {
+                    case 1:
+                    case 2:
+                        setCreateError(1);
+                        break;
+                    case 3:
+                        setCreateError(2);
+                        break;
+                    case 4:
+                        setCreateError(3);
+                        break;
+                }
             }).finally(() => {
                 setBlock(false);
             });
@@ -221,7 +231,17 @@ function SignupPage() {
                 </div>
                 { createError === 1 &&
                     <div className='alert alert-danger mt-5'>
-                        <p className='mb-0'>회원가입하지 못했습니다.</p>
+                        <p className='mb-0'>올바르지 않은 요청입니다.</p>
+                    </div>
+                }
+                { createError === 1 &&
+                    <div className='alert alert-danger mt-5'>
+                        <p className='mb-0'>reCAPTCHA 확인에 실패했습니다.</p>
+                    </div>
+                }
+                { createError === 1 &&
+                    <div className='alert alert-danger mt-5'>
+                        <p className='mb-0'>사용자 보호를 위해 지금은 요청을 처리할 수 없습니다.</p>
                     </div>
                 }
                 <Link to='/' className='my-4 text-muted text-decoration-none'>기존 IonID로 로그인</Link>

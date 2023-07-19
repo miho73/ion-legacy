@@ -58,4 +58,5 @@ ion:
     api-key: ENC(J1J9FrDCTjbzn3DKq5a3XxPTDwurIXTXTvNz1PQ863zGvPJnpBsQUTkcmtrG21nisD5M68vYDIZ2kilAtZOJyIf5AKyH/DJwRPiCyiAp85A=)
   recaptcha:
     project-id: elemention
-    site-key: 6LdsNjInAAAAAJByk1stdHinRzoNZqcN4wl_CFXR
+    site-key: 6LcXsjInAAAAAFcWxsoV7UKfcxojAeWYbEYvNKg3
+    block-threshold: 0.1

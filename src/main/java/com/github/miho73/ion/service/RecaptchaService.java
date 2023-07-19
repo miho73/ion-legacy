@@ -7,6 +7,7 @@ import com.google.recaptchaenterprise.v1.CreateAssessmentRequest;
 import com.google.recaptchaenterprise.v1.Event;
 import com.google.recaptchaenterprise.v1.ProjectName;
 import com.google.recaptchaenterprise.v1.RiskAnalysis.ClassificationReason;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,6 +36,13 @@ public class RecaptchaService {
     @Value("${ion.recaptcha.site-key}")
     String recaptchaSiteKey;
 
+    RecaptchaEnterpriseServiceClient client;
+
+    @PostConstruct
+    public void init() throws IOException {
+        client = RecaptchaEnterpriseServiceClient.create();
+    }
+
     public RecaptchaReply performAssessment(String token, String recaptchaAction) throws IOException {
         return createAssessment(projectId, recaptchaSiteKey, token, recaptchaAction);
     }
@@ -54,63 +62,58 @@ public class RecaptchaService {
             throws IOException {
         RecaptchaReply rr = new RecaptchaReply();
 
-        // Initialize client that will be used to send requests. This client only needs to be created
-        // once, and can be reused for multiple requests. After completing all of your requests, call
-        // the `client.close()` method on the client to safely
-        // clean up any remaining background resources.
-        try (RecaptchaEnterpriseServiceClient client = RecaptchaEnterpriseServiceClient.create()) {
+        // Set the properties of the event to be tracked.
+        Event event = Event.newBuilder().setSiteKey(recaptchaSiteKey).setToken(token).build();
 
-            // Set the properties of the event to be tracked.
-            Event event = Event.newBuilder().setSiteKey(recaptchaSiteKey).setToken(token).build();
+        // Build the assessment request.
+        CreateAssessmentRequest createAssessmentRequest =
+                CreateAssessmentRequest.newBuilder()
+                        .setParent(ProjectName.of(projectID).toString())
+                        .setAssessment(Assessment.newBuilder().setEvent(event).build())
+                        .build();
 
-            // Build the assessment request.
-            CreateAssessmentRequest createAssessmentRequest =
-                    CreateAssessmentRequest.newBuilder()
-                            .setParent(ProjectName.of(projectID).toString())
-                            .setAssessment(Assessment.newBuilder().setEvent(event).build())
-                            .build();
+        Assessment response = client.createAssessment(createAssessmentRequest);
 
-            Assessment response = client.createAssessment(createAssessmentRequest);
-
-            // Check if the token is valid.
-            if (!response.getTokenProperties().getValid()) {
-                log.error(
-                        "The CreateAssessment call failed because the token was: "
-                        + response.getTokenProperties().getInvalidReason().name());
-                rr.setOk(false);
-                return rr;
-            }
-
-            // Check if the expected action was executed.
-            // (If the key is checkbox type and 'action' attribute wasn't set, skip this check.)
-            if (!response.getTokenProperties().getAction().equals(recaptchaAction)) {
-                log.error(
-                        "captcha failed: "
-                                + response.getTokenProperties().getAction());
-                log.error(
-                        "recaptcha action mismatch: "
-                                + recaptchaAction);
-                rr.setOk(false);
-                return rr;
-            }
-
-            rr.setOk(true);
-            List<String> reasons = new Vector<>();
-
-            // Get the reason(s) and the risk score.
-            for (ClassificationReason reason : response.getRiskAnalysis().getReasonsList()) {
-                reasons.add(reason.toString());
-            }
-            rr.setReasons(reasons);
-
-            float recaptchaScore = response.getRiskAnalysis().getScore();
-            rr.setScore(recaptchaScore);
-
-            // Get the assessment name (id). Use this to annotate the assessment.
-            String assessmentName = response.getName();
-            rr.setAssessmentName(assessmentName.substring(assessmentName.lastIndexOf("/") + 1));
+        // Check if the token is valid.
+        if (!response.getTokenProperties().getValid()) {
+            log.error(
+                    "The CreateAssessment call failed because the token was: "
+                            + response.getTokenProperties().getInvalidReason().name());
+            rr.setOk(false);
             return rr;
         }
+
+        // Check if the expected action was executed.
+        // (If the key is checkbox type and 'action' attribute wasn't set, skip this check.)
+        if (!response.getTokenProperties().getAction().equals(recaptchaAction)) {
+            log.error(
+                    "captcha failed: "
+                            + response.getTokenProperties().getAction());
+            log.error(
+                    "recaptcha action mismatch: "
+                            + recaptchaAction);
+            rr.setOk(false);
+            return rr;
+        }
+
+        rr.setOk(true);
+        List<String> reasons = new Vector<>();
+
+        // Get the reason(s) and the risk score.
+        for (ClassificationReason reason : response.getRiskAnalysis().getReasonsList()) {
+            reasons.add(reason.toString());
+        }
+        rr.setReasons(reasons);
+
+        float recaptchaScore = response.getRiskAnalysis().getScore();
+        rr.setScore(recaptchaScore);
+
+        // Get the assessment name (id). Use this to annotate the assessment.
+        String assessmentName = response.getName();
+        rr.setAssessmentName(assessmentName.substring(assessmentName.lastIndexOf("/") + 1));
+
+        log.info("recaptcha success. assessmentId="+rr.getAssessmentName()+" score="+rr.getScore());
+        return rr;
     }
 
     /**

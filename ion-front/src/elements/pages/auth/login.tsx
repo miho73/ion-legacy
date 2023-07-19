@@ -80,6 +80,9 @@ function LoginPage() {
                         {loginError === 6 &&
                             <p className='mb-0'>reCAPTCHA를 검증하지 못했습니다.</p>
                         }
+                        {loginError === 7 &&
+                            <p className='mb-0'>사용자 보호를 위해 지금은 로그인할 수 없습니다.</p>
+                        }
                     </div>
                 }
                 <Link to={'/auth/signup'} className='text-muted text-decoration-none'>IonID 만들기</Link>

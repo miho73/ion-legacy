@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,9 @@ public class AuthController {
 
     @Autowired
     RecaptchaService reCaptchaAssessment;
+
+    @Value("${ion.recaptcha.block-threshold}")
+    float CAPTCHA_THRESHOLD;
 
     /**
      * 0: ok.
@@ -70,8 +74,10 @@ public class AuthController {
             if(!recaptchaReply.isOk()) {
                 return RestResponse.restResponse(HttpStatus.OK, 6);
             }
-            //TODO: make action by score
-            log.info(recaptchaReply.getAssessmentName()+"/"+recaptchaReply.getScore()+"/"+recaptchaReply.getReasons().size());
+
+            if(recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
+                return RestResponse.restResponse(HttpStatus.OK, 7);
+            }
 
             userOptional = userService.getUserById(body.get("id"));
             if(userOptional.isEmpty()) {

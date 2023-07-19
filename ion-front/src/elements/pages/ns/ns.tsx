@@ -10,6 +10,7 @@ import CannotAuthorize from '../auth/cannotAuth';
 
 import { Alert, Button, Col, Container, Form, Modal, Row, Stack, Table } from 'react-bootstrap';
 import NsState from './nsState';
+import { ready } from '../../service/recaptcha';
 
 function Ns() {
     const [lnsRoomRequired, setLnsRoomRequired] = useState(false);
@@ -172,49 +173,76 @@ function Ns() {
                 lns = -1;
             }
 
-            axios.post('/ns/api/nsr/create', {
-                time: time,
-                place: revPlace,
-                supervisor: revSup,
-                reason: revRes,
-                lnsReq: lnsRoomRequired,
-                lnsSeat: lns,
-            }).then(res => {
-                setSError(0);
-                loadNsReqs();
-                loadLns();
-            }).catch(err => {
-                const code = err.response?.data['result'];
-                switch(code) {
-                    case 4:
-                        setSError(2);
-                        break;
-                    case 5:
-                        setSError(3);
-                        break;
-                    default:
-                        setSError(1);
-                        break;
-                }
-            }).finally(() => {
-                setWorking(false);
-            })
+            ready('create_ns', token => {
+                axios.post('/ns/api/nsr/create', {
+                    time: time,
+                    place: revPlace,
+                    supervisor: revSup,
+                    reason: revRes,
+                    lnsReq: lnsRoomRequired,
+                    lnsSeat: lns,
+                    ctoken: token
+                }).then(res => {
+                    setSError(0);
+                    loadNsReqs();
+                    loadLns();
+                }).catch(err => {
+                    const code = err.response?.data['result'];
+                    switch(code) {
+                        case 4:
+                            setSError(2);
+                            break;
+                        case 5:
+                            setSError(3);
+                            break;
+                        case 6:
+                            setSError(4);
+                            break;
+                        case 7:
+                            setSError(5);
+                            break;
+                        default:
+                            setSError(1);
+                            break;
+                    }
+                }).finally(() => {
+                    setWorking(false);
+                });
+            });
         }
     }
 
     function deleteNs() {
-        axios.delete('/ns/api/nsr/delete', {
-            params: {
-                time: targetNs[0]
-            }
-        })
-        .then(res => {
-            closeDeleteConfirm();
-            loadNsReqs();
-            loadLns();
-        })
-        .catch(err => {
-            setDeleteResult(1);
+        ready('delete_ns', token => {
+            axios.delete('/ns/api/nsr/delete', {
+                params: {
+                    time: targetNs[0],
+                    ctoken: token
+                }
+            })
+            .then(res => {
+                closeDeleteConfirm();
+                loadNsReqs();
+                loadLns();
+            })
+            .catch(err => {
+                switch(err.response?.data['result']) {
+                    case 1:
+                        setDeleteResult(1);
+                        break;
+                    case 2:
+                        setDeleteResult(2);
+                        break;
+                    case 3:
+                        setDeleteResult(3);
+                        break;
+                    case 4:
+                        setDeleteResult(4);
+                        break;
+                    default:
+                        setDeleteResult(5);
+                }
+            });
         });
     }
     function closeDeleteConfirm() {
@@ -409,6 +437,16 @@ function Ns() {
                             <p className='my-0'>신청하지 못했습니다.</p>
                         </Alert>
                     }
+                    {sErrorState === 4 &&
+                        <Alert variant='danger'>
+                            <p className='my-0'>reCAPTCHA 인증에 실패했습니다.</p>
+                        </Alert>
+                    }
+                    {sErrorState === 5 &&
+                        <Alert variant='danger'>
+                            <p className='my-0'>사용자 보호를 위해 지금은 요청을 처리할 수 없습니다.</p>
+                        </Alert>
+                    }
                 </Form>
             </Row>
 
@@ -420,8 +458,24 @@ function Ns() {
                     {deleteResult === -1 &&
                         <p>{targetNs[1]}에 신청된 면불 신청을 삭제할까요?</p>
                     }
-                    {deleteResult === 1 &&
-                        <p className='bg-danger text-white p-3 rounded'>삭제하지 못했습니다.</p>
+                    {deleteResult !== -1 &&
+                        <>
+                            {deleteResult === 1 &&
+                                <p className='bg-danger text-white p-3 rounded'>이 면불을 수정할 수 없습니다.</p>
+                            }
+                            {deleteResult === 2 &&
+                                <p className='bg-danger text-white p-3 rounded'>이 시간에 신청된 면불이 없습니다.</p>
+                            }
+                            {deleteResult === 3 &&
+                                <p className='bg-danger text-white p-3 rounded'>reCAPTCHA 확인에 실패했습니다.</p>
+                            }
+                            {deleteResult === 4 &&
+                                <p className='bg-danger text-white p-3 rounded'>사용자 보호를 위해 지금은 작업을 처리할 수 없습니다.</p>
+                            }
+                            {deleteResult === 5 &&
+                                <p className='bg-danger text-white p-3 rounded'>삭제하지 못했습니다.</p>
+                            }
+                        </>
                     }
                 </Modal.Body>
                 <Modal.Footer>
@@ -431,12 +485,7 @@ function Ns() {
                             <Button onClick={closeDeleteConfirm} disabled={deleting}>아니오</Button>
                         </>
                     }
-                    {deleteResult === 0 &&
-                        <>
-                            <Button onClick={closeDeleteConfirm}>확인</Button>
-                        </>
-                    }
-                    {deleteResult === 1 &&
+                    {deleteResult !== -1 &&
                         <>
                             <Button onClick={deleteNs} disabled={deleting}>재시도</Button>
                             <Button onClick={closeDeleteConfirm} disabled={deleting}>취소</Button>

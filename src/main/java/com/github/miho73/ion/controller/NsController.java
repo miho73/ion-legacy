@@ -2,7 +2,9 @@ package com.github.miho73.ion.controller;
 
 import com.github.miho73.ion.dto.LnsReservation;
 import com.github.miho73.ion.dto.NsRecord;
+import com.github.miho73.ion.dto.RecaptchaReply;
 import com.github.miho73.ion.exceptions.IonException;
+import com.github.miho73.ion.service.RecaptchaService;
 import com.github.miho73.ion.service.SessionService;
 import com.github.miho73.ion.service.ns.NsService;
 import com.github.miho73.ion.utils.RestResponse;
@@ -14,10 +16,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -31,6 +35,12 @@ public class NsController {
 
     @Autowired
     NsService nsService;
+
+    @Autowired
+    RecaptchaService recaptchaService;
+
+    @Value("${ion.recaptcha.block-threshold}")
+    float CAPTCHA_THRESHOLD;
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
@@ -74,6 +84,8 @@ public class NsController {
      *  3: invalid session
      *  4: user already requested
      *  5: seat already reserved
+     *  6: recaptcha failed
+     *  7: too low recaptcha score
      */
     @PostMapping(
             value = "/nsr/create",
@@ -92,12 +104,22 @@ public class NsController {
         }
 
         // check key
-        if(!Validation.checkKeys(body, "time", "supervisor", "reason", "place", "lnsReq", "lnsSeat")) {
+        if(!Validation.checkKeys(body, "time", "supervisor", "reason", "place", "lnsReq", "lnsSeat", "ctoken")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
 
         try {
+            RecaptchaReply reply = recaptchaService.performAssessment(body.get("ctoken"), "create_ns");
+            if(!reply.isOk()) {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 6);
+            }
+            if(reply.getScore() <= CAPTCHA_THRESHOLD) {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 7);
+            }
+
             int uuid = sessionService.getUid(session);
             NsRecord.NS_TIME nsTime = NsRecord.NS_TIME.valueOf(body.get("time"));
 
@@ -122,6 +144,7 @@ public class NsController {
             }
 
             nsService.saveNsRequest(uuid, nsTime, lnsReq, lnsReqUid, body);
+            recaptchaService.addAssessmentComment(reply.getAssessmentName(), true);
 
             log.info("created ns req uuid="+uuid+", time="+nsTime);
             response.setStatus(201);
@@ -129,6 +152,9 @@ public class NsController {
         } catch (IonException e) {
             response.setStatus(500);
             return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR, 1);
+        } catch (IOException e) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 6);
         }
     }
 
@@ -136,6 +162,8 @@ public class NsController {
      *  0: success
      *  1: invalid session
      *  2: no request on that time
+     *  3: recaptcha failed
+     *  4: too low recaptcha score
      */
     @DeleteMapping(
             value = "/nsr/delete",
@@ -145,7 +173,8 @@ public class NsController {
     public String deleteNs(
             HttpSession session,
             HttpServletResponse response,
-            @RequestParam("time") NsRecord.NS_TIME time
+            @RequestParam("time") NsRecord.NS_TIME time,
+            @RequestParam("ctoken") String captchaToken
     ) {
         if(!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
             response.setStatus(401);
@@ -153,6 +182,16 @@ public class NsController {
         }
 
         try {
+            RecaptchaReply reply = recaptchaService.performAssessment(captchaToken, "delete_ns");
+            if(!reply.isOk()) {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+            }
+            if(reply.getScore() <= CAPTCHA_THRESHOLD) {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
+            }
+
             int uuid = sessionService.getUid(session);
 
             if(nsService.existsNsByUuid(uuid, time)) {
@@ -165,7 +204,11 @@ public class NsController {
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
             }
         } catch (IonException e) {
+            response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        } catch (IOException e) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
     }
 
