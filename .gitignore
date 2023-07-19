@@ -8,6 +8,8 @@ logs/
 elemention-379e349592d1.json
 !**/src/main/**/build/
 !**/src/test/**/build/
+ion-front/.env
+ion-front/.env*
 
 ### STS ###
 .apt_generated

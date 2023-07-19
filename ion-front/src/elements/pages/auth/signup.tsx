@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import { InputGroup, Form, FloatingLabel } from 'react-bootstrap';
 import { ready } from '../../service/recaptcha';
+import CaptchaNotice from '../fragments/captchaNotice';
+import Credit from '../fragments/credit';
 
 function SignupPage() {
     const [name, setName] = useState('');
@@ -222,12 +224,9 @@ function SignupPage() {
                         <p className='mb-0'>회원가입하지 못했습니다.</p>
                     </div>
                 }
-                <Link to='/' className='mt-4 text-muted text-decoration-none'>기존 IonID로 로그인</Link>
-                <div className='vstack'>
-                    <p className='mt-5 mb-1 text-muted'>Ion by Changwoon Hyun</p>
-                    <p className='mb-3 text-muted'>Seungwon Lee and Nakyung Lee</p>
-                    <p className='text-muted'>Look up <Link className='text-muted' to='https://github.com/miho73/ion' target='_blank'>GitHub</Link> repository of Ion project</p>
-                </div>
+                <Link to='/' className='my-4 text-muted text-decoration-none'>기존 IonID로 로그인</Link>
+                <CaptchaNotice/>
+                <Credit className='mt-4'/>
             </Form>
         </main>
     )

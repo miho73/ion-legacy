@@ -116,6 +116,7 @@ public class AuthController {
                 }
             }
             else {
+                log.info("login blocked(password mismatch). id="+user.getId());
                 reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
                 return RestResponse.restResponse(HttpStatus.OK, 4);
             }

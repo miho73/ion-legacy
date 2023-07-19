@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { ready } from '../../service/recaptcha';
+import CaptchaNotice from '../fragments/captchaNotice';
+import Credit from '../fragments/credit';
 
 function LoginPage() {
     const [id, setId] = useState('');
@@ -61,7 +63,6 @@ function LoginPage() {
                     <label htmlFor='pwd'>Password</label>
                 </div>
                 <button className='btn btn-lg btn-primary fs-6' type='button' onClick={submit}>Sign in</button>
-        
                 {loginError !== 0 &&
                     <div className='alert alert-danger mt-2'>
                         {loginError === -1 &&
@@ -81,14 +82,9 @@ function LoginPage() {
                         }
                     </div>
                 }
-
                 <Link to={'/auth/signup'} className='text-muted text-decoration-none'>IonID 만들기</Link>
-    
-                <div className='vstack'>
-                    <p className='mt-5 mb-1 text-muted'>Ion by Changwoon Hyun</p>
-                    <p className='mb-3 text-muted'>Seungwon Lee and Nakyung Lee</p>
-                    <p className='text-muted'>Look up <Link className='text-muted' to='https://github.com/miho73/ion' target='_blank'>GitHub</Link> repository of Ion project</p>
-                </div>
+                <CaptchaNotice/>
+                <Credit/>
             </form>
         </main>
     )
