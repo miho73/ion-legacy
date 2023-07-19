@@ -24,7 +24,7 @@ function Incheon() {
 
     return (
         <div className="cover hangang d-flex align-items-center" style={{backgroundImage: 'url("/static/temp/icn.jpg")'}}>
-            <div className="w-50 m-auto">
+            <div className="m-auto">
                 {set &&
                     <>
                         <p className="tmp mb-0">{data.tem}&deg;C</p>
