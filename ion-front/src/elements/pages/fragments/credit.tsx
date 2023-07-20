@@ -6,7 +6,7 @@ function Credit(props) {
         <div className={'vstack credit '+props.className}>
             <p className='m-0 text-muted'>Ion by Changwoon Hyun</p>
             <p className='m-0 text-muted'>Seungwon Lee and Nakyung Lee</p>
-            <p className='m-0 text-muted'>Look up <Link to='https://github.com/miho73/ion' target='_blank'>GitHub</Link> repository of Ion project</p>
+            <p className='m-0 text-muted'>Look up <Link to='https://github.com/miho73/ion' target='_blank'>GitHub</Link> repository of project Ion</p>
         </div>
     )
 }

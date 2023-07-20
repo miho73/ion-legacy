@@ -55,34 +55,36 @@ function QueryIonId() {
                 <Button variant="outline-primary" onClick={query}>조회</Button>
             </InputGroup>
             {gs === 1 &&
-                <Table>
-                    <thead>
-                        <tr>
-                            <th>uid</th>
-                            <th>name</th>
-                            <th>scode</th>
-                            <th>scode_cflag</th>
-                            <th>id</th>
-                            <th>last_login</th>
-                            <th>join_date</th>
-                            <th>status</th>
-                            <th>privilege</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>{usr[0]}</td>
-                            <td>{usr[1]}</td>
-                            <td>{usr[2]}</td>
-                            <td>{usr[3] ? 'true' : 'false'}</td>
-                            <td>{usr[4]}</td>
-                            <td>{usr[5]}</td>
-                            <td>{usr[6]}</td>
-                            <td>{usr[7]}</td>
-                            <td>{usr[8]}</td>
-                        </tr>
-                    </tbody>
-                </Table>
+                <div className='table-cover'>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>uid</th>
+                                <th>name</th>
+                                <th>scode</th>
+                                <th>scode_cflag</th>
+                                <th>id</th>
+                                <th>last_login</th>
+                                <th>join_date</th>
+                                <th>status</th>
+                                <th>privilege</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{usr[0]}</td>
+                                <td>{usr[1]}</td>
+                                <td>{usr[2]}</td>
+                                <td>{usr[3] ? 'true' : 'false'}</td>
+                                <td>{usr[4]}</td>
+                                <td>{usr[5]}</td>
+                                <td>{usr[6]}</td>
+                                <td>{usr[7]}</td>
+                                <td>{usr[8]}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
+                </div>
             }
             { gs === 2 &&
                 <Alert variant="danger">권한이 부족합니다.</Alert>

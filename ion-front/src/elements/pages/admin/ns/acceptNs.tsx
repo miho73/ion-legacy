@@ -139,21 +139,23 @@ function AcceptNs() {
         <Row className="my-3">
             <h2 className="mb-3">면학 불참 승인</h2>
             <p>나에게 요청된 신청만 승인할 수 있습니다.</p>
-            <Table>
-                <thead>
-                    <tr>
-                        <th>이름</th>
-                        <th>학번</th>
-                        <th>면학</th>
-                        <th>장소</th>
-                        <th>담당교사</th>
-                        <th>사유</th>
-                        <th>상태</th>
-                        <th>승인</th>
-                    </tr>
-                </thead>
-                <tbody>{rLst}</tbody>
-            </Table>
+            <div className='table-cover'>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>학번</th>
+                            <th>면학</th>
+                            <th>장소</th>
+                            <th>담당교사</th>
+                            <th>사유</th>
+                            <th>상태</th>
+                            <th>승인</th>
+                        </tr>
+                    </thead>
+                    <tbody>{rLst}</tbody>
+                </Table>
+            </div>
             <Button variant='outline-primary w-fit' onClick={loadNs}>새로고침</Button>
             <p className='my-2'>{date}</p>
             {ws === 2 &&

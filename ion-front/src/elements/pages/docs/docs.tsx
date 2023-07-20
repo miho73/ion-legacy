@@ -8,7 +8,7 @@ const DOC_REGISTRY = {
     'activation': ['IonID 활성화', (<Dactivation/>)],
     'eula': ["이용약관", (<Deula/>)],
     'manage': ["Management 도구", (<Dadmin/>)],
-    'credit': ["Ion Project", <Dcredit/>]
+    'credit': ["Project Ion", <Dcredit/>]
 };
 
 function Docs() {

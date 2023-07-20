@@ -117,6 +117,7 @@ public class AuthController {
                 }
                 else {
                     log.info("login blocked(unknown status). id="+user.getId());
+                    response.setStatus(500);
                     reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
                     return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
@@ -143,6 +144,7 @@ public class AuthController {
             return RestResponse.restResponse(HttpStatus.OK);
         }
         else {
+            response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST);
         }
     }

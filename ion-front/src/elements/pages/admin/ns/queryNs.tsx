@@ -124,20 +124,22 @@ function QueryNs(props) {
                     <Alert variant='danger w-fit'>문제가 발생했습니다.</Alert>
                 }
                 { workError === 0 &&
-                    <Table className='m-auto'>
-                        <thead>
-                            <tr>
-                                <th>면학</th>
-                                <th>장소</th>
-                                <th>담당교사</th>
-                                <th>사유</th>
-                                <th>노면실 자리</th>
-                                <th>상태</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>{rr}</tbody>
-                    </Table>
+                    <div className='table-cover'>
+                        <Table className='m-auto'>
+                            <thead>
+                                <tr>
+                                    <th>면학</th>
+                                    <th>장소</th>
+                                    <th>담당교사</th>
+                                    <th>사유</th>
+                                    <th>노면실 자리</th>
+                                    <th>상태</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>{rr}</tbody>
+                        </Table>
+                    </div>
                 }
             </Form.Group>
         </Row>

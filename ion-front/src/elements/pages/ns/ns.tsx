@@ -301,20 +301,22 @@ function Ns() {
         <Container className='mt-5 nst'>
             <Row>
                 <h4>{uName}님의 면불 신청</h4>
-                <Table className='m-auto'>
-                    <thead>
-                        <tr>
-                            <th>면학</th>
-                            <th>장소</th>
-                            <th>담당교사</th>
-                            <th>사유</th>
-                            <th>노면실 자리</th>
-                            <th>상태</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>{rr}</tbody>
-                </Table>
+                <div className='table-cover'>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>면학</th>
+                                <th>장소</th>
+                                <th>담당교사</th>
+                                <th>사유</th>
+                                <th>노면실 자리</th>
+                                <th>상태</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>{rr}</tbody>
+                    </Table>
+                </div>
                 <p>{date}</p>
             </Row>
             <Row>

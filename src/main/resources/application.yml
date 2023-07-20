@@ -59,4 +59,4 @@ ion:
   recaptcha:
     project-id: elemention
     site-key: 6LcXsjInAAAAAFcWxsoV7UKfcxojAeWYbEYvNKg3
-    block-threshold: 0.1
+    block-threshold: 0.5

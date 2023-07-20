@@ -136,7 +136,7 @@ function PrintNs() {
             </FormGroup>
             <Container className='my-3'>
                 { workState === 0 &&
-                    <>
+                    <div className='table-cover'>
                         <Table id='prt'>
                             <thead>
                                 <tr>
@@ -150,7 +150,7 @@ function PrintNs() {
                             <tbody>{rr}</tbody>
                         </Table>
                         <p>{date}</p>
-                    </>
+                    </div>
                 }
                 { workState === 1 &&
                     <Alert variant='danger'>권한이 부족합니다.</Alert>

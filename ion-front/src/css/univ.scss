@@ -221,6 +221,12 @@ table {
             font-size: 0.8rem;
         }
     }
+    .table-cover {
+        overflow-x: auto;
+        .table {
+            width: 150% !important;
+        }
+    }
 }
 
 .lns-seat {

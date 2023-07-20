@@ -82,7 +82,7 @@ function IonIdChangPrivilege(props) {
                     <Form.Check
                         inline
                         label='FACULTY'
-                        id='pr'
+                        id='pf'
                         disabled={!usrLoaded}
                         checked={getBit(up, 1) === 1}
                         onChange={() => setUp(changeBit(up, 1))}
