@@ -8,7 +8,7 @@ import font from '../../../types/SpoqaHanSansNeo-normal';
 function PrintNs() {
     const [data, setData] = useState<any[]>([]);
     const [grade, setGrade] = useState(1);
-    const [date, setDate] = useState('d');
+    const [date, setDate] = useState('');
     const [includeDenied, setIncludeDenied ] = useState(false);
     const [workState, setWorkState] = useState(-1);
 
@@ -19,19 +19,21 @@ function PrintNs() {
         doc.addFont("SpoqaHanSansNeo.ttf", "SpoqaHanSansNeo", "normal");
         doc.setFont("SpoqaHanSansNeo");
 
-        doc.setFontSize(20);
-        doc.text('면학 지도 일지', 10, 20);
-        doc.setFontSize(8);
-        doc.text(date, 15, 26);
+        doc.setFontSize(18);
+        doc.text('면학 지도 일지', 10, 13);
+        doc.setFontSize(10);
+        doc.text(date, 10, 18);
 
         doc.setFontSize(10);
         doc.autoTable({
             html: '#prt',
-            headStyles: { halign: "center", valign: "middle" },
-            startX: 15,
-            startY: 30,
-            margin: { left: 15, top: 0, right: 15 },
-            styles: { font: "SpoqaHanSansNeo", fontStyle: "normal" }
+            headStyles: { halign: "center", valign: "middle", fillColor: [59,59,59] },
+            tableLineColor: [59,59,59],
+            tableLineWidth: 0.1,
+            startX: 10,
+            startY: 20,
+            margin: { left: 10, top: 10, right: 10, bottom: 10 },
+            styles: { font: "SpoqaHanSansNeo", fontStyle: "normal" },
         });
 
         doc.save(`면학 지도 일지 ${date}.pdf`);
