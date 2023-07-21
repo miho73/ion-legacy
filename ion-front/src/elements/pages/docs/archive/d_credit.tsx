@@ -7,7 +7,7 @@ function Dcredit() {
         <div className='vstack'>
             <h2>Developers</h2>
             <div className='table-cover'>
-                <Table>
+                <Table className='table-narrow'>
                     <tbody>
                         <tr>
                             <td className='fw-bold'>현창운 (30th)</td>

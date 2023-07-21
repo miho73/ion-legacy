@@ -302,7 +302,7 @@ function Ns() {
             <Row>
                 <h4>{uName}님의 면불 신청</h4>
                 <div className='table-cover'>
-                    <Table>
+                    <Table className='table-wide'>
                         <thead>
                             <tr>
                                 <th>면학</th>

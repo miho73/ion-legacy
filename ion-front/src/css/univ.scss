@@ -224,7 +224,10 @@ table {
     .table-cover {
         overflow-x: auto;
         .table {
-            width: 150% !important;
+            width: 200% !important;
+        }
+        .table-narrow {
+            width: 100% !important;
         }
     }
 }
