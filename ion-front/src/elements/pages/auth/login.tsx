@@ -62,7 +62,7 @@ function LoginPage() {
                     <input type='password' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')} disabled={block} id='pwd' placeholder='암호' autoComplete='current-password' aria-label='암호' value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={enterDown}/>
                     <label htmlFor='pwd'>Password</label>
                 </div>
-                <button className='btn btn-lg btn-primary fs-6' type='button' onClick={submit}>Sign in</button>
+                <button className='btn btn-lg btn-primary fs-6' type='button' onClick={submit} disabled={block}>Sign in</button>
                 {loginError !== 0 &&
                     <div className='alert alert-danger mt-2'>
                         {loginError === -1 &&
