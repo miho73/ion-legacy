@@ -193,13 +193,13 @@ function SignupPage() {
                             />
                             <p className='invalid-feedback mb-0'>암호는 6자 이상이어야 합니다.</p>
                         </FloatingLabel>
-                        <FloatingLabel label='Password Confirm'>
+                        <FloatingLabel label='Confirm Password'>
                             <Form.Control type='password'
                                           className={'pe-5 fs-6 form-control-lg'+(getBit(formState, 9) ? ' is-invalid' : '')}
                                           disabled={block}
-                                          placeholder='Password Confirm'
+                                          placeholder='Confirm Password'
                                           autoComplete='new-password'
-                                          aria-label='Password Confirm'
+                                          aria-label='Confirm Password'
                                           value={pwdRe}
                                           onChange={e => setPWdRe(e.target.value)}
                             />
@@ -210,7 +210,7 @@ function SignupPage() {
 
                 {page === 2 &&
                     <div id='page2' className='vstack gap-3 d-flex justify-content-center align-items-center'>
-                        <p className='my-0'>이 서비스에 가입하면 Ion의 <Link to='/docs/eula' target='_blank'>이용약관</Link>에 동의하게 됩니다.</p>
+                        <p className='my-0'>IonID를 만들면 Ion의 <Link to='/docs/eula' target='_blank'>이용약관</Link>에 동의하게 됩니다.</p>
                         <div className='form-check'>
                             <input className={'form-check-input'+(getBit(formState, 8) ? ' is-invalid' : '')} type='checkbox' value='' id='eula-agr' checked={eula} onChange={e => setEula(e.target.checked)}/>
                             <label className='form-check-label' htmlFor='eula-agr'>이용약관을 읽었고 동의합니다.</label>
@@ -241,7 +241,7 @@ function SignupPage() {
                 }
                 { createError === 1 &&
                     <div className='alert alert-danger mt-5'>
-                        <p className='mb-0'>사용자 보호를 위해 지금은 요청을 처리할 수 없습니다.</p>
+                        <p className='mb-0'>사용자 보호를 위해 지금은 회원가입할 수 없습니다.</p>
                     </div>
                 }
                 <Link to='/' className='my-4 text-muted text-decoration-none'>기존 IonID로 로그인</Link>

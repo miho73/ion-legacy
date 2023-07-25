@@ -363,7 +363,7 @@ function Ns() {
                                     />
                                 </Form.Group>
                                 <Form.Group as={Col} className='mb-3'>
-                                    <Form.Label htmlFor='reason' className='form-label'>신청 사유</Form.Label>
+                                    <Form.Label htmlFor='reason' className='form-label'>신청사유</Form.Label>
                                     <Form.Control
                                         type='text'
                                         isInvalid={getBit(formState, 3) === 1}
@@ -446,7 +446,7 @@ function Ns() {
                     }
                     {sErrorState === 5 &&
                         <Alert variant='danger'>
-                            <p className='my-0'>사용자 보호를 위해 지금은 요청을 처리할 수 없습니다.</p>
+                            <p className='my-0'>사용자 보호를 위해 지금은 신청할 수 없습니다.</p>
                         </Alert>
                     }
                 </Form>
@@ -454,11 +454,11 @@ function Ns() {
 
             <Modal show={deleteModalShow} onHide={closeDeleteConfirm} dialogClassName='modal-dialog-centered'>
                 <Modal.Header closeButton>
-                    <Modal.Title>면불 신청 삭제</Modal.Title>
+                    <Modal.Title>면불 취소</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {deleteResult === -1 &&
-                        <p>{targetNs[1]}에 신청된 면불 신청을 삭제할까요?</p>
+                        <p>{targetNs[1]}에 신청된 면불을 취소할까요?</p>
                     }
                     {deleteResult !== -1 &&
                         <>
@@ -472,10 +472,10 @@ function Ns() {
                                 <p className='bg-danger text-white p-3 rounded'>reCAPTCHA 확인에 실패했습니다.</p>
                             }
                             {deleteResult === 4 &&
-                                <p className='bg-danger text-white p-3 rounded'>사용자 보호를 위해 지금은 작업을 처리할 수 없습니다.</p>
+                                <p className='bg-danger text-white p-3 rounded'>사용자 보호를 위해 지금은 면불을 취소할 수 없습니다.</p>
                             }
                             {deleteResult === 5 &&
-                                <p className='bg-danger text-white p-3 rounded'>삭제하지 못했습니다.</p>
+                                <p className='bg-danger text-white p-3 rounded'>취소하지 못했습니다.</p>
                             }
                         </>
                     }
@@ -489,7 +489,7 @@ function Ns() {
                     }
                     {deleteResult !== -1 &&
                         <>
-                            <Button onClick={deleteNs} disabled={deleting}>재시도</Button>
+                            <Button onClick={deleteNs} disabled={deleting}>다시 시도</Button>
                             <Button onClick={closeDeleteConfirm} disabled={deleting}>취소</Button>
                         </>
                     }

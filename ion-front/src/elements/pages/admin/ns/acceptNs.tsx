@@ -77,7 +77,7 @@ function AcceptNs() {
     else if(nsLst.length === 0) {
         rLst.push(
             <tr>
-                <td colSpan={8}>해당 면학 불참 신청이 존재하지 않습니다.</td>
+                <td colSpan={8}>신청된 면학 불참이 없습니다.</td>
             </tr>
         );
     }

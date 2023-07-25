@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Deula() {
     return (
         <div className='vstack docs'>
-            <p className='fw-bold'>이 약관은 2023년 07월 19일 업데이트되었습니다.</p>
+            <p className='fw-bold'>이 약관은 2023년 07월 26일 업데이트되었습니다.</p>
             <p className='fw-bold'>Ion 서비스를 사용하기 전 본 약관을 주의깊게 읽어주세요. IonID를 생성함에 따라 본 약관에 동의하는 것으로 간주됩니다.</p>
             <h3>Ion의 이용</h3>
             <ol>
@@ -114,7 +114,7 @@ function Deula() {
                     </ol>
                 </li>
                 <li>
-                    <p className='fw-bold'>개인정보 자동수집 장치의 설치, 운영 및 그 거부에 관한 사항</p>
+                    <p className='fw-bold'>개인정보 자동수집 장치의 설치, 운영 및 거부에 관한 사항</p>
                     <ol>
                         <li>
                             <p className='fw-bold'>쿠키</p>

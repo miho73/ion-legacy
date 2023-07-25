@@ -123,7 +123,7 @@ function AddNs(props) {
                             <Button onClick={exe}>등록</Button>
                         </InputGroup>
                     </Form.Group>
-                    <p>이 면학 불참의 담당교사는 면학 불참을 추가한 본인이 됩니다.</p>
+                    <p>이 면학 불참의 담당교사는 면학 불참을 추가한 본인이 됩니다. 신청한 후 별도로 승인해야 합니다.</p>
                     {workError === 0 &&
                         <Alert variant="success">면학 불참을 추가했습니다.</Alert>
                     }

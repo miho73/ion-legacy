@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Alert, Button, ButtonGroup, Form, ListGroup } from "react-bootstrap";
 import { changeBit, getBit } from "../../../service/bitmask";
 
-function IonIdChangPrivilege(props) {
+function IonIdChangPrivilege() {
     const [usrLoaded, setUsrLoaded] = useState(false);
     const [id, setId] = useState('');
     const [up, setUp] = useState(0);
@@ -121,9 +121,9 @@ function IonIdChangPrivilege(props) {
             }
 
             <ListGroup className="mt-3">
-                <ListGroup.Item><span className="fw-bold">USER</span>: IonID 사용</ListGroup.Item>
-                <ListGroup.Item><span className="fw-bold">FACULTY</span>: IonID 활성화 / 면불 승인</ListGroup.Item>
-                <ListGroup.Item><span className="fw-bold">ROOT</span>: IonID 권한 수정 / 교사로 등록</ListGroup.Item>
+                <ListGroup.Item><span className="fw-bold">USER(1)</span>: IonID 사용</ListGroup.Item>
+                <ListGroup.Item><span className="fw-bold">FACULTY(2)</span>: IonID 활성화, 조회 / 면불 승인 추가 삭제</ListGroup.Item>
+                <ListGroup.Item><span className="fw-bold">SUPERVISOR(4)</span>: IonID 권한 수정 / 교사로 등록</ListGroup.Item>
             </ListGroup>
         </Form>
     );
