@@ -483,4 +483,23 @@ public class ManageController {
         reply.put("qtime", new SimpleDateFormat("yyyy.MM.dd HH.mm.ss").format(new Date()));
         return RestResponse.restResponse(HttpStatus.OK, reply);
     }
+
+    /**
+     * 0: success
+     * 1: invalid session
+     * 2: internal server error
+     */
+    @PatchMapping(
+            value = "/bulk/promote"
+    )
+    @Transactional
+    public String promote(HttpSession session, HttpServletResponse response) {
+        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        userService.promoteAll();
+        return RestResponse.restResponse(HttpStatus.OK, 0);
+    }
 }

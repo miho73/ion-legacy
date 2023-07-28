@@ -3,7 +3,7 @@ import { inRange } from '../../service/checker';
 import { changeBit, getBit } from '../../service/bitmask';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
-import { InputGroup, Form, FloatingLabel } from 'react-bootstrap';
+import { InputGroup, Form, FloatingLabel, FormLabel } from 'react-bootstrap';
 import { ready } from '../../service/recaptcha';
 import CaptchaNotice from '../fragments/captchaNotice';
 import Credit from '../fragments/credit';
@@ -123,22 +123,42 @@ function SignupPage() {
 
                 {page === 0 &&
                     <div id='page1' className='vstack gap-3 d-flex justify-content-center align-items-center'>
-                        <div className='form-floating has-validation'>
+                        <FloatingLabel label='이름'>
                             <Form.Control type='text'
                                           className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')}
-                                          disabled={block} id='name' placeholder='이름' autoComplete='name' aria-label='이름' value={name} onChange={e => setName(e.target.value)}/>
-                            <label htmlFor='name'>이름</label>
+                                          disabled={block}
+                                          placeholder='이름' 
+                                          autoComplete='name' 
+                                          aria-label='이름' 
+                                          value={name} 
+                                          onChange={e => setName(e.target.value)}
+                            />
+                            <FormLabel htmlFor='name'>이름</FormLabel>
                             <p className='invalid-feedback mb-0'>이름을 입력해주세요.</p>
-                        </div>
+                        </FloatingLabel>
                         <InputGroup>
-                            <div className='form-floating'>
-                                <input type='number' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')} disabled={block} id='grade' placeholder='학년' aria-label='학년' value={grade} onChange={e => setGrade(Number.parseInt(e.target.value))}/>
-                                <label htmlFor='grade'>학년</label>
-                            </div>
-                            <div className='form-floating'>
-                                <input type='number' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 2) ? ' is-invalid' : '')} disabled={block} id='clas' placeholder='반' aria-label='반' value={clas} onChange={e => setClas(Number.parseInt(e.target.value))}/>
-                                <label htmlFor='clas'>반</label>
-                            </div>
+                            <FloatingLabel label='학년'>
+                                <Form.Control type='number' 
+                                              className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')} 
+                                              disabled={block}
+                                              placeholder='학년' 
+                                              aria-label='학년' 
+                                              value={grade} 
+                                              onChange={e => setGrade(Number.parseInt(e.target.value))}
+                                />
+                                <FormLabel htmlFor='grade'>학년</FormLabel>
+                            </FloatingLabel>
+                            <FloatingLabel label='반'>
+                                <Form.Control type='number'
+                                              className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 2) ? ' is-invalid' : '')} 
+                                              disabled={block} 
+                                              placeholder='반' 
+                                              aria-label='반' 
+                                              value={clas} 
+                                              onChange={e => setClas(Number.parseInt(e.target.value))}
+                                />
+                                <FormLabel htmlFor='clas'>반</FormLabel>
+                            </FloatingLabel>
                             <FloatingLabel label='번호'>
                                 <Form.Control type='number'
                                               className={'pe-5 s-6 form-control-lg'+(getBit(formState, 3) ? ' is-invalid' : '')}

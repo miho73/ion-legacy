@@ -3,10 +3,14 @@ package com.github.miho73.ion.service;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.repository.UserRepository;
+import com.github.miho73.ion.utils.RestResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +20,12 @@ import java.util.Optional;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    SessionService sessionService;
+
+    @Autowired
+    RecaptchaService recaptchaService;
 
     public Optional<User> getUserById(String id) {
         return userRepository.findById(id);
@@ -60,5 +70,35 @@ public class UserService {
     public void resetGrade(int uid) {
         log.info("IonID reset grade. uid="+uid);
         userRepository.resetGradeByUid(uid);
+    }
+
+    public void promoteAll() {
+        userRepository.deleteThirdGrades();
+        userRepository.resetGradeOnPromote();
+    }
+
+    public int updateScode(HttpSession session, int clas, int scode, String captchaCode) throws IonException, IOException {
+        int uid = sessionService.getUid(session);
+
+        Optional<User> userOptional = userRepository.findById(uid);
+        if(userOptional.isEmpty()) {
+            recaptchaService.addAssessmentComment(captchaCode, false);
+            return 4;
+        }
+        User user = userOptional.get();
+        if(!user.isScodeCFlag()) {
+            recaptchaService.addAssessmentComment(captchaCode, false);
+            return 5;
+        }
+        userRepository.updateScode(uid, clas, scode);
+        userRepository.updateScodeFlag(uid, false);
+
+        recaptchaService.addAssessmentComment(captchaCode, true);
+        session.setAttribute("schange", false);
+        session.setAttribute("login", true);
+        session.setAttribute("id", user.getId());
+        session.setAttribute("name", user.getName());
+        session.setAttribute("priv", user.getPrivilege());
+        return 0;
     }
 }

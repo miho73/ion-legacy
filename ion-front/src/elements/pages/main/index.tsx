@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { isLogin } from '../../service/auth';
 import CannotAuthorize from '../auth/cannotAuth';
-import { LoginPage } from '../auth/login';
+import { LoginPage } from '../auth/login/login';
 import { Link } from 'react-router-dom';
 import ErrorPage from '../etc/error';
 import axios from 'axios';

@@ -5,6 +5,7 @@ import NsManage from "./ns/ns";
 import { checkPrivilege } from "../../service/auth";
 import { useNavigate } from "react-router-dom";
 import CannotAuthorize from '../auth/cannotAuth';
+import BulkActions from "./bulk/bulkActions";
 
 function ManagementPage() {
     const navigate = useNavigate();
@@ -26,21 +27,20 @@ function ManagementPage() {
     }
 
     return (
-        <>
-            <Container className='mt-4'>
-                <h1>Ion Management</h1>
-                <Tabs
-                    defaultActiveKey='ns'
-                >
-                    <Tab eventKey='ionid' title='IonID'>
-                        <IonIdManage/>
-                    </Tab>
-                    <Tab eventKey='ns' title='면학 불참'>
-                        <NsManage/>
-                    </Tab>
-                </Tabs>
-            </Container>
-        </>
+        <Container className='mt-4'>
+            <h1>Ion Management</h1>
+            <Tabs defaultActiveKey='ns'>
+                <Tab eventKey='ns' title='면학 불참'>
+                    <NsManage/>
+                </Tab>
+                <Tab eventKey='ionid' title='IonID'>
+                    <IonIdManage/>
+                </Tab>
+                <Tab eventKey='' title='학년 변경'>
+                    <BulkActions/>
+                </Tab>
+            </Tabs>
+        </Container>
     )
 }
 

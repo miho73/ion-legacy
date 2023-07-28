@@ -9,17 +9,15 @@ function NsManage() {
     const [wScode, setWScode] = useState('');
 
     return (
-        <>
-            <Container className="p-3">
-                <AcceptNs/>
-                <hr/>
-                <PrintNs/>
-                <hr/>
-                <AddNs scode={wScode} setScode={setWScode}/>
-                <hr/>
-                <QueryNs scode={wScode} setScode={setWScode}/>
-            </Container>
-        </>
+        <Container className="p-3">
+            <AcceptNs/>
+            <hr/>
+            <PrintNs/>
+            <hr/>
+            <AddNs scode={wScode} setScode={setWScode}/>
+            <hr/>
+            <QueryNs scode={wScode} setScode={setWScode}/>
+        </Container>
     );
 }
 

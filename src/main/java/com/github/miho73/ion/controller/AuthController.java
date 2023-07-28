@@ -51,6 +51,7 @@ public class AuthController {
      * 4: incorrect passcode
      * 5: recaptcha failed
      * 6: client recaptcha failed
+     * 7: set to change scode mode
      */
     @PostMapping(
             value = "authenticate",
@@ -96,12 +97,21 @@ public class AuthController {
                     reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), true);
                     userService.updateLastLogin(user.getUid());
 
-                    session.setAttribute("login", true);
                     session.setAttribute("uid", user.getUid());
-                    session.setAttribute("id", user.getId());
-                    session.setAttribute("name", user.getName());
                     session.setAttribute("grade", user.getGrade());
-                    session.setAttribute("priv", user.getPrivilege());
+                    if(user.isScodeCFlag()) {
+                        log.info("scode flag is true. user in schange mode. id="+user.getId());
+                        session.setAttribute("schange", true);
+                        session.setAttribute("login", false);
+                        return RestResponse.restResponse(HttpStatus.OK, 7);
+                    }
+                    else {
+                        session.setAttribute("schange", false);
+                        session.setAttribute("login", true);
+                        session.setAttribute("id", user.getId());
+                        session.setAttribute("name", user.getName());
+                        session.setAttribute("priv", user.getPrivilege());
+                    }
 
                     return RestResponse.restResponse(HttpStatus.OK, 0);
                 }
@@ -141,6 +151,7 @@ public class AuthController {
     public String Signout(HttpSession session, HttpServletResponse response) {
         if(sessionService.isLoggedIn(session)) {
             session.setAttribute("login", false);
+            log.info("user signed out. id="+sessionService.getId(session));
             return RestResponse.restResponse(HttpStatus.OK);
         }
         else {

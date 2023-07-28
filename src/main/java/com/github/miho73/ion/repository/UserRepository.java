@@ -57,4 +57,39 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void resetGradeByUid(
             @Param("uid") int uid
     );
+
+    @Modifying
+    @Query(
+            value = "UPDATE users.users SET grade=grade+1, scode_cflag=true WHERE (grade=1 OR grade=2) AND status=1",
+            nativeQuery = true
+    )
+    void resetGradeOnPromote();
+
+    @Modifying
+    @Query(
+            value = "DELETE FROM users.users WHERE grade=3",
+            nativeQuery = true
+    )
+    void deleteThirdGrades();
+
+    @Modifying
+    @Query(
+            value = "UPDATE users.users SET clas=:clas, scode=:scode WHERE uid=:uid",
+            nativeQuery = true
+    )
+    void updateScode(
+            @Param("uid") int uid,
+            @Param("clas") int clas,
+            @Param("scode") int scode
+    );
+
+    @Modifying
+    @Query(
+            value = "UPDATE users.users SET scode_cflag=:scodeFlag WHERE uid=:uid",
+            nativeQuery = true
+    )
+    void updateScodeFlag(
+            @Param("uid") int uid,
+            @Param("scodeFlag") boolean scodeFlag
+    );
 }

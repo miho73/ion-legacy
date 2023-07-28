@@ -213,6 +213,7 @@ function Ns() {
     }
 
     function deleteNs() {
+        setDeleting(true);
         ready('delete_ns', token => {
             axios.delete('/ns/api/nsr/delete', {
                 params: {
@@ -242,6 +243,9 @@ function Ns() {
                     default:
                         setDeleteResult(5);
                 }
+            })
+            .finally(() => {
+                setDeleting(false);
             });
         });
     }
@@ -387,7 +391,7 @@ function Ns() {
                     </Row>
                     <Row className='mx-3 my-3'>
                         <Form.Check
-                            label='노면실 자리를 예약해야 합니다.'
+                            label='노트북실 자리 예약'
                             isInvalid={getBit(formState, 4) === 1}
                             disabled={working} checked={lnsRoomRequired}
                             id='lnsRr'
@@ -396,7 +400,7 @@ function Ns() {
                     </Row>
                     {lnsRoomRequired &&
                         <div className='mx-4 my-3 border p-3 lnst'>
-                            <h5>노면실 자리 예약</h5>
+                            <h5>노트북실 자리 예약</h5>
                             {revTime === -1 &&
                                 <p className='my-0'>면불 시간을 선택해주세요.</p>
                             }

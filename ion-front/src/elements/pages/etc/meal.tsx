@@ -60,7 +60,7 @@ function MealNoti() {
             }
             {
                 workState === 1 &&
-                <ErrorPage exp='급식 정보를 받아오지 못했어요.'/>
+                <ErrorPage exp='급식 정보가 없습니다.'/>
             }
         </Container>
     )

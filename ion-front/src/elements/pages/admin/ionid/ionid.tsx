@@ -7,29 +7,27 @@ import RemoveGrade from "./removeGrade";
 
 function IonIdManage() {
     return (
-        <>
-            <Container className="p-3">
-                <Row className="my-3">
-                    <h2 className="mb-3">IonID 조회</h2>
-                    <QueryIonId/>
-                </Row>
-                <hr/>
-                <Row className="my-3">
-                    <h2 className="mb-3">IonID 활성화</h2>
-                    <IonIdActivation/>
-                </Row>
-                <hr/>
-                <Row className="my-3">
-                    <h2 className="mb-3">IonID 권한 변경</h2>
-                    <IonIdChangPrivilege/>
-                </Row>
-                <hr/>
-                <Row className="my-3">
-                    <h2 className="mb-3">교사로 등록</h2>
-                    <RemoveGrade/>
-                </Row>
-            </Container>
-        </>
+        <Container className="p-3">
+            <Row className="my-3">
+                <h2 className="mb-3">IonID 조회</h2>
+                <QueryIonId/>
+            </Row>
+            <hr/>
+            <Row className="my-3">
+                <h2 className="mb-3">IonID 활성화</h2>
+                <IonIdActivation/>
+            </Row>
+            <hr/>
+            <Row className="my-3">
+                <h2 className="mb-3">IonID 권한 변경</h2>
+                <IonIdChangPrivilege/>
+            </Row>
+            <hr/>
+            <Row className="my-3">
+                <h2 className="mb-3">교사로 등록</h2>
+                <RemoveGrade/>
+            </Row>
+        </Container>
     );
 }
 

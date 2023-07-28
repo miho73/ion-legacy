@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,7 +17,7 @@ import java.util.GregorianCalendar;
 @Service
 @Slf4j
 public class MealService {
-    @Value("${ion.meal.api-key}")
+    @Value("${ion.neis.api-key}")
     String MEAL_KEY;
 
     JSONObject cache;

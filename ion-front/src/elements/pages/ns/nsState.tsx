@@ -5,11 +5,13 @@ const NsState = function(props) {
     let cla = '';
     switch(props.status) {
         case 'APPROVED':
-            cla = 'table-success';
+            cla = 'table-success text-success text-center';
             break;
         case 'DENIED':
-            cla = 'table-danger';
+            cla = 'table-danger text-danger text-center';
             break;
+        case 'REQUESTED':
+            cla = 'text-center'
     }
 
     let time;

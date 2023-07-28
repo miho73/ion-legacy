@@ -89,7 +89,7 @@ function IonIdChangPrivilege() {
                     />
                     <Form.Check
                         inline
-                        label='ROOT'
+                        label='SUPERVISOR'
                         id='pr'
                         disabled={!usrLoaded}
                         checked={getBit(up, 2) === 1}
