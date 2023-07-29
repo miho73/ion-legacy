@@ -55,7 +55,7 @@ function Promote() {
                 <Modal.Body>
                     { !working &&
                         <>
-                            { workState === -1 &&
+                            { (workState === -1 || workState === 1)&&
                                 <>
                                     <p className='m-1'>진급 작업을 시작합니다. 그 결과</p>
                                     <ul className='m-1'>
