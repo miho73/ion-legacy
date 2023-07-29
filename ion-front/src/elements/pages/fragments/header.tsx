@@ -10,7 +10,7 @@ function Header() {
                 </Link>
                 <hr/>
                 <ul className="nav nav-pills gap-1">
-                    <li>
+                    <li className="only-desktop">
                         <Link to="/" className="nav-link">Home</Link>
                     </li>
                     <li>
@@ -18,6 +18,9 @@ function Header() {
                     </li>
                     <li>
                         <Link to="/etc/meal" className="nav-link">급식</Link>
+                    </li>
+                    <li>
+                        <Link to="/docs" className="nav-link">문서</Link>
                     </li>
                 </ul>
             </nav>

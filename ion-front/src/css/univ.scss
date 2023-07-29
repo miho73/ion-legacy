@@ -143,6 +143,7 @@ table {
         height: 300px;
     }
 }
+
 @include media-breakpoint-down(lg) {
     table {
         width: 100% !important;
@@ -229,6 +230,9 @@ table {
         .table-narrow {
             width: 100% !important;
         }
+    }
+    .only-desktop {
+        display: none;
     }
 }
 
