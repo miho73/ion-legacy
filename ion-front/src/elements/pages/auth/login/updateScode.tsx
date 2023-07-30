@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Alert, Button, FloatingLabel, Form, FormLabel, InputGroup } from 'react-bootstrap';
-import { changeBit, getBit } from '../../../service/bitmask';
-import { inRange } from '../../../service/checker';
+import React, {useEffect, useState} from 'react'
+import {Alert, Button, FloatingLabel, Form, FormLabel, InputGroup} from 'react-bootstrap';
+import {changeBit, getBit} from '../../../service/bitmask';
+import {inRange} from '../../../service/checker';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { ready } from '../../../service/recaptcha';
+import {ready} from '../../../service/recaptcha';
 
 function UpdateScode() {
     const [grade, setGrade] = useState(1);

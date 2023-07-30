@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 
 function Hangang() {
     const [data, setData] = useState({tem: 0, loc: '', dat: '', tim: ''});

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
+import {Container, Row} from "react-bootstrap";
 import IonIdActivation from "./idActivation";
 import QueryIonId from "./queryIonId";
 import IonIdChangPrivilege from "./changeState";

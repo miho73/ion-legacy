@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 /**
  * @param props sn: Seat number(1-6) rev: Reserved(true/false) revName: Name(str) revScd: sCode(int)

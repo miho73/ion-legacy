@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container } from "react-bootstrap";
+import React, {useState} from 'react';
+import {Container} from "react-bootstrap";
 import QueryNs from './queryNs';
 import AddNs from './addNS';
 import AcceptNs from './acceptNs';

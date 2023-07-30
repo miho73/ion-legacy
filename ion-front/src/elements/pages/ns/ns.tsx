@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 import LnsRoomSelect from './nsr/lns';
-import { changeBit, getBit } from '../../service/bitmask';
-import { inRange } from '../../service/checker';
+import {changeBit, getBit} from '../../service/bitmask';
+import {inRange} from '../../service/checker';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import {isLogin} from '../../service/auth'
 import CannotAuthorize from '../auth/cannotAuth';
 
-import { Alert, Button, Col, Container, Form, Modal, Row, Stack, Table } from 'react-bootstrap';
+import {Alert, Button, Col, Container, Form, Modal, Row, Stack, Table} from 'react-bootstrap';
 import NsState from './nsState';
-import { ready } from '../../service/recaptcha';
+import {ready} from '../../service/recaptcha';
 
 function Ns() {
     const [lnsRoomRequired, setLnsRoomRequired] = useState(false);

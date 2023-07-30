@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { Alert, Button, Container, Form, FormCheck, FormGroup, FormSelect, InputGroup, Row, Table } from 'react-bootstrap';
+import {Alert, Button, Container, Form, FormGroup, FormSelect, InputGroup, Row, Table} from 'react-bootstrap';
 import axios from 'axios';
 import font from '../../../types/SpoqaHanSansNeo-normal';
 

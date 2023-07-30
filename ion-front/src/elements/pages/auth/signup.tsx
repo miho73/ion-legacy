@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { inRange } from '../../service/checker';
-import { changeBit, getBit } from '../../service/bitmask';
+import React, {useState} from 'react';
+import {inRange} from '../../service/checker';
+import {changeBit, getBit} from '../../service/bitmask';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
-import { InputGroup, Form, FloatingLabel, FormLabel } from 'react-bootstrap';
-import { ready } from '../../service/recaptcha';
+import {Link, useNavigate} from 'react-router-dom';
+import {FloatingLabel, Form, FormLabel, InputGroup} from 'react-bootstrap';
+import {ready} from '../../service/recaptcha';
 import CaptchaNotice from '../fragments/captchaNotice';
 import Credit from '../fragments/credit';
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, {useState} from 'react'
-import { Button, Form, Modal, Spinner, Stack } from 'react-bootstrap';
+import {Button, Form, Modal, Spinner, Stack} from 'react-bootstrap';
 
 function Promote() {
     const [ confirmModalShow, setConfirmModalShow ] = useState(false);

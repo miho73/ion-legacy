@@ -1,15 +1,15 @@
 import React from 'react';
 import Dactivation from './archive/d_activation';
 import Deula from './archive/d_eula';
-import Dadmin from './archive/d_admin';
 import Dcredit from './archive/d_credit';
-import { Container } from 'react-bootstrap';
-import { Link, useParams } from 'react-router-dom';
+import {Container} from 'react-bootstrap';
+import {Link, useParams} from 'react-router-dom';
+import Dintro from './archive/d_intro';
 
 const DOC_REGISTRY = {
     'activation': ['IonID 활성화', (<Dactivation/>)],
     'eula': ["이용약관", (<Deula/>)],
-    'manage': ["Management 도구", (<Dadmin/>)],
+    'introduction': ["Ion 사용하기", (<Dintro/>)],
     'credits': ["Project Ion", <Dcredit/>]
 };
 
@@ -72,7 +72,7 @@ function Docs() {
                 <h1>{DOC_REGISTRY[param][0]}</h1>
             </Link>
             <hr/>
-            <Container className='nst'>
+            <Container className='nst docs'>
                 {DOC_REGISTRY[param][1]}
             </Container>
         </>

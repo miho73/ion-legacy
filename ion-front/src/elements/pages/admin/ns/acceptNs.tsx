@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Alert, Button, ButtonGroup, Row, Table } from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {Alert, Button, ButtonGroup, Row, Table} from "react-bootstrap";
 
 function NsReq(props) {
     const id = props.id;

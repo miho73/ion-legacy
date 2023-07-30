@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, Container, Row } from 'react-bootstrap';
+import {Container, Row} from 'react-bootstrap';
 import Promote from './promote';
 
 function BulkActions() {

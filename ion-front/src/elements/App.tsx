@@ -1,12 +1,12 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 
 import Index from './pages/main';
 import ErrorPage from './pages/etc/error';
 import Ns from './pages/ns/ns';
 
 import '../css/univ.scss';
-import { SignoutPage } from './pages/auth/login/login';
+import {SignoutPage} from './pages/auth/login/login';
 import SignupPage from './pages/auth/signup';
 import Docs from './pages/docs/docs';
 import Header from './pages/fragments/header';

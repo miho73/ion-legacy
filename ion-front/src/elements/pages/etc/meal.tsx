@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { Container, Stack } from 'react-bootstrap';
+import React, {useEffect, useState} from 'react'
+import {Container} from 'react-bootstrap';
 import ErrorPage from './error';
 
 function Meal(props) {
