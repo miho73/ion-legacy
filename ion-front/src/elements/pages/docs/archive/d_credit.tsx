@@ -1,11 +1,11 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import {Row, Table} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 function Dcredit() {
     return (
         <div className='vstack'>
-            <div>
+            <Row className='mb-4'>
                 <h2>Developers</h2>
                 <div className='table-cover'>
                     <Table className='table-narrow'>
@@ -25,9 +25,17 @@ function Dcredit() {
                         </tbody>
                     </Table>
                 </div>
-                <p>Ion을 위해 가능한 모든 지원을 해주신 이지현 정보 선생님에게 특별한 감사의 말씀을 드립니다.</p>
-                <p>Project Ion GitHub: <Link to='https://github.com/miho73/ion' className='text-decoration-none' target='_black'>Link</Link></p>
-            </div>
+                <Row className='my-2'>
+                    <p className='my-1'>Ion을 위해 가능한 모든 지원을 해주신 이지현 정보 선생님에게 특별한 감사의 말씀을 드립니다.</p>
+                </Row>
+                <Row className='my-2'>
+                    <p className='my-1'>Project Ion GitHub: <Link to='https://github.com/miho73/ion' className='text-decoration-none' target='_black'>Link</Link></p>
+                    <p className='my-1'>
+                        <Link to='https://github.com/miho73/ion/issues' className='text-decoration-none' target='_blank'>이슈</Link>
+                        <span> 등 Ion 개발과 오픈소스 기여와 관련된 사항은 GitHub에서 확인할 수 있습니다.</span>
+                    </p>
+                </Row>
+            </Row>
             <div>
                 <h2>Managers</h2>
                 <Table>

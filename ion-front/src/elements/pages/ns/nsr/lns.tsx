@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import LnsSeat from './lns-seat';
-import { changeBit, getBit } from '../../../service/bitmask';
-import { Button, Form, Stack } from 'react-bootstrap';
+import {changeBit, getBit} from '../../../service/bitmask';
+import {Button, Form, Stack} from 'react-bootstrap';
 
 const sigMapping = ['A', 'B', 'C', 'D', 'E', 'F']
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Alert, Button, ButtonGroup, Row, Table } from "react-bootstrap";
+import React, {useEffect, useState} from "react";
+import {Alert, Button, ButtonGroup, Row, Table} from "react-bootstrap";
 
 function NsReq(props) {
     const id = props.id;
@@ -9,8 +9,8 @@ function NsReq(props) {
     const deny = props.deny;
 
     let cc;
-    if(props.status === 'APPROVED') cc = 'table-success';
-    if(props.status === 'DENIED') cc = 'table-danger';
+    if(props.status === 'APPROVED') cc = 'table-success text-success text-center';
+    if(props.status === 'DENIED') cc = 'table-danger text-danger text-center';
 
     return (
         <tr>

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Alert, Button, Col, Form, InputGroup, Modal, Row, Table } from "react-bootstrap";
+import React, {useState} from "react";
+import {Alert, Button, Col, Form, InputGroup, Modal, Row, Table} from "react-bootstrap";
 import NsState from "../../ns/nsState";
 import axios from "axios";
 

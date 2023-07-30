@@ -1,6 +1,6 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { Alert, Button, Form, InputGroup } from "react-bootstrap";
+import React, {useState} from "react";
+import {Alert, Button, Form, InputGroup} from "react-bootstrap";
 
 function IonIdActivation() {
     const [id, setId] = useState('');

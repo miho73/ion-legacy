@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Alert, Button, Col, Form, InputGroup, Row } from "react-bootstrap";
-import { changeBit, getBit } from "../../../service/bitmask";
+import React, {useState} from "react";
+import {Alert, Button, Col, Form, InputGroup, Row} from "react-bootstrap";
+import {changeBit, getBit} from "../../../service/bitmask";
 import axios from "axios";
-import { inRange } from "../../../service/checker";
+import {inRange} from "../../../service/checker";
 
 function AddNs(props) {
     const [revTime, setRevTime] = useState(-1);

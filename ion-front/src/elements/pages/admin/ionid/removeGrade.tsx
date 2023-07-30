@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { Alert, Button, FormControl, InputGroup } from 'react-bootstrap';
+import React, {useState} from 'react'
+import {Alert, Button, FormControl, InputGroup} from 'react-bootstrap';
 
 function RemoveGrade() {
     const [ionId, setIonId] = useState('');

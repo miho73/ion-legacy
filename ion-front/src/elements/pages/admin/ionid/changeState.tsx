@@ -1,7 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { Alert, Button, ButtonGroup, Form, ListGroup } from "react-bootstrap";
-import { changeBit, getBit } from "../../../service/bitmask";
+import React, {useState} from "react";
+import {Alert, Button, ButtonGroup, Form, ListGroup} from "react-bootstrap";
+import {changeBit, getBit} from "../../../service/bitmask";
 
 function IonIdChangPrivilege() {
     const [usrLoaded, setUsrLoaded] = useState(false);

@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, {useState} from 'react'
+import {Link} from 'react-router-dom'
 import CaptchaNotice from '../../fragments/captchaNotice'
 import Credit from '../../fragments/credit'
-import { inRange } from '../../../service/checker';
-import { changeBit, getBit } from '../../../service/bitmask';
-import { ready } from '../../../service/recaptcha';
+import {inRange} from '../../../service/checker';
+import {changeBit, getBit} from '../../../service/bitmask';
+import {ready} from '../../../service/recaptcha';
 import axios from 'axios';
 
 function LoginSection(props) {
