@@ -43,6 +43,7 @@ spring:
     redis:
       host: localhost
       port: 8735
+      password: ENC(3w1sVKd4Ja3ZcUOhqsq/3s1TAiVrOdJl+iWbaExpBiv1h7DAHiLDnZAAu4H8RnZlpJFlp706beA6CMjNBgckZWyxOD1OGiisssaLso7AejU=)
 
   mvc:
     static-path-pattern: /**
