@@ -18,7 +18,7 @@ public interface NsRepository extends JpaRepository<NsRecord, Integer> {
 
     void deleteByUuidAndNsTimeAndNsDate(int uuid, NsRecord.NS_TIME time, LocalDate nsDate);
 
-    List<NsRecord> findByNsDateAndNsSupervisorContainsOrderByNsStateAsc(LocalDate date, String nsSupervisor);
+    List<NsRecord> findByNsDateAndNsSupervisorContainsOrderByNsStateAscUuidAscNsTimeAsc(LocalDate date, String nsSupervisor);
 
     @Modifying
     @Query(

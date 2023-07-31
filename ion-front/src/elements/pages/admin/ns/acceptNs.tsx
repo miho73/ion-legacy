@@ -11,6 +11,7 @@ function NsReq(props) {
     let cc;
     if(props.status === 'APPROVED') cc = 'table-success text-success text-center';
     if(props.status === 'DENIED') cc = 'table-danger text-danger text-center';
+    if(props.status === 'REQUESTED') cc = 'text-center';
 
     return (
         <tr>

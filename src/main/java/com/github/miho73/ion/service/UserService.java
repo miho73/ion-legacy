@@ -64,7 +64,7 @@ public class UserService {
     }
 
     public List<User> getUserByGrade(int grade) {
-        return userRepository.findByGradeOrderByClasAscScodeAsc(grade);
+        return userRepository.findByGradeAndStatusOrderByClasAscScodeAsc(grade, User.USER_STATUS.ACTIVATED);
     }
 
     public void resetGrade(int uid) {

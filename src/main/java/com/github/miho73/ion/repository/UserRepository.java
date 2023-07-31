@@ -47,7 +47,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     Optional<User> findByGradeAndClasAndScode(int grade, int clas, int scode);
 
-    List<User> findByGradeOrderByClasAscScodeAsc(int grade);
+    List<User> findByGradeAndStatusOrderByClasAscScodeAsc(int grade, User.USER_STATUS status);
 
     @Modifying
     @Query(
