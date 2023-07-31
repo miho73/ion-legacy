@@ -33,7 +33,7 @@ jobs:
           server: ionya.cc
           username: ${{ secrets.FTP_USER_NAME }}
           password: ${{ secrets.FTP_USER_PASSWORD }}
-          protocol: ftp
+          protocol: ftps
           local-dir: ./to_be_sync/
           server-dir: ./ion/
       - name: action-slack
