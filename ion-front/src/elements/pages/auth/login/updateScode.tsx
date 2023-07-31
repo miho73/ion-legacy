@@ -17,7 +17,7 @@ function UpdateScode() {
 
     useEffect(() => {
         axios.get('/user/api/scode-change/query')
-        .then(res => {
+        .then((res: any) => {
             setGrade(res.data['result']);
             setWorking(false);
         })
@@ -34,7 +34,7 @@ function UpdateScode() {
         if(state !== 0) return;
 
         setWorking(true);
-        ready('login', token => {
+        ready('update_scode', token => {
             axios.patch('/user/api/scode-change/change', {
                 clas: clas,
                 scode: scode,

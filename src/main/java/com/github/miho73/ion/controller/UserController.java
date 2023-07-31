@@ -176,7 +176,7 @@ public class UserController {
         }
 
         try {
-            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "login");
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "update_scode");
             if (!recaptchaReply.isOk()) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
