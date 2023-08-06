@@ -5,12 +5,14 @@ import Dcredit from './archive/d_credit';
 import {Container} from 'react-bootstrap';
 import {Link, useParams} from 'react-router-dom';
 import Dintro from './archive/d_intro';
+import Dsystem from "./archive/d_system";
 
 const DOC_REGISTRY = {
     'activation': ['IonID 활성화', (<Dactivation/>)],
     'eula': ["이용약관", (<Deula/>)],
     'introduction': ["Ion 사용하기", (<Dintro/>)],
-    'credits': ["Project Ion", <Dcredit/>]
+    'credits': ["Project Ion", <Dcredit/>],
+    'system': ["Ion System", <Dsystem/>]
 };
 
 function DocsMain() {

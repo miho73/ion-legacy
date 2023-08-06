@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -35,9 +36,16 @@ public class UserService {
         return userRepository.findById(id).isEmpty();
     }
 
+    public User.USER_STATUS DEFAULT_USER_STATE;
+
+    @PostConstruct
+    public void init() {
+        DEFAULT_USER_STATE = User.USER_STATUS.INACTIVATED;
+    }
+
     public User createUser(User user) {
         user.setJoinDate(new Timestamp(System.currentTimeMillis()));
-        user.setStatus(User.USER_STATUS.INACTIVATED);
+        user.setStatus(DEFAULT_USER_STATE);
         user.setPrivilege(1);
         user.setScodeCFlag(false);
         return userRepository.save(user);
@@ -100,5 +108,25 @@ public class UserService {
         session.setAttribute("name", user.getName());
         session.setAttribute("priv", user.getPrivilege());
         return 0;
+    }
+
+    public void setDefaultIonIDState(int defaultState) throws IonException {
+        switch (defaultState) {
+            case 0:
+                DEFAULT_USER_STATE = User.USER_STATUS.INACTIVATED;
+                break;
+            case 1:
+                DEFAULT_USER_STATE = User.USER_STATUS.ACTIVATED;
+                break;
+            case 2:
+                DEFAULT_USER_STATE = User.USER_STATUS.BANNED;
+                break;
+            default:
+                throw new IonException();
+        }
+        log.info("IonID default state set to "+DEFAULT_USER_STATE);
+    }
+    public User.USER_STATUS getDefaultUserState() {
+        return DEFAULT_USER_STATE;
     }
 }

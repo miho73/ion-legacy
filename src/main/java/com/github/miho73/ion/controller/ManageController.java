@@ -9,6 +9,7 @@ import com.github.miho73.ion.service.UserService;
 import com.github.miho73.ion.service.ns.NsService;
 import com.github.miho73.ion.utils.RestResponse;
 import com.github.miho73.ion.utils.Validation;
+import com.google.api.Http;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -501,5 +502,57 @@ public class ManageController {
 
         userService.promoteAll();
         return RestResponse.restResponse(HttpStatus.OK, 0);
+    }
+
+    /**
+     * 0: success
+     * 1: invalid session
+     * 2: insufficient parameter
+     * 3: invalud parameter
+     */
+    @PatchMapping(
+            value = "/bulk/default-ionid-state/set",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String setDefaultIonIDState(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestBody Map<String, String> body
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+        if(!Validation.checkKeys(body, "defaultState")) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 2);
+        }
+
+        try {
+            userService.setDefaultIonIDState(Integer.parseInt(body.get("defaultState")));
+        } catch (IonException e) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 3);
+        }
+        return RestResponse.restResponse(HttpStatus.OK, 0);
+    }
+
+    /**
+     * [data]: success
+     * 1: invalid session
+     */
+    @GetMapping(
+            value = "/bulk/default-ionid-state/get"
+    )
+    public String getDefaultIonIDState(
+            HttpSession session,
+            HttpServletResponse response
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+        return RestResponse.restResponse(HttpStatus.OK, userService.getDefaultUserState());
     }
 }

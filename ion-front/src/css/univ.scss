@@ -277,6 +277,9 @@ table {
     background-color: $gray-400;
 }
 
+.list-group-item {
+    margin: 0 !important;
+}
 .docs {
     h3 {
         margin-top: 20px;
