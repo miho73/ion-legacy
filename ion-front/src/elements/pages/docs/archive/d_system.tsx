@@ -11,6 +11,8 @@ function Dsystem() {
                     <ListGroupItem as='a' className='ps-5' href='#ionidoutline'>개요</ListGroupItem>
                     <ListGroupItem as='a' className='ps-5' href='#status'>상태</ListGroupItem>
                     <ListGroupItem as='a' className='ps-5' href='#privilege'>권한</ListGroupItem>
+                    <ListGroupItem as='li' className='fw-bold fs-5'>기타</ListGroupItem>
+                    <ListGroupItem as='a' className='ps-5' href='#mainpage'>메인 페이지</ListGroupItem>
                     <ListGroupItem as='li' className='fw-bold fs-5'>관리자 페이지</ListGroupItem>
                     <ListGroupItem as='a' className='ps-5' href='#ionid'>IonID</ListGroupItem>
                     <ListGroupItem as='a' className='ps-5' href='#ns'>면학 불참</ListGroupItem>
@@ -126,10 +128,18 @@ function Dsystem() {
                             <p>권한은 정수 n으로 표현됩니다.</p>
                             <p>정수 n을 이진수로 바꿉니다. 예를 들어 n=6인 경우 110이 됩니다.</p>
                             <p>이진수의 각 자릿수는 각 권한을 뜻하고 그 자리수가 1인 경우 권한이 있는것, 0인 경우 권한이 없는 것입니다. 자릿수는 권한의 코드와 같습니다.</p>
-                            <p>예를 들어 n=6의 경우 110이므로 FACULTY와 SUPERVISOR 권한을 가진 것입니다.</p>
+                            <p>예를 들어 6의 경우 110이므로 FACULTY와 SUPERVISOR 권한을 가지고 있습니다.</p>
                         </div>
                         <p>권한은 여러개를 중첩하여 가질 수 있습니다. 또한 하나의 권한으로는 그 권한으로 할 수 있는 작업만 할 수 있습니다. 예를 들어 권한 '5'은 면불을 승인할 수 없습니다.</p>
                         <p>권한의 관리는 관리자 페이지/IonID 에서 가능하며 SUPERVISOR 권한이 필요합니다. 또한 자기 자신의 권한은 수정할 수 없으며 이미 로그인되어있는 IonID의 권한을 수정하면 다시 로그인한 후 변경사항이 적용됩니다.</p>
+                    </Row>
+                </Row>
+                <Row className='mb-3'>
+                    <p className='fw-bold fs-2 my-1'>기타</p>
+                    <Row className='mb-2'>
+                        <p className='my-1 fw-bold fs-4' id='mainpage'>메인페이지</p>
+                        <p>메인페이지는 사이트에 처음 접속하면 보여지는 페이지입니다. 로그인된 사용자는 메인페이지가 보여지며 로그인 되어있지 않은 경우 로그인 페이지를 보여줍니다.</p>
+                        <p>메인페이지의 이미지는 매일 바뀌며 그날의 NASA APOD 사진을 보여줍니다.</p>
                     </Row>
                 </Row>
                 <Row className='mb-3'>
