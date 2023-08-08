@@ -78,7 +78,7 @@ function AddNs(props) {
     return (
         <Row className="my-3">
             <h2 className="mb-3">면학 불참 추가</h2>
-            <Form>
+            <div>
                 <Row className='mt-1'>
                     <Form.Group as={Col} className='mb-3'>
                         <Form.Label htmlFor='time' className='form-label'>면학</Form.Label>
@@ -143,7 +143,7 @@ function AddNs(props) {
                         <Alert variant="danger">문제가 발생했습니다.</Alert>
                     }
                 </Row>
-            </Form>
+            </div>
         </Row>
     )
 }

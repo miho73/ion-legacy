@@ -2,25 +2,14 @@ package com.github.miho73.ion.service;
 
 import com.github.miho73.ion.dto.RecaptchaReply;
 import com.google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseServiceClient;
-import com.google.recaptchaenterprise.v1.Assessment;
-import com.google.recaptchaenterprise.v1.CreateAssessmentRequest;
-import com.google.recaptchaenterprise.v1.Event;
-import com.google.recaptchaenterprise.v1.ProjectName;
+import com.google.recaptchaenterprise.v1.*;
 import com.google.recaptchaenterprise.v1.RiskAnalysis.ClassificationReason;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -119,15 +108,35 @@ public class RecaptchaService {
      * @return true when success otherwise, false
      */
     public boolean addAssessmentComment(String assessmentId, boolean type) throws IOException {
-        String requestUrl = "https://recaptchaenterprise.googleapis.com/v1/projects/elemention/assessments/"+assessmentId+":annotate";
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost(requestUrl);
-        List<NameValuePair> params = new ArrayList<NameValuePair>(2);
-        params.add(new BasicNameValuePair("annotation", type ? "LEGITIMATE" : "FRAUDULENT"));
-        httppost.setEntity(new UrlEncodedFormEntity(params, "UTF-8"));
+        if(type) return addLegitimateAnnotation(assessmentId);
+        else return addSuspiciousAnnotation(assessmentId);
+    }
 
-        HttpResponse response = httpclient.execute(httppost);
-        log.info("made "+(type ? "legal" : "illegal")+" comment. assessmentId="+assessmentId);
-        return response.getStatusLine().getStatusCode() == 200;
+    private boolean addSuspiciousAnnotation(String assessmentId) throws IOException {
+        try (RecaptchaEnterpriseServiceClient client = RecaptchaEnterpriseServiceClient.create()) {
+            AnnotateAssessmentRequest annotateAssessmentRequest =
+                    AnnotateAssessmentRequest.newBuilder()
+                            .setName(AssessmentName.of(projectId, assessmentId).toString())
+                            .setAnnotation(AnnotateAssessmentRequest.Annotation.FRAUDULENT)
+                            .build();
+
+            AnnotateAssessmentResponse response = client.annotateAssessment(annotateAssessmentRequest);
+            log.info("recaptcha fraudulent annotation success. assessmentId="+assessmentId);
+        }
+        return true;
+    }
+
+    private boolean addLegitimateAnnotation(String assessmentId) throws IOException {
+        try (RecaptchaEnterpriseServiceClient client = RecaptchaEnterpriseServiceClient.create()) {
+            AnnotateAssessmentRequest annotateAssessmentRequest =
+                    AnnotateAssessmentRequest.newBuilder()
+                            .setName(AssessmentName.of(projectId, assessmentId).toString())
+                            .setAnnotation(AnnotateAssessmentRequest.Annotation.LEGITIMATE)
+                            .build();
+
+            AnnotateAssessmentResponse response = client.annotateAssessment(annotateAssessmentRequest);
+            log.info("recaptcha Legitimate comment success. assessmentId="+assessmentId);
+        }
+        return true;
     }
 }

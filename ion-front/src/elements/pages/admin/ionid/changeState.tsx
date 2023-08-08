@@ -62,7 +62,7 @@ function IonIdChangPrivilege() {
     }
 
     return (
-        <Form className="w-50 mgw">
+        <div className="w-50 mgw" action={e => e.preventDefault()}>
             <Form.Group className="mb-2">
                 <Form.Control
                     type="text"
@@ -125,7 +125,7 @@ function IonIdChangPrivilege() {
                 <ListGroup.Item><span className="fw-bold">FACULTY(2)</span>: IonID 활성화, 조회 / 면불 승인 추가 삭제</ListGroup.Item>
                 <ListGroup.Item><span className="fw-bold">SUPERVISOR(4)</span>: IonID 권한 수정 / 교사로 등록</ListGroup.Item>
             </ListGroup>
-        </Form>
+        </div>
     );
 }
 

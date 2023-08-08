@@ -139,7 +139,7 @@ function SignupPage() {
                         <InputGroup>
                             <FloatingLabel label='학년'>
                                 <Form.Control type='number' 
-                                              className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')} 
+                                              className={'pe-5 fs-6'+(getBit(formState, 1) ? ' is-invalid' : '')}
                                               disabled={block}
                                               placeholder='학년' 
                                               aria-label='학년' 
@@ -150,7 +150,7 @@ function SignupPage() {
                             </FloatingLabel>
                             <FloatingLabel label='반'>
                                 <Form.Control type='number'
-                                              className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 2) ? ' is-invalid' : '')} 
+                                              className={'pe-5 fs-6'+(getBit(formState, 2) ? ' is-invalid' : '')}
                                               disabled={block} 
                                               placeholder='반' 
                                               aria-label='반' 
@@ -161,7 +161,7 @@ function SignupPage() {
                             </FloatingLabel>
                             <FloatingLabel label='번호'>
                                 <Form.Control type='number'
-                                              className={'pe-5 s-6 form-control-lg'+(getBit(formState, 3) ? ' is-invalid' : '')}
+                                              className={'pe-5 fs-6'+(getBit(formState, 3) ? ' is-invalid' : '')}
                                               disabled={block}
                                               placeholder='번호'
                                               aria-label='번호'

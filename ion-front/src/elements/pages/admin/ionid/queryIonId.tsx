@@ -43,7 +43,7 @@ function QueryIonId() {
 
     return (
         <>
-        <Form className="w-25 mgw">
+        <div className="w-25 mgw">
             <InputGroup className="mb-3">
                 <InputGroup.Text>IonID</InputGroup.Text>
                 <Form.Control
@@ -95,7 +95,7 @@ function QueryIonId() {
             { (gs === 4 || gs === 5) &&
                 <Alert variant="danger">문제가 발생했습니다.</Alert>
             }
-        </Form>
+        </div>
         </>
     );
 }

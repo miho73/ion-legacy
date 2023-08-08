@@ -39,7 +39,7 @@ function IonIdActivation() {
     }
 
     return (
-        <Form className="w-50 mgw">
+        <div className="w-50 mgw">
             <InputGroup className="mb-3">
                 <Form.Control
                     type="text"
@@ -57,7 +57,7 @@ function IonIdActivation() {
             {result[0] === 1 &&
                 <Alert variant="danger">{result[1]}</Alert>
             }
-        </Form>
+        </div>
     );
 }
 
