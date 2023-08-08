@@ -1,6 +1,5 @@
 package com.github.miho73.ion.dto;
 
-import jakarta.persistence.Entity;
 import lombok.Data;
 
 import java.util.List;

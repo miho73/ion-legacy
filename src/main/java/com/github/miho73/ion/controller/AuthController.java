@@ -2,7 +2,6 @@ package com.github.miho73.ion.controller;
 
 import com.github.miho73.ion.dto.RecaptchaReply;
 import com.github.miho73.ion.dto.User;
-import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.service.AuthService;
 import com.github.miho73.ion.service.RecaptchaService;
 import com.github.miho73.ion.service.SessionService;

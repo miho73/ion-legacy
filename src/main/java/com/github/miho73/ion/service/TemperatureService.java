@@ -1,4 +1,5 @@
 package com.github.miho73.ion.service;
+
 import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.utils.Requests;
 import jakarta.annotation.PostConstruct;
@@ -8,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

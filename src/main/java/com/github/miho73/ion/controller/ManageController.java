@@ -9,14 +9,12 @@ import com.github.miho73.ion.service.UserService;
 import com.github.miho73.ion.service.ns.NsService;
 import com.github.miho73.ion.utils.RestResponse;
 import com.github.miho73.ion.utils.Validation;
-import com.google.api.Http;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -33,17 +31,24 @@ import java.util.Optional;
 @Slf4j
 @RequestMapping("/manage/api")
 public class ManageController {
-    @Autowired
+    final
     SessionService sessionService;
 
-    @Autowired
+    final
     UserService userService;
 
-    @Autowired
+    final
     IonIdManageService ionIdManageService;
 
-    @Autowired
+    final
     NsService nsService;
+
+    public ManageController(SessionService sessionService, UserService userService, IonIdManageService ionIdManageService, NsService nsService) {
+        this.sessionService = sessionService;
+        this.userService = userService;
+        this.ionIdManageService = ionIdManageService;
+        this.nsService = nsService;
+    }
 
     /**
      *  0: OK

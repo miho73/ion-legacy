@@ -20,10 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 @RestController
