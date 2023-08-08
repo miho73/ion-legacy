@@ -45,6 +45,7 @@ function Dcredit() {
                             <th>기수</th>
                             <th>기간</th>
                             <th>SNS</th>
+                            <td>GitHub</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,12 +54,14 @@ function Dcredit() {
                             <td>30th</td>
                             <td>2023 - </td>
                             <td><Link className='text-decoration-none' to='https://www.instagram.com/iya.es/' target='_blank'>@iya.es</Link></td>
+                            <td><Link className='text-decoration-none' to='https://github.com/miho73' target='_blank'>miho73</Link></td>
                         </tr>
                         <tr>
                             <td>이승원</td>
                             <td>30th</td>
                             <td>2023 - </td>
-                            <td></td>
+                            <td><Link className='text-decoration-none' to='https://www.instagram.com/thislife_won/' target='_blank'>@thislife_won</Link></td>
+                            <td><Link className='text-decoration-none' to='https://github.com/sw8744' target='_blank'>sw8744</Link></td>
                         </tr>
                     </tbody>
                 </Table>
