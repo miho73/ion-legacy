@@ -8,10 +8,11 @@ function NsReq(props) {
     const accept = props.accept;
     const deny = props.deny;
 
-    let cc;
-    if(props.status === 'APPROVED') cc = 'table-success text-success text-center';
-    if(props.status === 'DENIED') cc = 'table-danger text-danger text-center';
-    if(props.status === 'REQUESTED') cc = 'text-center';
+    let cc, sh;
+    if(props.status === 'APPROVED') {cc = 'table-success text-success text-center'; sh='APPROVED';}
+    if(props.status === 'DENIED') {cc = 'table-danger text-danger text-center'; sh = 'DENIED';}
+    if(props.status === 'REQUESTED') {cc = 'text-center'; sh = 'REQUESTED';}
+    if(props.status === 'NO_SUPERVISOR') {cc = 'table-warning text-danger text-center'; sh = 'NO SUPERVISOR';}
 
     return (
         <tr>
@@ -21,7 +22,7 @@ function NsReq(props) {
             <td>{props.place}</td>
             <td>{props.super}</td>
             <td>{props.reason}</td>
-            <td className={cc}>{props.status}</td>
+            <td className={cc}>{sh}</td>
             <td>
                 <ButtonGroup>
                     <Button variant='outline-success' onClick={() => accept(id)}>승인</Button>

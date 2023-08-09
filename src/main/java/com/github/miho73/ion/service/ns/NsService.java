@@ -34,6 +34,15 @@ public class NsService {
     public void saveNsRequest(int uuid, NsRecord.NS_TIME nsTime, boolean lnsReq, int lnsReqUid, Map<String, String> body) {
         NsRecord nsRecord = new NsRecord();
 
+        // check if supervisor exists
+        int supervisors = nsRepository.findAllUserContainedInName(body.get("supervisor")).size();
+        if(supervisors == 0) {
+            nsRecord.setNsState(NsRecord.NS_STATE.NO_SUPERVISOR);
+        }
+        else {
+            nsRecord.setNsState(NsRecord.NS_STATE.REQUESTED);
+        }
+
         nsRecord.setNsDate(LocalDate.now());
         nsRecord.setNsReqTime(new Timestamp(System.currentTimeMillis()));
 
@@ -41,8 +50,6 @@ public class NsService {
         nsRecord.setNsPlace(body.get("place"));
         nsRecord.setNsSupervisor(body.get("supervisor"));
         nsRecord.setNsReason(body.get("reason"));
-
-        nsRecord.setNsState(NsRecord.NS_STATE.REQUESTED);
 
         nsRecord.setLnsReq(lnsReq);
         if(lnsReq) {

@@ -3,15 +3,24 @@ import {Button} from "react-bootstrap";
 
 const NsState = function(props) {
     let cla = '';
+    let sHint = '';
     switch(props.status) {
         case 'APPROVED':
             cla = 'table-success text-success text-center';
+            sHint = 'APPROVED';
             break;
         case 'DENIED':
             cla = 'table-danger text-danger text-center';
+            sHint = 'DENIED';
             break;
         case 'REQUESTED':
             cla = 'text-center'
+            sHint = 'REQUESTED';
+            break;
+        case 'NO_SUPERVISOR':
+            cla = 'table-warning text-danger text-center';
+            sHint = 'NO SUPERVISOR';
+            break;
     }
 
     let time;
@@ -44,7 +53,7 @@ const NsState = function(props) {
             {!props.lnsReq &&
                 <td>-</td>
             }
-            <td className={cla}>{props.status}</td>
+            <td className={cla}>{sHint}</td>
             <td className="d-flex gap-2">
                 <Button variant='outline-secondary' className='d-flex align-content-center p-2' title='삭제' onClick={deleteNs}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-lg" viewBox="0 0 16 16">

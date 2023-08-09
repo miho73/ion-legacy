@@ -1,6 +1,7 @@
 package com.github.miho73.ion.repository;
 
 import com.github.miho73.ion.dto.NsRecord;
+import com.github.miho73.ion.dto.User;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -19,6 +20,14 @@ public interface NsRepository extends JpaRepository<NsRecord, Integer> {
     void deleteByUuidAndNsTimeAndNsDate(int uuid, NsRecord.NS_TIME time, LocalDate nsDate);
 
     List<NsRecord> findByNsDateAndNsSupervisorContainsOrderByNsStateAscUuidAscNsTimeAsc(LocalDate date, String nsSupervisor);
+
+    @Query(
+            value = "SELECT * FROM users.users WHERE :query LIKE concat('%', users.name, '%')",
+            nativeQuery = true
+    )
+    List<User> findAllUserContainedInName(
+            @Param("query") String query
+    );
 
     @Modifying
     @Query(

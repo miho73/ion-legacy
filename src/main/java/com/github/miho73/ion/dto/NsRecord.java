@@ -53,7 +53,8 @@ public class NsRecord {
     public enum NS_STATE {
         REQUESTED,
         APPROVED,
-        DENIED
+        DENIED,
+        NO_SUPERVISOR
     }
 
     public enum NS_TIME {
