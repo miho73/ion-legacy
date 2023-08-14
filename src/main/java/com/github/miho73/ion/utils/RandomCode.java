@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
@@ -20,8 +22,8 @@ public class RandomCode {
 
     @PostConstruct
     public void init() throws IOException {
-        File resource = new ClassPathResource("wordlist.csv").getFile();
-        String employees = Files.readString(resource.toPath());
+        InputStream resource = new ClassPathResource("wordlist.csv").getInputStream();
+        String employees = new String(resource.readAllBytes(), StandardCharsets.UTF_8);
         String[] words = employees.split(",");
         Collections.addAll(WORD_SET, words);
         WORD_SET_SIZE = WORD_SET.size();
