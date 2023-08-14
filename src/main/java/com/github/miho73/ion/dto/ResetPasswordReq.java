@@ -27,8 +27,8 @@ public class ResetPasswordReq {
     @Column(name = "uuid", nullable = false)
     private int uuid;
 
-    @Length(min = 8, max = 50, message = "invalid private code")
-    @Column(name = "private_code", nullable = false)
+    @Length(min = 1, max = 60, message = "invalid private code")
+    @Column(name = "private_code")
     private String privateCode;
 
     @Length(min = 128, max = 128, message = "invalid randUrl")

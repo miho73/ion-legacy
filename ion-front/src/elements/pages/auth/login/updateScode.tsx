@@ -7,8 +7,8 @@ import {ready} from '../../../service/recaptcha';
 
 function UpdateScode() {
     const [grade, setGrade] = useState(1);
-    const [clas, setClas] = useState(0);
-    const [scode, setScode] = useState(0);
+    const [clas, setClas] = useState();
+    const [scode, setScode] = useState();
     const [working, setWorking] = useState(true);
     const [workState, setWorkState] = useState(-1);
     const [formState, setFormState] = useState(0);
@@ -74,7 +74,7 @@ function UpdateScode() {
             <InputGroup>                
                 <FloatingLabel label='반'>
                     <Form.Control type='number'
-                                  className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')} 
+                                  className={'pe-5 fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')}
                                   disabled={working} 
                                   placeholder='반' 
                                   aria-label='반' 
@@ -85,7 +85,7 @@ function UpdateScode() {
                 </FloatingLabel>
                 <FloatingLabel label='번호'>
                     <Form.Control type='number'
-                                  className={'pe-5 s-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')}
+                                  className={'pe-5 fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')}
                                   disabled={working}
                                   placeholder='번호'
                                   aria-label='번호'

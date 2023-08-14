@@ -1,12 +1,15 @@
 package com.github.miho73.ion.controller;
 
 import com.github.miho73.ion.dto.NsRecord;
+import com.github.miho73.ion.dto.ResetPasswordReq;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.service.IonIdManageService;
+import com.github.miho73.ion.service.ResetPasswordService;
 import com.github.miho73.ion.service.SessionService;
 import com.github.miho73.ion.service.UserService;
 import com.github.miho73.ion.service.ns.NsService;
+import com.github.miho73.ion.utils.RandomCode;
 import com.github.miho73.ion.utils.RestResponse;
 import com.github.miho73.ion.utils.Validation;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,6 +18,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +39,9 @@ public class ManageController {
     SessionService sessionService;
 
     final
+    RandomCode randomCode;
+
+    final
     UserService userService;
 
     final
@@ -43,11 +50,16 @@ public class ManageController {
     final
     NsService nsService;
 
-    public ManageController(SessionService sessionService, UserService userService, IonIdManageService ionIdManageService, NsService nsService) {
+    final
+    ResetPasswordService resetPasswordService;
+
+    public ManageController(SessionService sessionService, UserService userService, IonIdManageService ionIdManageService, NsService nsService, ResetPasswordService resetPasswordService, RandomCode randomCode) {
         this.sessionService = sessionService;
         this.userService = userService;
         this.ionIdManageService = ionIdManageService;
         this.nsService = nsService;
+        this.resetPasswordService = resetPasswordService;
+        this.randomCode = randomCode;
     }
 
     /**
@@ -559,5 +571,105 @@ public class ManageController {
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
         return RestResponse.restResponse(HttpStatus.OK, userService.getDefaultUserState());
+    }
+
+    /**
+     * [data]: success
+     * 1: invalid session
+     * 2: request not found
+     * 3: user not found
+     */
+    @GetMapping(
+            value = "/reset-passwd/query",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String queryResetPwdReq(
+            @RequestParam("id") String id,
+            HttpServletResponse response,
+            HttpSession session
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        //1. get user by id
+        Optional<User> userOptional = userService.getUserById(id);
+        if(userOptional.isEmpty()) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+        }
+        User user = userOptional.get();
+
+        // 2. get request by user entity
+        Optional<ResetPasswordReq> rpq = resetPasswordService.getRequest(user.getUid());
+        if(rpq.isEmpty()) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        }
+
+        ResetPasswordReq req = rpq.get();
+        if(!req.getRequestDate().equals(LocalDate.now())) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        }
+
+        // 3. return request
+        JSONObject ret = new JSONObject();
+        ret.put("id", user.getId());
+        ret.put("name", user.getName());
+        ret.put("scode", user.getGrade()*1000+user.getClas()*100+user.getScode());
+        ret.put("status", req.getStatus());
+        ret.put("uid", req.getUid());
+        return RestResponse.restResponse(HttpStatus.OK, ret);
+    }
+
+    /**
+     * 0: success
+     * 1: invalid session
+     * 2: insufficient parameter(s)
+     * 3: request not found
+     * 4: invalid status
+     */
+    @PatchMapping(
+            value = "/reset-passwd/accept",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public String acceptResetPwd(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestBody Map<String, String> body
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+        if(!Validation.checkKeys(body, "reqUid", "accept")) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        }
+        int uid = Integer.parseInt(body.get("reqUid"));
+        Optional<ResetPasswordReq> reqOptional = resetPasswordService.getRequestByUid(uid);
+        if(reqOptional.isEmpty()) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+        }
+        ResetPasswordReq req = reqOptional.get();
+        if(req.getStatus() != ResetPasswordReq.RESET_PWD_STATUS.WAITING && req.getStatus() != ResetPasswordReq.RESET_PWD_STATUS.REQUESTED) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
+        }
+
+        boolean aprv = Boolean.parseBoolean(body.get("accept"));
+        resetPasswordService.acceptRequest(uid, aprv);
+        if(aprv) {
+            String code = randomCode.randomString(128);
+            reqOptional.get().setRandUrl(code);
+            reqOptional.get().setStatus(ResetPasswordReq.RESET_PWD_STATUS.APPROVED);
+            return RestResponse.restResponse(HttpStatus.OK, code);
+        }
+        else return RestResponse.restResponse(HttpStatus.OK);
     }
 }

@@ -4,6 +4,8 @@ import IonIdActivation from "./idActivation";
 import QueryIonId from "./queryIonId";
 import IonIdChangPrivilege from "./changeState";
 import RemoveGrade from "./removeGrade";
+import AcceptNs from "../ns/acceptNs";
+import AcceptPwdChange from "./acceptPwdChange";
 
 function IonIdManage() {
     return (
@@ -21,6 +23,11 @@ function IonIdManage() {
             <Row className="my-3">
                 <h2 className="mb-3">IonID 권한 변경</h2>
                 <IonIdChangPrivilege/>
+            </Row>
+            <hr/>
+            <Row className="my-3">
+                <h2 className="mb-3">암호 재설정 확인</h2>
+                <AcceptPwdChange/>
             </Row>
             <hr/>
             <Row className="my-3">

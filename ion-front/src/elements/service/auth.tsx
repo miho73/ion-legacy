@@ -8,7 +8,7 @@ const MODE = process.env.REACT_APP_MODE
  */
 function isLogin(setLogin: (a: number) => void) {
     if(MODE === 'TEST') {
-        setLogin(1);
+        setLogin(0);
         return;
     }
 

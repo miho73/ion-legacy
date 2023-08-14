@@ -6,6 +6,7 @@ import com.github.miho73.ion.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
@@ -17,14 +18,24 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class UserService {
-    @Autowired
+    final
+    PasswordEncoder passwordEncoder;
+
+    final
     UserRepository userRepository;
 
-    @Autowired
+    final
     SessionService sessionService;
 
-    @Autowired
+    final
     RecaptchaService recaptchaService;
+
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository, SessionService sessionService, RecaptchaService recaptchaService) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+        this.sessionService = sessionService;
+        this.recaptchaService = recaptchaService;
+    }
 
     public Optional<User> getUserById(String id) {
         return userRepository.findById(id);
@@ -126,5 +137,13 @@ public class UserService {
     }
     public User.USER_STATUS getDefaultUserState() {
         return DEFAULT_USER_STATE;
+    }
+
+    public int updatePassword(int uid, String pwd) {
+        log.info("IonID update password. uid="+uid);
+        Optional<User> user = userRepository.findById(uid);
+        if(user.isEmpty()) return 6;
+        user.get().setPwd(passwordEncoder.encode(pwd));
+        return 0;
     }
 }

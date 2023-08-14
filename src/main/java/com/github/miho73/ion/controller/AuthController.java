@@ -4,46 +4,63 @@ import com.github.miho73.ion.dto.RecaptchaReply;
 import com.github.miho73.ion.dto.ResetPasswordReq;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.service.*;
+import com.github.miho73.ion.utils.RandomCode;
 import com.github.miho73.ion.utils.RestResponse;
 import com.github.miho73.ion.utils.Validation;
-import com.google.api.Http;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 @Slf4j
 @RestController
 @RequestMapping("/auth/api")
 public class AuthController {
+    final
+    RandomCode randomCode;
 
-    @Autowired
+    final
+    PasswordEncoder passwordEncoder;
+
+    final
     UserService userService;
 
-    @Autowired
+    final
     AuthService authService;
 
-    @Autowired
+    final
     SessionService sessionService;
 
-    @Autowired
+    final
     ResetPasswordService resetPasswordService;
 
-    @Autowired
+    final
     RecaptchaService reCaptchaAssessment;
 
     @Value("${ion.recaptcha.block-threshold}")
     float CAPTCHA_THRESHOLD;
+
+    public AuthController(PasswordEncoder passwordEncoder, UserService userService, AuthService authService, SessionService sessionService, ResetPasswordService resetPasswordService, RecaptchaService reCaptchaAssessment, RandomCode randomCode) {
+        this.passwordEncoder = passwordEncoder;
+        this.userService = userService;
+        this.authService = authService;
+        this.sessionService = sessionService;
+        this.resetPasswordService = resetPasswordService;
+        this.reCaptchaAssessment = reCaptchaAssessment;
+        this.randomCode = randomCode;
+    }
 
     /**
      * 0: ok.
@@ -257,7 +274,7 @@ public class AuthController {
             }
             User user = userOptional.get();
 
-            if(!user.getName().equals(name) || !(user.getGrade()*1000+user.getClas()+user.getScode() == scode)) {
+            if(!user.getName().equals(name) || !(user.getGrade()*1000+user.getClas()*100+user.getScode() == scode)) {
                 reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
                 log.info("reset password request failed: bad identity.");
                 response.setStatus(400);
@@ -274,8 +291,8 @@ public class AuthController {
             resetPasswordService.createRequest(user.getUid());
             log.info("reset password request success. id="+user.getId());
             return RestResponse.restResponse(HttpStatus.OK, 0);
-        } catch (IOException e) {
-            log.error("recaptcha failed(IOException).", e);
+        } catch (Exception e) {
+            log.error("reset password request failed", e);
             response.setStatus(500);
             return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -317,10 +334,176 @@ public class AuthController {
         log.info("reset password query success. id="+user.getId());
         JSONObject ret = new JSONObject();
         ret.put("status", req.getStatus());
-        if(req.getStatus() == ResetPasswordReq.RESET_PWD_STATUS.REQUESTED) {
-            ret.put("privateCode", req.getPrivateCode());
+        if(req.getStatus() == ResetPasswordReq.RESET_PWD_STATUS.REQUESTED && req.getPrivateCode() == null) {
+            log.info("Generating private code for req uid " + req.getUid());
+            String code = randomCode.certString();
+            rpqOptional.get().setPrivateCode(passwordEncoder.encode(code));
+            rpqOptional.get().setStatus(ResetPasswordReq.RESET_PWD_STATUS.WAITING);
+            ret.put("privateCode", code);
         }
         ret.put("reqDate", req.getRequestDate());
         return RestResponse.restResponse(HttpStatus.OK, ret);
+    }
+
+    /**
+     * 0: ok
+     * 1: insufficient parameter(s)
+     * 2: request not found(invalid token)
+     * 3: invalid private code
+     * 4: invalid status
+     * 5: recaptcha failed
+     * 6: client recaptcha failed (low score)
+     * 7: internal server error
+     */
+    @PostMapping(
+            value = "/reset-passwd/check-private",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public String checkPrivateCode(
+            @RequestBody Map<String, String> body,
+            HttpSession session,
+            HttpServletResponse response
+    ) {
+        if(!Validation.checkKeys(body, "token", "privateCode", "ctoken")) {
+            log.info("reset password check private code failed: insufficient parameter(s).");
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
+        }
+
+        String ctoken = body.get("ctoken");
+        String token = body.get("token");
+        String privateCode = body.get("privateCode");
+
+        try {
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "check_private_code");
+            if (!recaptchaReply.isOk()) {
+                log.info("check private code request failed: recaptcha failed.");
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
+            }
+
+            if (recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
+                log.info("check private code failed: client recaptcha failed (low score).");
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 6);
+            }
+
+            Optional<ResetPasswordReq> rpqOptional = resetPasswordService.getRequestByRandUrl(token);
+            if(rpqOptional.isEmpty()) {
+                log.info("reset password check private code failed: request not found.");
+                response.setStatus(400);
+                reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+            }
+            if(!passwordEncoder.matches(privateCode, rpqOptional.get().getPrivateCode())) {
+                log.info("reset password check private code failed: invalid private code");
+                response.setStatus(400);
+                reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+            }
+            if(rpqOptional.get().getStatus() != ResetPasswordReq.RESET_PWD_STATUS.APPROVED) {
+                log.info("reset password check private code failed: invalid status");
+                response.setStatus(400);
+                reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), false);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
+            }
+
+            rpqOptional.get().setStatus(ResetPasswordReq.RESET_PWD_STATUS.CLOSED);
+            session.setAttribute("changingPwd", true);
+            session.setAttribute("pwdToken", token);
+            reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), true);
+            return RestResponse.restResponse(HttpStatus.OK);
+        } catch (IOException e) {
+            log.error("recaptcha failed(IOException).", e);
+            response.setStatus(500);
+            return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR, 7);
+        }
+    }
+
+    /**
+     *  0: success
+     *  1: insufficient parameter(s)
+     *  2: unprepared session
+     *  3: password too short
+     *  4: recaptcha failed
+     *  5: client recaptcha failed (low score)
+     *  6: user/request not found
+     *  7: internal server error
+     */
+    @PatchMapping(
+            value = "/reset-passwd/reset",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @Transactional
+    public String resetPasswd(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestBody Map<String, String> body
+    ) {
+        if(!Validation.checkKeys(body, "pwd", "token", "ctoken")) {
+            log.info("reset password failed: insufficient parameter(s).");
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
+        }
+
+        try {
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "reset_password");
+            if (!recaptchaReply.isOk()) {
+                log.info("reset password failed: recaptcha failed.");
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
+            }
+
+            if (recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
+                log.info("reset password failed: client recaptcha failed (low score).");
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
+            }
+
+            // check session
+            Object sFlag = session.getAttribute("changingPwd");
+            Object token = session.getAttribute("pwdToken");
+            if(sFlag == null || token == null) {
+                log.info("reset password failed: unprepared session(at primary check).");
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+            }
+            if(!((boolean) sFlag) || !token.toString().equals(token)) {
+                log.info("reset password failed: unprepared session(at secondary check).");
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+            }
+
+            // check password
+            String pwd = body.get("pwd");
+            if(pwd.length() < 6) {
+                log.info("reset password failed: password too short.");
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+            }
+
+            // update pwd
+            Optional<ResetPasswordReq> rpqOptional = resetPasswordService.getRequestByRandUrl(token.toString());
+            if(rpqOptional.isEmpty()) {
+                log.info("reset password failed: request not found.");
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 6);
+            }
+            int uid = rpqOptional.get().getUuid();
+            int res = userService.updatePassword(uid, pwd);
+            if(res == 0) {
+                return RestResponse.restResponse(HttpStatus.OK);
+            }
+            else {
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, res);
+            }
+        } catch (Exception e) {
+            log.error("reset password failed: internal server error.", e);
+            response.setStatus(500);
+            return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR, 7);
+        }
     }
 }

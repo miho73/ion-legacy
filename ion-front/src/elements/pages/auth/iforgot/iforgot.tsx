@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import {Alert, Button, FloatingLabel, Form, Stack} from "react-bootstrap";
 import axios from "axios";
-import {inRange} from "../../service/checker";
-import {changeBit} from "../../service/bitmask";
-import {ready} from "../../service/recaptcha";
+import {inRange} from "../../../service/checker";
+import {changeBit} from "../../../service/bitmask";
+import {ready} from "../../../service/recaptcha";
 import {Link} from "react-router-dom";
-import ErrorPage from "../etc/error";
+import ErrorPage from "../../etc/error";
 
 function IForgotDashboard(props) {
     const [privateCode, setPrivateCode] = useState<string>('');
@@ -35,17 +35,17 @@ function IForgotDashboard(props) {
         <main className='container mt-4'>
             <Stack className='justify-content-center align-items-center text-center'>
                 <h1 className='h3 mt-3 mb-0 fw-normal'>IonID 찾기</h1>
-                <p className={'h5 my-4 fw-normal'}>암호 변경 신청</p>
-                <p className={'my-1'}>암호 변경이 신청되었습니다. 학년 부장 선생님께 찾아가서 변경 신청을 승인하도록 부탁드리세요. 이 신청은 오늘만 유효합니다.</p>
-                <p className={'my-1'}>변경 신청이 승인되면 암호를 변경할 수 있는 링크가 생성됩니다. 이 링크를 통해 암호를 변경할 수 있습니다.</p>
-                <p className={'my-1'}>사용자 보호를 위해 암호를 변경하기 전에 개인 확인 코드를 입력해야 합니다. 코드를 잘 기억해두세요.</p>
+                <p className={'h5 my-4 fw-normal'}>암호 재설정</p>
+                <p className={'my-1'}>암호 재설정이 신청되었습니다. 학년 부장 선생님께 찾아가서 재설정 신청을 승인하도록 부탁드리세요. 이 신청은 오늘만 유효합니다.</p>
+                <p className={'my-1'}>재설정 신청이 승인되면 암호를 변경할 수 있는 링크가 생성됩니다. 이 링크를 통해 암호를 변경할 수 있습니다.</p>
+                <p className={'my-1'}>사용자 보호를 위해 암호를 재설정하기 전에 개인 확인 코드를 입력해야 합니다. 코드를 잘 기억해두세요.</p>
                 { workState === -1 &&
                     <p className={'fs-5 fw-bold'}>확인중</p>
                 }
                 { workState === 0 &&
                     <>
-                        <p className={'fs-4 fw-bold mt-4 mb-1'}>개인 확인 코드: HoneyMoon</p>
-                        <p className={'fs-5 fw-bold'}>이 코드는 이번 한 번만 볼 수 있습니다.</p>
+                        <p className={'fs-4 fw-bold mt-4 mb-1'}>개인 확인 코드: {privateCode}</p>
+                        <p className={'fs-5 fw-bold'}>이 코드는 한 번만 볼 수 있습니다.</p>
                     </>
                 }
                 { workState === 1 &&
@@ -120,10 +120,8 @@ function IForgot() {
                         setWorkState(6);
                         break;
                     case 7:
-                        setStage(2);
-                        break;
                     default:
-                        setWorkState(7);
+                        setStage(2);
                 }
             }).finally(() => {
                 setWorking(false);
@@ -141,7 +139,7 @@ function IForgot() {
         <main className='container mt-4'>
             <form className='vstack gap-3 d-flex justify-content-center align-items-center text-center form-signin'>
                 <h1 className='h3 mt-3 mb-0 fw-normal'>IonID 찾기</h1>
-                <p className={'h5 fw-normal'}>암호 변경 신청</p>
+                <p className={'h5 fw-normal'}>암호 재설정</p>
                 {stage === 0 &&
                     <>
                         <p className='fs-6 m-0'>복구할 IonID를 입력해주세요.</p>
@@ -202,22 +200,19 @@ function IForgot() {
                     <Alert variant={'danger'}>IonID를 확인하지 못했습니다.</Alert>
                 }
                 {workState === 2 &&
-                    <Alert variant={'danger'}>암호 변경을 신청하지 못했습니다.</Alert>
+                    <Alert variant={'danger'}>암호 재설정을 신청하지 못했습니다.</Alert>
                 }
                 {workState === 3 &&
-                    <Alert variant={'danger'}>이미 로그인 되어있으므로 암호찾기를 할 수 없습니다.</Alert>
+                    <Alert variant={'danger'}>이미 로그인 되어있으므로 암호를 재설정할 수 없습니다.</Alert>
                 }
                 {workState === 4 &&
                     <Alert variant={'danger'}>reCAPTCHA 확인에 실패했습니다.</Alert>
                 }
                 {workState === 5 &&
-                    <Alert variant={'danger'}>사용자 보호를 위해 지금은 암호 변경을 신청할 수 없습니다.</Alert>
+                    <Alert variant={'danger'}>사용자 보호를 위해 지금은 암호 재설정을 신청할 수 없습니다.</Alert>
                 }
                 {workState === 6 &&
                     <Alert variant={'danger'}>IonID를 찾을 수 없습니다.</Alert>
-                }
-                {workState === 7 &&
-                    <Alert variant={'danger'}>암호 변경을 신청하지 못했습니다.</Alert>
                 }
             </form>
         </main>

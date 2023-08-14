@@ -23,7 +23,7 @@ public class MainController {
 
     @GetMapping({
             "/",
-            "/auth/signup", "/auth/iforgot",
+            "/auth/signup", "/auth/iforgot", "/auth/iforgot/reset",
             "/docs/**",
             "/ns",
             "/manage",

@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
-    @Autowired
+    final
     PasswordEncoder passwordEncoder;
+
+    public AuthService(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     /**
      * @param pwd password to match
