@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,20 +27,27 @@ import java.util.Map;
 @RequestMapping("/user/api")
 public class UserController {
 
-    @Autowired
+    final
     UserService userService;
 
-    @Autowired
+    final
     PasswordEncoder passwordEncoder;
 
-    @Autowired
+    final
     SessionService sessionService;
 
-    @Autowired
+    final
     RecaptchaService reCaptchaAssessment;
 
     @Value("${ion.recaptcha.block-threshold}")
     float CAPTCHA_THRESHOLD;
+
+    public UserController(UserService userService, PasswordEncoder passwordEncoder, SessionService sessionService, RecaptchaService reCaptchaAssessment) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.sessionService = sessionService;
+        this.reCaptchaAssessment = reCaptchaAssessment;
+    }
 
     @GetMapping(
             value = "/validation/id-duplication",

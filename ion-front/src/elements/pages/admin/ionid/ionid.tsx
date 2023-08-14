@@ -4,7 +4,6 @@ import IonIdActivation from "./idActivation";
 import QueryIonId from "./queryIonId";
 import IonIdChangPrivilege from "./changeState";
 import RemoveGrade from "./removeGrade";
-import AcceptNs from "../ns/acceptNs";
 import AcceptPwdChange from "./acceptPwdChange";
 
 function IonIdManage() {

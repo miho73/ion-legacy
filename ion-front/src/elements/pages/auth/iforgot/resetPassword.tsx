@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react'
-import {Alert, Button, FloatingLabel, Form, FormLabel, InputGroup, Stack} from 'react-bootstrap';
+import React, {useState} from 'react'
+import {Alert, Button, FloatingLabel, Form, Stack} from 'react-bootstrap';
 import {changeBit, getBit} from '../../../service/bitmask';
 import {inRange} from '../../../service/checker';
 import axios from 'axios';

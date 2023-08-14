@@ -1,10 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Alert, Button, FloatingLabel, Form, Stack} from "react-bootstrap";
 import axios from "axios";
-import {inRange} from "../../../service/checker";
-import {changeBit} from "../../../service/bitmask";
 import {ready} from "../../../service/recaptcha";
-import {Link} from "react-router-dom";
 import ErrorPage from "../../etc/error";
 
 function IForgotDashboard(props) {

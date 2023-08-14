@@ -4,7 +4,6 @@ import com.github.miho73.ion.service.MealService;
 import com.github.miho73.ion.service.TemperatureService;
 import com.github.miho73.ion.utils.RestResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequestMapping("/etc/api")
 public class EtcController {
-    @Autowired
+    final
     TemperatureService tempService;
 
-    @Autowired
+    final
     MealService mealService;
+
+    public EtcController(TemperatureService tempService, MealService mealService) {
+        this.tempService = tempService;
+        this.mealService = mealService;
+    }
 
     @GetMapping(
             value = "/temp/hangang",

@@ -1,7 +1,6 @@
 package com.github.miho73.ion.service;
 
 import com.github.miho73.ion.dto.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

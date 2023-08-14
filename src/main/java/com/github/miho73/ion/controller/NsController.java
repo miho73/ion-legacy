@@ -15,7 +15,6 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,19 +29,25 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/ns/api")
 public class NsController {
-    @Autowired
+    final
     SessionService sessionService;
 
-    @Autowired
+    final
     NsService nsService;
 
-    @Autowired
+    final
     RecaptchaService recaptchaService;
 
     @Value("${ion.recaptcha.block-threshold}")
     float CAPTCHA_THRESHOLD;
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
+
+    public NsController(SessionService sessionService, NsService nsService, RecaptchaService recaptchaService) {
+        this.sessionService = sessionService;
+        this.nsService = nsService;
+        this.recaptchaService = recaptchaService;
+    }
 
     /**
      *  [data]: success

@@ -10,7 +10,6 @@ import com.github.miho73.ion.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -22,14 +21,20 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class NsService {
-    @Autowired
+    final
     NsRepository nsRepository;
 
-    @Autowired
+    final
     LnsRepository lnsRepository;
 
-    @Autowired
+    final
     UserRepository userRepository;
+
+    public NsService(NsRepository nsRepository, LnsRepository lnsRepository, UserRepository userRepository) {
+        this.nsRepository = nsRepository;
+        this.lnsRepository = lnsRepository;
+        this.userRepository = userRepository;
+    }
 
     public void saveNsRequest(int uuid, NsRecord.NS_TIME nsTime, boolean lnsReq, int lnsReqUid, Map<String, String> body) {
         NsRecord nsRecord = new NsRecord();

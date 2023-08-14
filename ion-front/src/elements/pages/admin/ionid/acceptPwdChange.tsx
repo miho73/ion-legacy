@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, {useState} from "react";
-import {Alert, Button, ButtonGroup, Form, InputGroup, ListGroup, OverlayTrigger, Popover, Table} from "react-bootstrap";
-import {changeBit, getBit} from "../../../service/bitmask";
+import {Alert, Button, Form, InputGroup, Table} from "react-bootstrap";
 
 function AcceptPwdChange() {
     const [usrLoaded, setUsrLoaded] = useState(false);
