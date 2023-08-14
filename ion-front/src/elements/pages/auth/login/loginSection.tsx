@@ -6,6 +6,7 @@ import {inRange} from '../../../service/checker';
 import {changeBit, getBit} from '../../../service/bitmask';
 import {ready} from '../../../service/recaptcha';
 import axios from 'axios';
+import {Stack} from "react-bootstrap";
 
 function LoginSection(props) {
     const [id, setId] = useState('');
@@ -86,7 +87,10 @@ function LoginSection(props) {
                     }
                 </div>
             }
-            <Link to={'/auth/signup'} className='text-muted text-decoration-none'>IonID 만들기</Link>
+            <Stack direction='horizontal' className='gap-3 justify-content-center mt-2 mb-4'>
+                <Link to={'/auth/signup'} className='text-muted text-decoration-none fs-6'>IonID 만들기</Link>
+                <Link to={'/auth/iforgot'} className='text-muted text-decoration-none fs-6'>암호 찾기</Link>
+            </Stack>
             <CaptchaNotice/>
             <Credit/>
         </form>

@@ -14,6 +14,7 @@ import ManagementPage from './pages/admin/admin';
 import Hangang from './pages/etc/temperature/hangang';
 import Incheon from './pages/etc/temperature/icn';
 import MealNoti from './pages/etc/meal';
+import IForgot from "./pages/auth/iforgot";
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
 
                         <Route path='/auth/signup' element={<SignupPage/>}/>
                         <Route path='/auth/signout' element={<SignoutPage/>}/>
+                        <Route path='/auth/iforgot' element={<IForgot/>}/>
 
                         <Route path='/docs/*' element={<Docs/>}/>
 
