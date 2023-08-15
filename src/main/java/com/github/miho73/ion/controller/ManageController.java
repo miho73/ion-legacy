@@ -4,10 +4,10 @@ import com.github.miho73.ion.dto.NsRecord;
 import com.github.miho73.ion.dto.ResetPasswordReq;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.exceptions.IonException;
-import com.github.miho73.ion.service.IonIdManageService;
-import com.github.miho73.ion.service.ResetPasswordService;
-import com.github.miho73.ion.service.SessionService;
-import com.github.miho73.ion.service.UserService;
+import com.github.miho73.ion.service.auth.ResetPasswordService;
+import com.github.miho73.ion.service.auth.SessionService;
+import com.github.miho73.ion.service.ionid.IonIdManageService;
+import com.github.miho73.ion.service.ionid.UserService;
 import com.github.miho73.ion.service.ns.NsService;
 import com.github.miho73.ion.utils.RandomCode;
 import com.github.miho73.ion.utils.RestResponse;
@@ -62,12 +62,12 @@ public class ManageController {
     }
 
     /**
-     *  0: OK
-     *  1: Invalid session
-     *  2: insufficient parameter
-     *  3: invalid new status
-     *  4: no user with such id
-     *  5: no self modify
+     * 0: OK
+     * 1: Invalid session
+     * 2: insufficient parameter
+     * 3: invalid new status
+     * 4: no user with such id
+     * 5: no self modify
      */
     @PatchMapping(
             value = "/ionid/active/patch",
@@ -80,26 +80,26 @@ public class ManageController {
             @RequestBody Map<String, String> body,
             HttpSession session
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
-        if(!Validation.checkKeys(body, "id", "ac")) {
+        if (!Validation.checkKeys(body, "id", "ac")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
 
         String uid = body.get("id");
         int status = Integer.parseInt(body.get("ac"));
-        if(status < 0 || status > 2) {
+        if (status < 0 || status > 2) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
-        if(userService.existsUserById(uid)) {
+        if (userService.existsUserById(uid)) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
         }
-        if(sessionService.getId(session).equals(uid)) {
+        if (sessionService.getId(session).equals(uid)) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
         }
@@ -120,8 +120,8 @@ public class ManageController {
 
     /**
      * [data]: success
-     *  1: invalid session
-     *  2: no user with such id
+     * 1: invalid session
+     * 2: no user with such id
      */
     @GetMapping(
             value = "/ionid/get",
@@ -132,14 +132,14 @@ public class ManageController {
             HttpServletResponse response,
             @RequestParam("id") String id
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
         User user;
         Optional<User> userOptional = userService.getUserById(id);
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
@@ -161,10 +161,10 @@ public class ManageController {
     }
 
     /**
-     *  0: ok
-     *  1: invalid session
-     *  2: insufficient parameter
-     *  3: user not found
+     * 0: ok
+     * 1: invalid session
+     * 2: insufficient parameter
+     * 3: user not found
      */
     @PatchMapping(
             value = "/ionid/eliminate",
@@ -176,18 +176,18 @@ public class ManageController {
             HttpServletResponse response,
             @RequestBody Map<String, String> body
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
-        if(!Validation.checkKeys(body, "id")) {
+        if (!Validation.checkKeys(body, "id")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
         String id = body.get("id");
 
         Optional<User> userOptional = userService.getUserById(id);
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
@@ -197,9 +197,9 @@ public class ManageController {
     }
 
     /**
-     *  [data]: success
-     *  1: invalid session
-     *  2: no user with such id
+     * [data]: success
+     * 1: invalid session
+     * 2: no user with such id
      */
     @GetMapping(
             value = "/privilege/get",
@@ -210,13 +210,13 @@ public class ManageController {
             HttpServletResponse response,
             @RequestParam("id") String id
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
         Optional<User> userOptional = userService.getUserById(id);
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
@@ -224,10 +224,10 @@ public class ManageController {
     }
 
     /**
-     *  [data]: success
-     *  1: invalid session
-     *  2: no user with such id
-     *  3: no self modify
+     * [data]: success
+     * 1: invalid session
+     * 2: no user with such id
+     * 3: no self modify
      */
     @PatchMapping(
             value = "/privilege/patch",
@@ -240,11 +240,11 @@ public class ManageController {
             HttpServletResponse response,
             @RequestBody Map<String, String> body
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
-        if(!Validation.checkKeys(body, "id", "pr")) {
+        if (!Validation.checkKeys(body, "id", "pr")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
@@ -252,28 +252,28 @@ public class ManageController {
         String id = body.get("id");
         int privilege = Integer.parseInt(body.get("pr"));
 
-         if(userService.existsUserById(id)) {
-             response.setStatus(400);
-             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
-         }
-         if(sessionService.getId(session).equals(id)) {
-             response.setStatus(400);
-             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
-         }
+        if (userService.existsUserById(id)) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        }
+        if (sessionService.getId(session).equals(id)) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+        }
 
-         userService.updatePrivilege(id, privilege);
+        userService.updatePrivilege(id, privilege);
 
-         JSONObject ret = new JSONObject();
-         ret.put("id", id);
-         ret.put("pr", privilege);
-         return RestResponse.restResponse(HttpStatus.OK, ret);
+        JSONObject ret = new JSONObject();
+        ret.put("id", id);
+        ret.put("pr", privilege);
+        return RestResponse.restResponse(HttpStatus.OK, ret);
     }
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
 
     /**
-     *  [data]: success
-     *  1: invalid session
+     * [data]: success
+     * 1: invalid session
      */
     @GetMapping(
             value = "/ns/get",
@@ -283,7 +283,7 @@ public class ManageController {
             HttpSession session,
             HttpServletResponse response
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
@@ -297,10 +297,10 @@ public class ManageController {
     }
 
     /**
-     *  0: ok
-     *  1: invalid session
-     *  2: insufficient parameter
-     *  3: no ns with such id
+     * 0: ok
+     * 1: invalid session
+     * 2: insufficient parameter
+     * 3: no ns with such id
      */
     @PatchMapping(
             value = "/ns/accept",
@@ -313,11 +313,11 @@ public class ManageController {
             HttpServletResponse response,
             @RequestBody Map<String, String> body
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
-        if(!Validation.checkKeys(body, "id", "ac")) {
+        if (!Validation.checkKeys(body, "id", "ac")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
@@ -325,7 +325,8 @@ public class ManageController {
         int id = Integer.parseInt(body.get("id"));
         boolean accept = Boolean.parseBoolean(body.get("ac"));
 
-        if(!nsService.existsNsById(id)) {
+
+        if (!nsService.existsNsById(id)) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
@@ -335,9 +336,9 @@ public class ManageController {
     }
 
     /**
-     *  [data]: success
-     *  1: invalid session
-     *  2: ionid not found
+     * [data]: success
+     * 1: invalid session
+     * 2: ionid not found
      */
     @GetMapping(
             value = "/ns/get-user",
@@ -348,13 +349,13 @@ public class ManageController {
             HttpServletResponse response,
             @RequestParam("code") int scode
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
         Optional<User> userOptional = userService.getUserByScode(scode);
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
@@ -367,11 +368,11 @@ public class ManageController {
     }
 
     /**
-     *  0: ok
-     *  1: invalid session
-     *  2: insufficient property
-     *  3: no user with such scode
-     *  4: already requested
+     * 0: ok
+     * 1: invalid session
+     * 2: insufficient property
+     * 3: no user with such scode
+     * 4: already requested
      */
     @PostMapping(
             value = "/ns/create",
@@ -383,12 +384,12 @@ public class ManageController {
             HttpServletResponse response,
             @RequestBody Map<String, String> body
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
-        if(!Validation.checkKeys(body, "scode", "time", "place", "reason")) {
+        if (!Validation.checkKeys(body, "scode", "time", "place", "reason")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
@@ -397,13 +398,13 @@ public class ManageController {
         NsRecord.NS_TIME nsTime = NsRecord.NS_TIME.valueOf(body.get("time"));
 
         Optional<User> userOptional = userService.getUserByScode(scode);
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
         User user = userOptional.get();
 
-        if(nsService.existsNsByUuid(user.getUid(), nsTime)) {
+        if (nsService.existsNsByUuid(user.getUid(), nsTime)) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
         }
@@ -416,11 +417,11 @@ public class ManageController {
     }
 
     /**
-     *  0: ok
-     *  1: invalid session
-     *  2: insufficient property
-     *  3: no user with such scode
-     *  4: no ns found
+     * 0: ok
+     * 1: invalid session
+     * 2: insufficient property
+     * 3: no user with such scode
+     * 4: no ns found
      */
     @DeleteMapping(
             value = "/ns/delete",
@@ -433,13 +434,13 @@ public class ManageController {
             @RequestParam("code") int scode,
             @RequestParam("time") NsRecord.NS_TIME nsTime
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
         Optional<User> userOptional = userService.getUserByScode(scode);
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
@@ -455,8 +456,8 @@ public class ManageController {
     }
 
     /**
-     *  [data]: ok
-     *  1: invalid session
+     * [data]: ok
+     * 1: invalid session
      */
     @GetMapping(
             value = "/ns/print",
@@ -467,7 +468,7 @@ public class ManageController {
             HttpServletResponse response,
             @RequestParam("grade") int grade
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
@@ -477,21 +478,21 @@ public class ManageController {
         users.forEach(e -> {
             List<NsRecord> records = nsService.findByUuid(e.getUid());
             JSONObject element = new JSONObject();
-            element.put("code", e.getGrade()*1000+e.getClas()*100+e.getScode());
+            element.put("code", e.getGrade() * 1000 + e.getClas() * 100 + e.getScode());
             element.put("name", e.getName());
             records.forEach(s -> {
-                String str = s.getNsPlace()+"/"+s.getNsSupervisor()+"/"+s.getNsReason();
-                boolean aprv = ( s.getNsState() == NsRecord.NS_STATE.APPROVED );
+                String str = s.getNsPlace() + "/" + s.getNsSupervisor() + "/" + s.getNsReason();
+                boolean aprv = (s.getNsState() == NsRecord.NS_STATE.APPROVED);
                 JSONObject pt = new JSONObject();
                 pt.put("c", str);
                 pt.put("a", aprv);
-                if(s.getNsTime() == NsRecord.NS_TIME.N8) element.put("n8", pt);
-                if(s.getNsTime() == NsRecord.NS_TIME.N1) element.put("n1", pt);
-                if(s.getNsTime() == NsRecord.NS_TIME.N2) element.put("n2", pt);
+                if (s.getNsTime() == NsRecord.NS_TIME.N8) element.put("n8", pt);
+                if (s.getNsTime() == NsRecord.NS_TIME.N1) element.put("n1", pt);
+                if (s.getNsTime() == NsRecord.NS_TIME.N2) element.put("n2", pt);
             });
-            if(!element.has("n8")) element.put("n8", JSONObject.NULL);
-            if(!element.has("n1")) element.put("n1", JSONObject.NULL);
-            if(!element.has("n2")) element.put("n2", JSONObject.NULL);
+            if (!element.has("n8")) element.put("n8", JSONObject.NULL);
+            if (!element.has("n1")) element.put("n1", JSONObject.NULL);
+            if (!element.has("n2")) element.put("n2", JSONObject.NULL);
             ret.put(element);
         });
 
@@ -511,7 +512,7 @@ public class ManageController {
     )
     @Transactional
     public String promote(HttpSession session, HttpServletResponse response) {
-        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
@@ -536,11 +537,11 @@ public class ManageController {
             HttpServletResponse response,
             @RequestBody Map<String, String> body
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
-        if(!Validation.checkKeys(body, "defaultState")) {
+        if (!Validation.checkKeys(body, "defaultState")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 2);
         }
@@ -565,7 +566,7 @@ public class ManageController {
             HttpSession session,
             HttpServletResponse response
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
@@ -587,14 +588,14 @@ public class ManageController {
             HttpServletResponse response,
             HttpSession session
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
         //1. get user by id
         Optional<User> userOptional = userService.getUserById(id);
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
@@ -602,13 +603,13 @@ public class ManageController {
 
         // 2. get request by user entity
         Optional<ResetPasswordReq> rpq = resetPasswordService.getRequest(user.getUid());
-        if(rpq.isEmpty()) {
+        if (rpq.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
 
         ResetPasswordReq req = rpq.get();
-        if(!req.getRequestDate().equals(LocalDate.now())) {
+        if (!req.getRequestDate().equals(LocalDate.now())) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
@@ -617,7 +618,7 @@ public class ManageController {
         JSONObject ret = new JSONObject();
         ret.put("id", user.getId());
         ret.put("name", user.getName());
-        ret.put("scode", user.getGrade()*1000+user.getClas()*100+user.getScode());
+        ret.put("scode", user.getGrade() * 1000 + user.getClas() * 100 + user.getScode());
         ret.put("status", req.getStatus());
         ret.put("uid", req.getUid());
         return RestResponse.restResponse(HttpStatus.OK, ret);
@@ -641,34 +642,33 @@ public class ManageController {
             HttpServletResponse response,
             @RequestBody Map<String, String> body
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
-        if(!Validation.checkKeys(body, "reqUid", "accept")) {
+        if (!Validation.checkKeys(body, "reqUid", "accept")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
         int uid = Integer.parseInt(body.get("reqUid"));
         Optional<ResetPasswordReq> reqOptional = resetPasswordService.getRequestByUid(uid);
-        if(reqOptional.isEmpty()) {
+        if (reqOptional.isEmpty()) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
         ResetPasswordReq req = reqOptional.get();
-        if(req.getStatus() != ResetPasswordReq.RESET_PWD_STATUS.WAITING && req.getStatus() != ResetPasswordReq.RESET_PWD_STATUS.REQUESTED) {
+        if (req.getStatus() != ResetPasswordReq.RESET_PWD_STATUS.WAITING && req.getStatus() != ResetPasswordReq.RESET_PWD_STATUS.REQUESTED) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
         }
 
         boolean aprv = Boolean.parseBoolean(body.get("accept"));
         resetPasswordService.acceptRequest(uid, aprv);
-        if(aprv) {
+        if (aprv) {
             String code = randomCode.randomString(128);
             reqOptional.get().setRandUrl(code);
             reqOptional.get().setStatus(ResetPasswordReq.RESET_PWD_STATUS.APPROVED);
             return RestResponse.restResponse(HttpStatus.OK, code);
-        }
-        else return RestResponse.restResponse(HttpStatus.OK);
+        } else return RestResponse.restResponse(HttpStatus.OK);
     }
 }

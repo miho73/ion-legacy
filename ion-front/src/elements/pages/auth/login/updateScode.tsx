@@ -17,21 +17,21 @@ function UpdateScode() {
 
     useEffect(() => {
         axios.get('/user/api/scode-change/query')
-        .then((res: any) => {
-            setGrade(res.data['result']);
-            setWorking(false);
-        })
-        .catch(err => {
-            window.location.reload();
-        });
+            .then((res: any) => {
+                setGrade(res.data['result']);
+                setWorking(false);
+            })
+            .catch(err => {
+                window.location.reload();
+            });
     }, []);
 
     function submit() {
         let state = 0;
-        if(!inRange(1, 4, clas)) state = changeBit(state, 0);
-        if(!inRange(1, 24, scode)) state = changeBit(state, 1);
+        if (!inRange(1, 4, clas)) state = changeBit(state, 0);
+        if (!inRange(1, 24, scode)) state = changeBit(state, 1);
         setFormState(state);
-        if(state !== 0) return;
+        if (state !== 0) return;
 
         setWorking(true);
         ready('update_scode', token => {
@@ -40,30 +40,30 @@ function UpdateScode() {
                 scode: scode,
                 ctoken: token
             })
-            .then(() => {
-                window.location.reload();
-            })
-            .catch(err => {
-                switch(err.response?.data['result']) {
-                    case 1:
-                    case 6:
-                    case 4:
-                        setWorkState(1);
-                        break;
-                    case 2:
-                        setWorkState(2);
-                        break;
-                    case 3:
-                        setWorkState(3);
-                        break;
-                    case 5:
-                        setWorkState(4);
-                        break;
-                }
-            })
-            .finally(() => {
-                setWorking(false);
-            });
+                .then(() => {
+                    window.location.reload();
+                })
+                .catch(err => {
+                    switch (err.response?.data['result']) {
+                        case 1:
+                        case 6:
+                        case 4:
+                            setWorkState(1);
+                            break;
+                        case 2:
+                            setWorkState(2);
+                            break;
+                        case 3:
+                            setWorkState(3);
+                            break;
+                        case 5:
+                            setWorkState(4);
+                            break;
+                    }
+                })
+                .finally(() => {
+                    setWorking(false);
+                });
         });
     }
 
@@ -71,21 +71,21 @@ function UpdateScode() {
         <form className='vstack gap-3 d-flex justify-content-center align-items-center text-center form-signin'>
             <h1 className='h3 my-3 fw-normal'>IonID</h1>
             <p className='fw-bold fs-5 m-1'>학번을 업데이트해주세요.</p>
-            <InputGroup>                
+            <InputGroup>
                 <FloatingLabel label='반'>
                     <Form.Control type='number'
-                                  className={'pe-5 fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')}
-                                  disabled={working} 
-                                  placeholder='반' 
-                                  aria-label='반' 
-                                  value={clas} 
+                                  className={'pe-5 fs-6 form-control-lg' + (getBit(formState, 0) ? ' is-invalid' : '')}
+                                  disabled={working}
+                                  placeholder='반'
+                                  aria-label='반'
+                                  value={clas}
                                   onChange={e => setClas(Number.parseInt(e.target.value))}
                     />
                     <FormLabel htmlFor='clas'>반</FormLabel>
                 </FloatingLabel>
                 <FloatingLabel label='번호'>
                     <Form.Control type='number'
-                                  className={'pe-5 fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')}
+                                  className={'pe-5 fs-6 form-control-lg' + (getBit(formState, 1) ? ' is-invalid' : '')}
                                   disabled={working}
                                   placeholder='번호'
                                   aria-label='번호'
@@ -95,29 +95,29 @@ function UpdateScode() {
                     <Form.Label htmlFor='scode'>번호</Form.Label>
                 </FloatingLabel>
             </InputGroup>
-            {inRange(1, 3, grade) && inRange(1, 4, clas) && inRange(1, 24, scode) && 
+            {inRange(1, 3, grade) && inRange(1, 4, clas) && inRange(1, 24, scode) &&
                 <div className='vstack'>
-                    <p className='my-0'>{yrs-1992-grade}기의 {''+grade+clas+(scode<10 ? '0'+scode : scode)}입니다.</p>
+                    <p className='my-0'>{yrs - 1992 - grade}기의 {'' + grade + clas + (scode < 10 ? '0' + scode : scode)}입니다.</p>
                 </div>
             }
             <Button className='mt-2' disabled={working} onClick={submit}>Continue</Button>
-            { workState === 1 &&
+            {workState === 1 &&
                 <Alert variant='danger'>
                     <p className='m-1'>학번을 수정하지 못했습니다.</p>
                     <p className='m-1'>나중에 다시 시도해주세요.</p>
                 </Alert>
             }
-            { workState === 2 &&
+            {workState === 2 &&
                 <Alert variant='danger'>
                     <p className='m-1'>reCAPTCHA를 검증하지 못했습니다.</p>
                 </Alert>
             }
-            { workState === 3 &&
+            {workState === 3 &&
                 <Alert variant='danger'>
                     <p className='m-1'>사용자 보호를 위해 지금은 학번을 업데이트할 수 없습니다.</p>
                 </Alert>
             }
-            { workState === 4 &&
+            {workState === 4 &&
                 <Alert variant='danger'>
                     <p className='m-1'>해당 IonID는 학번을 바꿀 수 없습니다.</p>
                 </Alert>

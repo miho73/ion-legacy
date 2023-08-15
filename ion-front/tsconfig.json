@@ -1,14 +1,14 @@
 {
-    "compilerOptions": {
-        "types": [
-            "node"
-        ],
-        "lib": [
-            "DOM"
-        ]
-    },
-    "extends": "@tsconfig/react-native/tsconfig.json",
-    "include": [
-        "src/custom.d.ts"
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "lib": [
+      "DOM"
     ]
+  },
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "include": [
+    "src/custom.d.ts"
+  ]
 }

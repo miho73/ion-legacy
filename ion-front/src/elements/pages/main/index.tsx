@@ -9,44 +9,50 @@ import axios from 'axios';
 function LoggedInIndex() {
     const [user, setUser] = useState({name: '', id: '', priv: 0});
     const [workState, setWorkState] = useState(-1);
-    const [picture, setPicture] = useState({url: 'https://apod.nasa.gov/apod/image/1708/PerseidsoverPyreneesGraffand1024.jpg', type: 'image', title: 'Perseids over the Pyrénées', exp: `This mountain and night skyscape stretches across the French Pyrenees National Park on August 12, near the peak of the annual Perseid meteor shower. The multi-exposure panoramic view was composed from the Col d'Aubisque, a mountain pass, about an hour before the bright gibbous moon rose. Centered is a misty valley and lights from the region's Gourette ski station toward the south. Taken over the following hour, frames capturing some of the night's long bright perseid meteors were aligned against the backdrop of stars and Milky Way.`, cpy: 'Jean-Francois\nGraffand'});
+    const [picture, setPicture] = useState({
+        url: 'https://apod.nasa.gov/apod/image/1708/PerseidsoverPyreneesGraffand1024.jpg',
+        type: 'image',
+        title: 'Perseids over the Pyrénées',
+        exp: `This mountain and night skyscape stretches across the French Pyrenees National Park on August 12, near the peak of the annual Perseid meteor shower. The multi-exposure panoramic view was composed from the Col d'Aubisque, a mountain pass, about an hour before the bright gibbous moon rose. Centered is a misty valley and lights from the region's Gourette ski station toward the south. Taken over the following hour, frames capturing some of the night's long bright perseid meteors were aligned against the backdrop of stars and Milky Way.`,
+        cpy: 'Jean-Francois\nGraffand'
+    });
     const [apodSet, setApodSet] = useState(false);
     const [apodDetail, setApodDetail] = useState(false);
 
     useEffect(() => {
         axios.get('/user/api/idx-iden')
-        .then(res => {
-            setUser(res.data['result']);
-        })
-        .catch(err => {
-            setWorkState(1);
-        });
+            .then(res => {
+                setUser(res.data['result']);
+            })
+            .catch(err => {
+                setWorkState(1);
+            });
 
         axios.get('/idx/apod')
-        .then(res => {
-            if(res.data['result']['type'] === 'image') {
-                setPicture(res.data['result']);
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        }).finally(() => {
+            .then(res => {
+                if (res.data['result']['type'] === 'image') {
+                    setPicture(res.data['result']);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            }).finally(() => {
             setApodSet(true);
         });
-        
+
     }, []);
 
-    if(workState === 1) {
+    if (workState === 1) {
         return <ErrorPage exp='사용자 정보를 받아오지 못했어요.'/>
     }
 
     return (
         <>
             {picture.type === 'image' && apodSet &&
-                <div className='w-100 h-100 pict' style={{backgroundImage: ('url('+picture.url+')')}}>
+                <div className='w-100 h-100 pict' style={{backgroundImage: ('url(' + picture.url + ')')}}>
                     <div onClick={() => setApodDetail(!apodDetail)} title='Details'>
                         <p className='m-0 tit'>{picture.title}</p>
-                        { apodDetail &&
+                        {apodDetail &&
                             <>
                                 <hr className='my-2'/>
                                 <p className='m-0'>{picture.exp}</p>
@@ -58,7 +64,7 @@ function LoggedInIndex() {
                     </div>
                 </div>
             }
-            { !apodSet &&
+            {!apodSet &&
                 <div className='w-100 h-100 pict'/>
             }
             <main className='d-flex flex-column justify-content-center align-items-center h-100 text-center'>
@@ -79,23 +85,20 @@ function LoggedInIndex() {
 
 function Index() {
     const [loginState, setLoginState] = useState(-1);
-    
+
     useEffect(() => {
         isLogin(setLoginState);
     }, []);
 
-    if(loginState === -1) {
+    if (loginState === -1) {
         return <></>;
-    }
-    else if(loginState === 0) {
+    } else if (loginState === 0) {
         return (
             <LoggedInIndex/>
         );
-    }
-    else if(loginState === 1) {
+    } else if (loginState === 1) {
         return <LoginPage/>;
-    }
-    else {
+    } else {
         return (
             <CannotAuthorize/>
         );

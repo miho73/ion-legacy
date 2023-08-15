@@ -9,10 +9,10 @@ function LoginPage() {
 
     return (
         <main className='container mt-4'>
-            { changeFlag &&
+            {changeFlag &&
                 <UpdateScode/>
             }
-            { !changeFlag &&
+            {!changeFlag &&
                 <LoginSection setChangeFlag={setChangeFlag}/>
             }
         </main>
@@ -26,24 +26,23 @@ function SignoutPage(props) {
 
     useEffect(() => {
         axios.get('/auth/api/signout')
-        .then(res => {
-            navigate('/');
-        })
-        .catch(err => {
-            setError(1);
-        });
+            .then(res => {
+                navigate('/');
+            })
+            .catch(err => {
+                setError(1);
+            });
     }, [])
 
-    if(error) {
+    if (error) {
         return (
             <div className="alert alert-danger" role="alert">로그아웃하지 못했습니다.</div>
         )
-    }
-    else {
+    } else {
         return (
             <p>로그아웃중</p>
         );
     }
 }
 
-export { LoginPage, SignoutPage };
+export {LoginPage, SignoutPage};

@@ -58,11 +58,11 @@ function ResetPassword() {
 
     function submit() {
         let state = 0;
-        if(!inRange(6, 100, newPassword.length)) state = changeBit(state, 0);
-        if(newPassword !== checkPassword) state = changeBit(state, 1);
+        if (!inRange(6, 100, newPassword.length)) state = changeBit(state, 0);
+        if (newPassword !== checkPassword) state = changeBit(state, 1);
 
         setFormState(state);
-        if(state !== 0) return;
+        if (state !== 0) return;
 
         setWorking(true);
         ready("reset_password", token => {
@@ -110,7 +110,7 @@ function ResetPassword() {
                                       value={privateCode}
                                       onChange={e => setPrivateCode(e.target.value)}
                                       onKeyDown={e => {
-                                          if(e.key === 'Enter') nxt();
+                                          if (e.key === 'Enter') nxt();
                                       }}
                                       disabled={working}
                         />
@@ -129,7 +129,7 @@ function ResetPassword() {
                     <FloatingLabel label='New Password'>
                         <Form.Control type={'password'}
                                       placeholder={'New Password'}
-                                      className={'pe-5 fs-6'+(getBit(formState, 0) ? ' is-invalid' : '')}
+                                      className={'pe-5 fs-6' + (getBit(formState, 0) ? ' is-invalid' : '')}
                                       value={newPassword}
                                       onChange={e => setNewPassword(e.target.value)}
                                       onKeyDown={e => {
@@ -143,7 +143,7 @@ function ResetPassword() {
                     <FloatingLabel label='Password Confirm'>
                         <Form.Control type={'password'}
                                       placeholder={'Confirm Password'}
-                                      className={'pe-5 fs-6'+(getBit(formState, 1) ? ' is-invalid' : '')}
+                                      className={'pe-5 fs-6' + (getBit(formState, 1) ? ' is-invalid' : '')}
                                       value={checkPassword}
                                       onChange={e => setCheckPassword(e.target.value)}
                                       onKeyDown={e => {

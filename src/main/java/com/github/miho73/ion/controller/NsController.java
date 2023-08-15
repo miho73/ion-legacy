@@ -4,8 +4,8 @@ import com.github.miho73.ion.dto.LnsReservation;
 import com.github.miho73.ion.dto.NsRecord;
 import com.github.miho73.ion.dto.RecaptchaReply;
 import com.github.miho73.ion.exceptions.IonException;
-import com.github.miho73.ion.service.RecaptchaService;
-import com.github.miho73.ion.service.SessionService;
+import com.github.miho73.ion.service.auth.RecaptchaService;
+import com.github.miho73.ion.service.auth.SessionService;
 import com.github.miho73.ion.service.ns.NsService;
 import com.github.miho73.ion.utils.RestResponse;
 import com.github.miho73.ion.utils.Validation;
@@ -50,8 +50,8 @@ public class NsController {
     }
 
     /**
-     *  [data]: success
-     *  1: invalid session
+     * [data]: success
+     * 1: invalid session
      */
     @GetMapping(
             value = "/nsr/get",
@@ -61,7 +61,7 @@ public class NsController {
             HttpSession session,
             HttpServletResponse response
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
@@ -83,14 +83,15 @@ public class NsController {
     }
 
     /**
-     *  0: success
-     *  1: internal server error
-     *  2: insufficient parameters
-     *  3: invalid session
-     *  4: user already requested
-     *  5: seat already reserved
-     *  6: recaptcha failed
-     *  7: too low recaptcha score
+     * 0: success
+     * 1: internal server error
+     * 2: insufficient parameters
+     * 3: invalid session
+     * 4: user already requested
+     * 5: seat already reserved
+     * 6: recaptcha failed
+     * 7: too low recaptcha score
+     * 8: you are faculty
      */
     @PostMapping(
             value = "/nsr/create",
@@ -103,33 +104,39 @@ public class NsController {
             HttpServletResponse response,
             @RequestBody Map<String, String> body
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 3);
         }
 
         // check key
-        if(!Validation.checkKeys(body, "time", "supervisor", "reason", "place", "lnsReq", "lnsSeat", "ctoken")) {
+        if (!Validation.checkKeys(body, "time", "supervisor", "reason", "place", "lnsReq", "lnsSeat", "ctoken")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
 
         try {
             RecaptchaReply reply = recaptchaService.performAssessment(body.get("ctoken"), "create_ns");
-            if(!reply.isOk()) {
+            if (!reply.isOk()) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 6);
             }
-            if(reply.getScore() <= CAPTCHA_THRESHOLD) {
+            if (reply.getScore() <= CAPTCHA_THRESHOLD) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 7);
+            }
+
+            // if user is registered is a faculty
+            if (sessionService.getGrade(session) == 0) {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 8);
             }
 
             int uuid = sessionService.getUid(session);
             NsRecord.NS_TIME nsTime = NsRecord.NS_TIME.valueOf(body.get("time"));
 
             // if user already has request on same time
-            if(nsService.existsNsByUuid(uuid, nsTime)) {
+            if (nsService.existsNsByUuid(uuid, nsTime)) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
             }
@@ -137,10 +144,10 @@ public class NsController {
             boolean lnsReq = Boolean.parseBoolean(body.get("lnsReq"));
             int lnsReqUid = -1;
 
-            if(lnsReq) {
+            if (lnsReq) {
                 int grade = sessionService.getGrade(session);
                 LnsReservation lnsRev = nsService.saveLnsReservation(uuid, nsTime, grade, body.get("lnsSeat"));
-                if(lnsRev == null) {
+                if (lnsRev == null) {
                     response.setStatus(400);
                     return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
                 }
@@ -151,7 +158,7 @@ public class NsController {
             nsService.saveNsRequest(uuid, nsTime, lnsReq, lnsReqUid, body);
             recaptchaService.addAssessmentComment(reply.getAssessmentName(), true);
 
-            log.info("created ns req uuid="+uuid+", time="+nsTime);
+            log.info("created ns req uuid=" + uuid + ", time=" + nsTime);
             response.setStatus(201);
             return RestResponse.restResponse(HttpStatus.CREATED, 0);
         } catch (IonException e) {
@@ -164,11 +171,11 @@ public class NsController {
     }
 
     /**
-     *  0: success
-     *  1: invalid session
-     *  2: no request on that time
-     *  3: recaptcha failed
-     *  4: too low recaptcha score
+     * 0: success
+     * 1: invalid session
+     * 2: no request on that time
+     * 3: recaptcha failed
+     * 4: too low recaptcha score
      */
     @DeleteMapping(
             value = "/nsr/delete",
@@ -181,30 +188,29 @@ public class NsController {
             @RequestParam("time") NsRecord.NS_TIME time,
             @RequestParam("ctoken") String captchaToken
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
         try {
             RecaptchaReply reply = recaptchaService.performAssessment(captchaToken, "delete_ns");
-            if(!reply.isOk()) {
+            if (!reply.isOk()) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
             }
-            if(reply.getScore() <= CAPTCHA_THRESHOLD) {
+            if (reply.getScore() <= CAPTCHA_THRESHOLD) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
             }
 
             int uuid = sessionService.getUid(session);
 
-            if(nsService.existsNsByUuid(uuid, time)) {
+            if (nsService.existsNsByUuid(uuid, time)) {
                 nsService.deleteNs(uuid, time);
-                log.info("deleted ns req uuid="+uuid+", time="+time);
+                log.info("deleted ns req uuid=" + uuid + ", time=" + time);
                 return RestResponse.restResponse(HttpStatus.OK, 0);
-            }
-            else {
+            } else {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
             }
@@ -218,8 +224,8 @@ public class NsController {
     }
 
     /**
-     *  [data]: success
-     *  1: invalid session
+     * [data]: success
+     * 1: invalid session
      */
     @GetMapping(
             value = "/lns/get",
@@ -229,7 +235,7 @@ public class NsController {
             HttpSession session,
             HttpServletResponse response
     ) {
-        if(!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
+        if (!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
             response.setStatus(401);
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }

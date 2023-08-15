@@ -30,6 +30,7 @@ public class Requests {
         }
         return inputStreamToByte(inStream);
     }
+
     public static byte[] inputStreamToByte(InputStream is) {
         try {
             ByteArrayOutputStream bytestream = new ByteArrayOutputStream();

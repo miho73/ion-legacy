@@ -10,21 +10,21 @@ function RemoveGrade() {
         axios.patch('/manage/api/ionid/eliminate', {
             id: ionId
         })
-        .then(res => {
-            setWorkState(0);
-        })
-        .catch(err => {
-            switch(err.response?.data['result']) {
-                case 1:
-                    setWorkState(1);
-                    break;
-                case 2:
-                    setWorkState(2);
-                    break;
-                default:
-                    setWorkState(3);
-            }
-        });
+            .then(res => {
+                setWorkState(0);
+            })
+            .catch(err => {
+                switch (err.response?.data['result']) {
+                    case 1:
+                        setWorkState(1);
+                        break;
+                    case 2:
+                        setWorkState(2);
+                        break;
+                    default:
+                        setWorkState(3);
+                }
+            });
     }
 
     return (

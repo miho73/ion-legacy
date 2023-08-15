@@ -15,32 +15,32 @@ function AcceptPwdChange() {
         axios.get('/manage/api/reset-passwd/query', {
             params: {id: id}
         })
-        .then(res => {
-            setReqData({
-                ionid: res.data['result']['id'],
-                name: res.data['result']['name'],
-                scode: res.data['result']['scode'],
-                status: res.data['result']['status']
+            .then(res => {
+                setReqData({
+                    ionid: res.data['result']['id'],
+                    name: res.data['result']['name'],
+                    scode: res.data['result']['scode'],
+                    status: res.data['result']['status']
+                });
+                setUsrLoaded(true);
+                setReqUid(res.data['result']['uid']);
+                setWorkState(0);
+            })
+            .catch(err => {
+                switch (err?.response.data['result']) {
+                    case 0:
+                        setWorkStaea(4);
+                        break;
+                    case 2:
+                        setWorkState(1);
+                        break;
+                    case 3:
+                        setWorkState(2);
+                        break;
+                    default:
+                        setWorkState(5);
+                }
             });
-            setUsrLoaded(true);
-            setReqUid(res.data['result']['uid']);
-            setWorkState(0);
-        })
-        .catch(err => {
-            switch (err?.response.data['result']) {
-                case 0:
-                    setWorkStaea(4);
-                    break;
-                case 2:
-                    setWorkState(1);
-                    break;
-                case 3:
-                    setWorkState(2);
-                    break;
-                default:
-                    setWorkState(5);
-            }
-        });
     }
 
     function ctrl(state: boolean) {
@@ -48,32 +48,31 @@ function AcceptPwdChange() {
             accept: state,
             reqUid: reqUid
         })
-        .then(res => {
-            if(state) {
-                setUrlToken(res.data['result']);
-                setWorkStaea(0);
-            }
-            else setWorkStaea(5);
-        })
-        .catch(err => {
-            switch (err?.response.data['result']) {
-                case 1:
-                    setWorkStaea(1);
-                    break;
-                case 3:
-                    setWorkStaea(2);
-                    break;
-                case 4:
-                    setWorkStaea(3);
-                    break;
-                case 2:
-                default:
-                    setWorkStaea(4);
-            }
-        })
-        .finally(() => {
-            load();
-        });
+            .then(res => {
+                if (state) {
+                    setUrlToken(res.data['result']);
+                    setWorkStaea(0);
+                } else setWorkStaea(5);
+            })
+            .catch(err => {
+                switch (err?.response.data['result']) {
+                    case 1:
+                        setWorkStaea(1);
+                        break;
+                    case 3:
+                        setWorkStaea(2);
+                        break;
+                    case 4:
+                        setWorkStaea(3);
+                        break;
+                    case 2:
+                    default:
+                        setWorkStaea(4);
+                }
+            })
+            .finally(() => {
+                load();
+            });
     }
 
     let status = '';
@@ -106,27 +105,27 @@ function AcceptPwdChange() {
             </InputGroup>
             <Table>
                 <thead>
-                    <tr>
-                        <th>IonID</th>
-                        <th>이름</th>
-                        <th>학번</th>
-                        <th>상태</th>
-                    </tr>
+                <tr>
+                    <th>IonID</th>
+                    <th>이름</th>
+                    <th>학번</th>
+                    <th>상태</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {workState !== 0 &&
-                        <tr>
-                            <td colSpan={4}>No data</td>
-                        </tr>
-                    }
-                    {workState === 0 &&
-                        <tr>
-                            <td>{reqData.ionid}</td>
-                            <td>{reqData.name}</td>
-                            <td>{reqData.scode}</td>
-                            <td>{status}</td>
-                        </tr>
-                    }
+                {workState !== 0 &&
+                    <tr>
+                        <td colSpan={4}>No data</td>
+                    </tr>
+                }
+                {workState === 0 &&
+                    <tr>
+                        <td>{reqData.ionid}</td>
+                        <td>{reqData.name}</td>
+                        <td>{reqData.scode}</td>
+                        <td>{status}</td>
+                    </tr>
+                }
                 </tbody>
             </Table>
             {workState === 1 && <Alert variant={'danger'}>이 IonID는 암호 재설정을 신청하지 않았습니다.</Alert>}

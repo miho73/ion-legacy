@@ -25,6 +25,7 @@ public interface ResetPasswordRepository extends JpaRepository<ResetPasswordReq,
     void acceptRequest(
             @Param("uid") int uid
     );
+
     @Query(
             value = "UPDATE auth.reset_pwd_req SET status = 3 WHERE uid = :uid and (status = 1 OR status = 0)",
             nativeQuery = true

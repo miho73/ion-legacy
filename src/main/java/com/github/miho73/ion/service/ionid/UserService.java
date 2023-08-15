@@ -1,8 +1,10 @@
-package com.github.miho73.ion.service;
+package com.github.miho73.ion.service.ionid;
 
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.exceptions.IonException;
 import com.github.miho73.ion.repository.UserRepository;
+import com.github.miho73.ion.service.auth.RecaptchaService;
+import com.github.miho73.ion.service.auth.SessionService;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,18 +62,14 @@ public class UserService {
     }
 
     public void updatePrivilege(String id, int privilege) {
-        log.info("IonID set privilege. id="+id+", priv="+privilege);
+        log.info("IonID set privilege. id=" + id + ", priv=" + privilege);
         userRepository.updatePrivilegeById(id, privilege);
-    }
-
-    public void updateLastLogin(int uid) {
-        userRepository.updateLastLogin(uid, new Timestamp(System.currentTimeMillis()));
     }
 
     public Optional<User> getUserByScode(int scode) {
         int s = scode;
         int code = s % 100;
-        s = (s - code)/100;
+        s = (s - code) / 100;
         int clas = s % 10;
         s = (s - clas) / 10;
         int grade = s;
@@ -84,12 +82,12 @@ public class UserService {
     }
 
     public void resetGrade(int uid) {
-        log.info("IonID reset grade. uid="+uid);
+        log.info("IonID reset grade. uid=" + uid);
         userRepository.resetGradeByUid(uid);
     }
 
     public void promoteAll() {
-        userRepository.deleteThirdGrades();
+        userRepository.deleteByGrade(3);
         userRepository.resetGradeOnPromote();
     }
 
@@ -97,17 +95,18 @@ public class UserService {
         int uid = sessionService.getUid(session);
 
         Optional<User> userOptional = userRepository.findById(uid);
-        if(userOptional.isEmpty()) {
+        if (userOptional.isEmpty()) {
             recaptchaService.addAssessmentComment(captchaCode, false);
             return 4;
         }
         User user = userOptional.get();
-        if(!user.isScodeCFlag()) {
+        if (!user.isScodeCFlag()) {
             recaptchaService.addAssessmentComment(captchaCode, false);
             return 5;
         }
-        userRepository.updateScode(uid, clas, scode);
-        userRepository.updateScodeFlag(uid, false);
+        userOptional.get().setClas(clas);
+        userOptional.get().setScode(scode);
+        userOptional.get().setScodeCFlag(false);
 
         recaptchaService.addAssessmentComment(captchaCode, true);
         session.setAttribute("schange", false);
@@ -132,16 +131,17 @@ public class UserService {
             default:
                 throw new IonException();
         }
-        log.info("IonID default state set to "+DEFAULT_USER_STATE);
+        log.info("IonID default state set to " + DEFAULT_USER_STATE);
     }
+
     public User.USER_STATUS getDefaultUserState() {
         return DEFAULT_USER_STATE;
     }
 
     public int updatePassword(int uid, String pwd) {
-        log.info("IonID update password. uid="+uid);
+        log.info("IonID update password. uid=" + uid);
         Optional<User> user = userRepository.findById(uid);
-        if(user.isEmpty()) return 6;
+        if (user.isEmpty()) return 6;
         user.get().setPwd(passwordEncoder.encode(pwd));
         return 0;
     }

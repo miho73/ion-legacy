@@ -1,4 +1,4 @@
-package com.github.miho73.ion.service;
+package com.github.miho73.ion.service.etc;
 
 import com.github.miho73.ion.utils.Requests;
 import jakarta.annotation.PostConstruct;
@@ -30,12 +30,12 @@ public class MainPageService {
     }
 
     public JSONObject getImage() {
-        if(pictureDate.equals(LocalDate.now())) {
+        if (pictureDate.equals(LocalDate.now())) {
             return image;
         }
 
         try {
-            String res = Requests.sendGetRequest("https://api.nasa.gov/planetary/apod?thumbs=true&api_key="+APOD_KEY);
+            String res = Requests.sendGetRequest("https://api.nasa.gov/planetary/apod?thumbs=true&api_key=" + APOD_KEY);
             JSONObject r = new JSONObject(res);
             JSONObject k = new JSONObject();
             k.put("url", r.get("url"));
@@ -45,7 +45,7 @@ public class MainPageService {
             k.put("cpy", r.has("copyright") ? r.get("copyright") : "");
             image = k;
             pictureDate = LocalDate.now();
-            log.info("updated APOD for "+pictureDate);
+            log.info("updated APOD for " + pictureDate);
             return image;
         } catch (IOException e) {
             log.error("Failed to update APOD picture", e);

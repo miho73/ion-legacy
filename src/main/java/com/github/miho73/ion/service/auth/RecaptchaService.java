@@ -1,4 +1,4 @@
-package com.github.miho73.ion.service;
+package com.github.miho73.ion.service.auth;
 
 import com.github.miho73.ion.dto.RecaptchaReply;
 import com.google.cloud.recaptchaenterprise.v1.RecaptchaEnterpriseServiceClient;
@@ -36,11 +36,11 @@ public class RecaptchaService {
      * Create an assessment to analyze the risk of an UI action. Assessment approach is the same for
      * both 'score' and 'checkbox' type recaptcha site keys.
      *
-     * @param projectID : GCloud Project ID
+     * @param projectID        : GCloud Project ID
      * @param recaptchaSiteKey : Site key obtained by registering a domain/app to use recaptcha
-     *     services. (score/ checkbox type)
-     * @param token : The token obtained from the client on passing the recaptchaSiteKey.
-     * @param recaptchaAction : Action name corresponding to the token.
+     *                         services. (score/ checkbox type)
+     * @param token            : The token obtained from the client on passing the recaptchaSiteKey.
+     * @param recaptchaAction  : Action name corresponding to the token.
      */
     public RecaptchaReply createAssessment(
             String projectID, String recaptchaSiteKey, String token, String recaptchaAction)
@@ -97,18 +97,19 @@ public class RecaptchaService {
         String assessmentName = response.getName();
         rr.setAssessmentName(assessmentName.substring(assessmentName.lastIndexOf("/") + 1));
 
-        log.info("recaptcha success. assessmentId="+rr.getAssessmentName()+" score="+rr.getScore());
+        log.info("recaptcha success. assessmentId=" + rr.getAssessmentName() + " score=" + rr.getScore());
         return rr;
     }
 
     /**
      * Send an assessment comment
+     *
      * @param assessmentId : Assessment id to comment
-     * @param type : true when it's legal. false when it's illegal
+     * @param type         : true when it's legal. false when it's illegal
      * @return true when success otherwise, false
      */
     public boolean addAssessmentComment(String assessmentId, boolean type) throws IOException {
-        if(type) return addLegitimateAnnotation(assessmentId);
+        if (type) return addLegitimateAnnotation(assessmentId);
         else return addSuspiciousAnnotation(assessmentId);
     }
 
@@ -121,7 +122,7 @@ public class RecaptchaService {
                             .build();
 
             AnnotateAssessmentResponse response = client.annotateAssessment(annotateAssessmentRequest);
-            log.info("recaptcha fraudulent annotation success. assessmentId="+assessmentId);
+            log.info("recaptcha fraudulent annotation success. assessmentId=" + assessmentId);
         }
         return true;
     }
@@ -135,7 +136,7 @@ public class RecaptchaService {
                             .build();
 
             AnnotateAssessmentResponse response = client.annotateAssessment(annotateAssessmentRequest);
-            log.info("recaptcha Legitimate comment success. assessmentId="+assessmentId);
+            log.info("recaptcha Legitimate comment success. assessmentId=" + assessmentId);
         }
         return true;
     }

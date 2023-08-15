@@ -17,11 +17,11 @@ function LoginSection(props) {
 
     function submit() {
         let state = 0;
-        if(!inRange(1, 30, id.length)) state = changeBit(state, 0);
-        if(!inRange(1, 30, pwd.length)) state = changeBit(state, 1);
+        if (!inRange(1, 30, id.length)) state = changeBit(state, 0);
+        if (!inRange(1, 30, pwd.length)) state = changeBit(state, 1);
         setFormState(state);
 
-        if(state !== 0) return;
+        if (state !== 0) return;
 
         setBlock(true);
         ready('login', token => {
@@ -31,13 +31,11 @@ function LoginSection(props) {
                 ctoken: token
             }).then(res => {
                 let re = res.data['result'];
-                if(re === 0) {
+                if (re === 0) {
                     window.location.reload();
-                }
-                else if(re === 7) {
+                } else if (re === 7) {
                     props.setChangeFlag(true);
-                }
-                else setLoginError(re);
+                } else setLoginError(re);
             }).catch(err => {
                 setLoginError(-1);
             }).finally(() => {
@@ -47,7 +45,7 @@ function LoginSection(props) {
     }
 
     function enterDown(e) {
-        if(e.key === 'Enter') {
+        if (e.key === 'Enter') {
             e.preventDefault();
             submit();
         }
@@ -57,14 +55,21 @@ function LoginSection(props) {
         <form className='vstack gap-3 d-flex justify-content-center align-items-center text-center form-signin'>
             <h1 className='h3 my-3 fw-normal'>IonID</h1>
             <div className='form-floating'>
-                <input type='text' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 0) ? ' is-invalid' : '')} disabled={block} id='ionid' placeholder='IonID' autoComplete='username' aria-label='IonID' value={id} onChange={e => setId(e.target.value)} onKeyDown={enterDown}/>
+                <input type='text'
+                       className={'pe-5 form-control fs-6 form-control-lg' + (getBit(formState, 0) ? ' is-invalid' : '')}
+                       disabled={block} id='ionid' placeholder='IonID' autoComplete='username' aria-label='IonID'
+                       value={id} onChange={e => setId(e.target.value)} onKeyDown={enterDown}/>
                 <label htmlFor='ionid'>IonID</label>
             </div>
             <div className='form-floating'>
-                <input type='password' className={'pe-5 form-control fs-6 form-control-lg'+(getBit(formState, 1) ? ' is-invalid' : '')} disabled={block} id='pwd' placeholder='암호' autoComplete='current-password' aria-label='암호' value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={enterDown}/>
+                <input type='password'
+                       className={'pe-5 form-control fs-6 form-control-lg' + (getBit(formState, 1) ? ' is-invalid' : '')}
+                       disabled={block} id='pwd' placeholder='암호' autoComplete='current-password' aria-label='암호'
+                       value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={enterDown}/>
                 <label htmlFor='pwd'>Password</label>
             </div>
-            <button className='btn btn-lg btn-primary fs-6' type='button' onClick={submit} disabled={block}>Sign in</button>
+            <button className='btn btn-lg btn-primary fs-6' type='button' onClick={submit} disabled={block}>Sign in
+            </button>
             {loginError !== 0 &&
                 <div className='alert alert-danger mt-2'>
                     {loginError === -1 &&

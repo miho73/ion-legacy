@@ -3,9 +3,9 @@ package com.github.miho73.ion.controller;
 import com.github.miho73.ion.dto.RecaptchaReply;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.exceptions.IonException;
-import com.github.miho73.ion.service.RecaptchaService;
-import com.github.miho73.ion.service.SessionService;
-import com.github.miho73.ion.service.UserService;
+import com.github.miho73.ion.service.auth.RecaptchaService;
+import com.github.miho73.ion.service.auth.SessionService;
+import com.github.miho73.ion.service.ionid.UserService;
 import com.github.miho73.ion.utils.RestResponse;
 import com.github.miho73.ion.utils.Validation;
 import jakarta.servlet.http.HttpServletResponse;
@@ -75,7 +75,7 @@ public class UserController {
             @RequestBody Map<String, String> body,
             HttpServletResponse response
     ) {
-        if(!Validation.checkKeys(body, "clas", "ctoken", "grade", "id", "name", "pwd", "scode")) {
+        if (!Validation.checkKeys(body, "clas", "ctoken", "grade", "id", "name", "pwd", "scode")) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
         }
@@ -88,7 +88,7 @@ public class UserController {
         user.setId(body.get("id"));
         user.setName(body.get("name"));
 
-        if(user.getGrade() == 0 || user.getScode() == 0 || user.getClas() == 0) {
+        if (user.getGrade() == 0 || user.getScode() == 0 || user.getClas() == 0) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
@@ -99,7 +99,7 @@ public class UserController {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
             }
-            if(recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
+            if (recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
             }
@@ -111,7 +111,7 @@ public class UserController {
 
         user.setPwd(passwordEncoder.encode(user.getPwd()));
         User created = userService.createUser(user);
-        log.info("user created. uid="+user.getUid()+", id="+user.getId());
+        log.info("user created. uid=" + user.getUid() + ", id=" + user.getId());
         return RestResponse.restResponse(HttpStatus.CREATED, created.getId());
     }
 
@@ -122,7 +122,7 @@ public class UserController {
     public String getIdxIden(
             HttpSession session
     ) {
-        if(!sessionService.isLoggedIn(session)) {
+        if (!sessionService.isLoggedIn(session)) {
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
@@ -143,16 +143,15 @@ public class UserController {
     )
     public String queryScodeChange(HttpSession session, HttpServletResponse response) {
         Object sco = session.getAttribute("schange");
-        if(sco == null) {
+        if (sco == null) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
         }
         boolean sc = (boolean) sco;
-        if(!sc) {
+        if (!sc) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
-        }
-        else return RestResponse.restResponse(HttpStatus.OK, session.getAttribute("grade"));
+        } else return RestResponse.restResponse(HttpStatus.OK, session.getAttribute("grade"));
     }
 
     /**
@@ -174,9 +173,9 @@ public class UserController {
             HttpSession session,
             HttpServletResponse response,
             @RequestBody Map<String, String> body) {
-        if(Validation.checkKeys(body, "clas, scode, ctoken")) {
+        if (Validation.checkKeys(body, "clas, scode, ctoken")) {
             response.setStatus(400);
-            return  RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
         }
 
         try {
@@ -197,15 +196,13 @@ public class UserController {
                     Integer.parseInt(body.get("scode")),
                     recaptchaReply.getAssessmentName()
             );
-            if(ret != 0) {
+            if (ret != 0) {
                 response.setStatus(400);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, ret);
-            }
-            else {
+            } else {
                 return RestResponse.restResponse(HttpStatus.OK, ret);
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             log.error("recaptcha failed(IOException).", e);
             response.setStatus(500);
             return RestResponse.restResponse(HttpStatus.INTERNAL_SERVER_ERROR, 6);

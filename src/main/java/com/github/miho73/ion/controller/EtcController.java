@@ -1,7 +1,7 @@
 package com.github.miho73.ion.controller;
 
-import com.github.miho73.ion.service.MealService;
-import com.github.miho73.ion.service.TemperatureService;
+import com.github.miho73.ion.service.etc.MealService;
+import com.github.miho73.ion.service.etc.TemperatureService;
 import com.github.miho73.ion.utils.RestResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

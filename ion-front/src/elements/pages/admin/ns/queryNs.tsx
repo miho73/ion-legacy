@@ -14,34 +14,34 @@ function QueryNs(props) {
 
     const scode = props.scode;
     const setScode = props.setScode;
-    
+
     function exe() {
         axios.get('/manage/api/ns/get-user', {
             params: {code: scode}
         })
-        .then(res => {
-            setNsLst(res.data['result']['reqs']);
-            setWorkError(0);
-        })
-        .catch(err => {
-            const cd = err.response?.data['result'];
-            switch(cd) {
-                case 1:
-                    setWorkError(1);
-                    break;
-                case 2:
-                    setWorkError(2);
-                    break;
-                default:
-                    setWorkError(3);
-                    break;
-            }
-        });
+            .then(res => {
+                setNsLst(res.data['result']['reqs']);
+                setWorkError(0);
+            })
+            .catch(err => {
+                const cd = err.response?.data['result'];
+                switch (cd) {
+                    case 1:
+                        setWorkError(1);
+                        break;
+                    case 2:
+                        setWorkError(2);
+                        break;
+                    default:
+                        setWorkError(3);
+                        break;
+                }
+            });
     }
 
     let rr: any[] = [];
-    if(!workError) {
-        if(nsLst.length === 0) {
+    if (!workError) {
+        if (nsLst.length === 0) {
             rr.push(
                 <tr>
                     <td colSpan={7}>
@@ -49,25 +49,23 @@ function QueryNs(props) {
                     </td>
                 </tr>
             );
-        }
-        else {
+        } else {
             nsLst.forEach(req => {
                 let row = <NsState
-                            name={req.time}
-                            place={req.place}
-                            superviser={req.supervisor}
-                            reason={req.reason}
-                            seat={req.lnsSeat}
-                            lnsReq={req.lnsReq}
-                            status={req.status}
-                            showDeleteConfirm={() => setDeleteModalShow(true)}
-                            setTargetNs={setTargetNs}
-                        />
+                    name={req.time}
+                    place={req.place}
+                    superviser={req.supervisor}
+                    reason={req.reason}
+                    seat={req.lnsSeat}
+                    lnsReq={req.lnsReq}
+                    status={req.status}
+                    showDeleteConfirm={() => setDeleteModalShow(true)}
+                    setTargetNs={setTargetNs}
+                />
                 rr.push(row);
             });
         }
-    }
-    else {
+    } else {
         rr.push(
             <tr>
                 <td className='table-danger' colSpan={7}>면학 불참 신청 목록을 받지 못했습니다.</td>
@@ -83,17 +81,18 @@ function QueryNs(props) {
                 time: targetNs[0]
             }
         })
-        .then(res => {
-            closeDeleteConfirm();
-            exe();
-        })
-        .catch(err => {
-            setDeleteResult(1);
-        })
-        .finally(() => {
-            setDeleting(false);
-        });
+            .then(res => {
+                closeDeleteConfirm();
+                exe();
+            })
+            .catch(err => {
+                setDeleteResult(1);
+            })
+            .finally(() => {
+                setDeleting(false);
+            });
     }
+
     function closeDeleteConfirm() {
         setDeleteModalShow(false);
         setDeleteResult(-1);
@@ -101,32 +100,32 @@ function QueryNs(props) {
 
     return (
         <>
-        <Row className='my-3'>
-            <h2 className="mb-3">면학 불참 확인</h2>
-            <Form.Group as={Col}>
-                <InputGroup className='w-25 mb-3 mgw'>
-                    <InputGroup.Text>학번</InputGroup.Text>
-                    <Form.Control
-                        type='number'
-                        placeholder='학번'
-                        value={scode}
-                        onChange={e => setScode(Number.parseInt(e.target.value))}
-                    />
-                    <Button onClick={exe}>확인</Button>
-                </InputGroup>
-                { workError === 1 &&
-                    <Alert variant='danger w-fit'>권한이 부족합니다.</Alert>
-                }
-                { workError === 2 &&
-                    <Alert variant='danger w-fit'>해당 IonID가 없습니다.</Alert>
-                }
-                { workError === 3 &&
-                    <Alert variant='danger w-fit'>문제가 발생했습니다.</Alert>
-                }
-                { workError === 0 &&
-                    <div className='table-cover'>
-                        <Table className='m-auto'>
-                            <thead>
+            <Row className='my-3'>
+                <h2 className="mb-3">면학 불참 확인</h2>
+                <Form.Group as={Col}>
+                    <InputGroup className='w-25 mb-3 mgw'>
+                        <InputGroup.Text>학번</InputGroup.Text>
+                        <Form.Control
+                            type='number'
+                            placeholder='학번'
+                            value={scode}
+                            onChange={e => setScode(Number.parseInt(e.target.value))}
+                        />
+                        <Button onClick={exe}>확인</Button>
+                    </InputGroup>
+                    {workError === 1 &&
+                        <Alert variant='danger w-fit'>권한이 부족합니다.</Alert>
+                    }
+                    {workError === 2 &&
+                        <Alert variant='danger w-fit'>해당 IonID가 없습니다.</Alert>
+                    }
+                    {workError === 3 &&
+                        <Alert variant='danger w-fit'>문제가 발생했습니다.</Alert>
+                    }
+                    {workError === 0 &&
+                        <div className='table-cover'>
+                            <Table className='m-auto'>
+                                <thead>
                                 <tr>
                                     <th>면학</th>
                                     <th>장소</th>
@@ -136,14 +135,14 @@ function QueryNs(props) {
                                     <th>상태</th>
                                     <th></th>
                                 </tr>
-                            </thead>
-                            <tbody>{rr}</tbody>
-                        </Table>
-                    </div>
-                }
-            </Form.Group>
-        </Row>
-        <Modal show={deleteModalShow} onHide={closeDeleteConfirm} dialogClassName='modal-dialog-centered'>
+                                </thead>
+                                <tbody>{rr}</tbody>
+                            </Table>
+                        </div>
+                    }
+                </Form.Group>
+            </Row>
+            <Modal show={deleteModalShow} onHide={closeDeleteConfirm} dialogClassName='modal-dialog-centered'>
                 <Modal.Header closeButton>
                     <Modal.Title>면학 불참 신청 삭제</Modal.Title>
                 </Modal.Header>

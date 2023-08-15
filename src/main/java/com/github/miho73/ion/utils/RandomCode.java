@@ -4,11 +4,9 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -44,7 +42,7 @@ public class RandomCode {
         StringBuilder buffer = new StringBuilder();
         for (int i = 0; i < 2; i++) {
             buffer.append(WORD_SET.get(new Random().nextInt(0, WORD_SET_SIZE)));
-            if(i == 0) buffer.append("-");
+            if (i == 0) buffer.append("-");
         }
         return buffer.toString();
     }

@@ -11,31 +11,31 @@ function IonIdActivation() {
             id: id,
             ac: mode
         })
-        .then(res => {
-            const r = res.data['result'];
-            setResult([
-                0,
-                `"${r['sub']}"의 활성화 상태를 "${r['act']}"로 변경했습니다.`
-            ]);
-        })
-        .catch(err => {
-            let msg;
-            switch(err.response?.data['result']) {
-                case 1:
-                    msg = '권한이 부족합니다.'
-                    break;
-                case 4:
-                    msg = '해당 IonID가 없습니다.'
-                    break;
-                case 5:
-                    msg = '자신은 상태는 수정할 수 없습니다.'
-                    break;
-                default:
-                    msg = '문제가 발생했습니다.'
-                    break;
-            }
-            setResult([1, msg])
-        });
+            .then(res => {
+                const r = res.data['result'];
+                setResult([
+                    0,
+                    `"${r['sub']}"의 활성화 상태를 "${r['act']}"로 변경했습니다.`
+                ]);
+            })
+            .catch(err => {
+                let msg;
+                switch (err.response?.data['result']) {
+                    case 1:
+                        msg = '권한이 부족합니다.'
+                        break;
+                    case 4:
+                        msg = '해당 IonID가 없습니다.'
+                        break;
+                    case 5:
+                        msg = '자신은 상태는 수정할 수 없습니다.'
+                        break;
+                    default:
+                        msg = '문제가 발생했습니다.'
+                        break;
+                }
+                setResult([1, msg])
+            });
     }
 
     return (

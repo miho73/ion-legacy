@@ -14,51 +14,52 @@ function IonIdChangPrivilege() {
         axios.get('/manage/api/privilege/get', {
             params: {id: id}
         })
-        .then(res => {
-            setUp(res.data['result']);
-            setUsrLoaded(true);
-            setWs(1);
-        })
-        .catch(err => {
-            switch(err.response?.data['result']) {
-                case 1:
-                    setWs(2);
-                    break;
-                case 2:
-                    setWs(3);
-                    break;
-                default:
-                    setWs(5);
-            }
-        });
+            .then(res => {
+                setUp(res.data['result']);
+                setUsrLoaded(true);
+                setWs(1);
+            })
+            .catch(err => {
+                switch (err.response?.data['result']) {
+                    case 1:
+                        setWs(2);
+                        break;
+                    case 2:
+                        setWs(3);
+                        break;
+                    default:
+                        setWs(5);
+                }
+            });
     }
+
     function set() {
         axios.patch('/manage/api/privilege/patch', {
             id: id,
             pr: up
         })
-        .then(res => {
-            setWs(0);
-            setWr([
-                res.data['result']['id'],
-                res.data['result']['pr'],
-            ])
-        })
-        .catch(err => {
-            switch(err.response?.data['result']) {
-                case 1:
-                    setWs(2);
-                    break;
-                case 2:
-                    setWs(3);
-                    break;
-                case 3:
-                    setWs(4);
-                    break;
-                default:
-                    setWs(5);
-            }
-        });
+            .then(res => {
+                setWs(0);
+                setWr([
+                    res.data['result']['id'],
+                    res.data['result']['pr'],
+                ])
+            })
+            .catch(err => {
+                switch (err.response?.data['result']) {
+                    case 1:
+                        setWs(2);
+                        break;
+                    case 2:
+                        setWs(3);
+                        break;
+                    case 3:
+                        setWs(4);
+                        break;
+                    default:
+                        setWs(5);
+                }
+            });
     }
 
     return (
@@ -122,7 +123,8 @@ function IonIdChangPrivilege() {
 
             <ListGroup className="mt-3">
                 <ListGroup.Item><span className="fw-bold">USER(1)</span>: IonID 사용</ListGroup.Item>
-                <ListGroup.Item><span className="fw-bold">FACULTY(2)</span>: IonID 활성화, 조회 / 면불 승인 추가 삭제</ListGroup.Item>
+                <ListGroup.Item><span className="fw-bold">FACULTY(2)</span>: IonID 활성화, 조회 / 면불 승인 추가
+                    삭제</ListGroup.Item>
                 <ListGroup.Item><span className="fw-bold">SUPERVISOR(4)</span>: IonID 권한 수정 / 교사로 등록</ListGroup.Item>
             </ListGroup>
         </div>

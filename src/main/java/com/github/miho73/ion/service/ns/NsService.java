@@ -40,11 +40,10 @@ public class NsService {
         NsRecord nsRecord = new NsRecord();
 
         // check if supervisor exists
-        int supervisors = nsRepository.findAllUserContainedInName(body.get("supervisor")).size();
-        if(supervisors == 0) {
+        long supervisors = (long) nsRepository.findAllUserContainedInName(body.get("supervisor")).get(0)[0];
+        if (supervisors == 0) {
             nsRecord.setNsState(NsRecord.NS_STATE.NO_SUPERVISOR);
-        }
-        else {
+        } else {
             nsRecord.setNsState(NsRecord.NS_STATE.REQUESTED);
         }
 
@@ -57,7 +56,7 @@ public class NsService {
         nsRecord.setNsReason(body.get("reason"));
 
         nsRecord.setLnsReq(lnsReq);
-        if(lnsReq) {
+        if (lnsReq) {
             nsRecord.setLnsReqUid(lnsReqUid);
         }
 
@@ -78,9 +77,9 @@ public class NsService {
             ele.put("lnsReq", nsRecord.isLnsReq());
             ele.put("status", nsRecord.getNsState());
             ele.put("place", nsRecord.getNsPlace());
-            if(nsRecord.isLnsReq()) {
+            if (nsRecord.isLnsReq()) {
                 Optional<LnsReservation> lr = lnsRepository.findById(nsRecord.getLnsReqUid());
-                if(lr.isEmpty()) ele.put("lnsSeat", "No Record");
+                if (lr.isEmpty()) ele.put("lnsSeat", "No Record");
                 else ele.put("lnsSeat", lr.get().getSeat());
             }
             ret.put(ele);
@@ -89,7 +88,7 @@ public class NsService {
     }
 
     public LnsReservation saveLnsReservation(int uuid, NsRecord.NS_TIME nsTime, int grade, String seat) {
-        if(existsLnsBySeat(nsTime, seat, grade)) {
+        if (existsLnsBySeat(nsTime, seat, grade)) {
             return null;
         }
 
@@ -113,14 +112,13 @@ public class NsService {
 
     public void deleteNs(int uuid, NsRecord.NS_TIME time) throws IonException {
         Optional<NsRecord> nsRecord = nsRepository.findByUuidAndNsDateAndNsTime(uuid, LocalDate.now(), time);
-        if(nsRecord.isPresent()) {
+        if (nsRecord.isPresent()) {
             NsRecord toDel = nsRecord.get();
-            if(toDel.isLnsReq()) {
+            if (toDel.isLnsReq()) {
                 lnsRepository.deleteById(toDel.getLnsReqUid());
             }
             nsRepository.deleteByUuidAndNsTimeAndNsDate(uuid, time, LocalDate.now());
-        }
-        else {
+        } else {
             throw new IonException();
         }
     }
@@ -137,14 +135,13 @@ public class NsService {
         lrev.forEach(e -> {
             JSONObject rev = new JSONObject();
             Optional<User> reserver = userRepository.findById(e.getUuid());
-            if(reserver.isEmpty()) {
+            if (reserver.isEmpty()) {
                 rev.put("v", false);
-            }
-            else {
+            } else {
                 User user = reserver.get();
                 rev.put("v", true);
                 rev.put("name", user.getName());
-                rev.put("scode", user.getGrade()*1000+user.getClas()*100+user.getScode());
+                rev.put("scode", user.getGrade() * 1000 + user.getClas() * 100 + user.getScode());
                 rev.put("sn", e.getSeat());
                 byNsTime[NsRecord.nsTimeToInt(e.getLnsTime())].put(rev);
             }
@@ -163,19 +160,18 @@ public class NsService {
         rec.forEach(r -> {
             Optional<User> pla = userRepository.findById(r.getUuid());
             JSONObject e = new JSONObject();
-            if(pla.isPresent()) {
+            if (pla.isPresent()) {
                 User u = pla.get();
                 e.put("id", r.getUid());
                 e.put("time", r.getNsTime());
                 e.put("name", u.getName());
-                e.put("rscode", u.getGrade()*1000+u.getClas()*100+u.getScode());
+                e.put("rscode", u.getGrade() * 1000 + u.getClas() * 100 + u.getScode());
                 e.put("place", r.getNsPlace());
                 e.put("super", r.getNsSupervisor());
                 e.put("reason", r.getNsReason());
                 e.put("status", r.getNsState());
                 e.put("v", true);
-            }
-            else {
+            } else {
                 e.put("v", false);
             }
             lst.put(e);

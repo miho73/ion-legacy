@@ -1,4 +1,4 @@
-package com.github.miho73.ion.service;
+package com.github.miho73.ion.service.auth;
 
 import com.github.miho73.ion.dto.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,7 +14,7 @@ public class AuthService {
     }
 
     /**
-     * @param pwd password to match
+     * @param pwd  password to match
      * @param user user to check
      * @return true: matches, false: not matches.
      */

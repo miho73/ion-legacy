@@ -41,7 +41,7 @@ public class User {
     @Column(name = "scode_cflag", nullable = false)
     private boolean scodeCFlag;
 
-    @Length(min = 1,  message = "{validation.id.too_short}")
+    @Length(min = 1, message = "{validation.id.too_short}")
     @Length(max = 30, message = "{validation.id.too_long}")
     @Column(name = "id", nullable = false)
     private String id;

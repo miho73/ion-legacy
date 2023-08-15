@@ -11,19 +11,20 @@ function Hangang() {
 
     useEffect(() => {
         axios.get('/etc/api/temp/hangang')
-        .then(res => {
-            if(res.data['result']['ok']) {
-                setData(res.data['result']);
-                setSet(true);
-            }
-        })
-        .catch(err => {
-            console.error(err);
-        });
+            .then(res => {
+                if (res.data['result']['ok']) {
+                    setData(res.data['result']);
+                    setSet(true);
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
     }, []);
 
     return (
-        <div className="cover hangang d-flex align-items-center" style={{backgroundImage: 'url("/static/temp/seoul.jpg")'}}>
+        <div className="cover hangang d-flex align-items-center"
+             style={{backgroundImage: 'url("/static/temp/seoul.jpg")'}}>
             <div className="m-auto">
                 {set &&
                     <>

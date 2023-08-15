@@ -53,15 +53,14 @@ function Ns() {
     }, [lnsRoomRequired]);
 
     useEffect(() => {
-        if(id === '') return;
+        if (id === '') return;
 
         let nsaf = localStorage.getItem('nsaf');
         let parsed = JSON.parse(nsaf);
 
-        if(parsed === null) {
+        if (parsed === null) {
             localStorage.setItem('nsaf', '{}');
-        }
-        else if(parsed.hasOwnProperty(id)) {
+        } else if (parsed.hasOwnProperty(id)) {
             setAutoFill(true);
             let me = parsed[id];
             setRevPlace(me['at']);
@@ -70,14 +69,14 @@ function Ns() {
         }
     }, [id]);
 
-    if(loginState === -1) {
+    if (loginState === -1) {
         return <></>;
     }
-    if(loginState === 1) {
+    if (loginState === 1) {
         navigate('/');
         return <></>;
     }
-    if(loginState === 2) {
+    if (loginState === 2) {
         return <CannotAuthorize/>
     }
 
@@ -85,23 +84,23 @@ function Ns() {
         setDeleting(true);
 
         axios.get('/ns/api/nsr/get')
-        .then(res => {
-            const reqs = res.data['result'];
-            setUName(reqs['name']);
-            setDate(reqs['date']);
-            setNsLst(reqs['reqs']);
-            setId(reqs['id']);
-        })
-        .catch(err => {
-            setNsErr(true);
-        }).finally(() => {
+            .then(res => {
+                const reqs = res.data['result'];
+                setUName(reqs['name']);
+                setDate(reqs['date']);
+                setNsLst(reqs['reqs']);
+                setId(reqs['id']);
+            })
+            .catch(err => {
+                setNsErr(true);
+            }).finally(() => {
             setDeleting(false);
         });
     }
 
     let rr: any[] = [];
-    if(!cNsErr) {
-        if(cNsLst.length === 0) {
+    if (!cNsErr) {
+        if (cNsLst.length === 0) {
             rr.push(
                 <tr>
                     <td colSpan={7}>
@@ -109,25 +108,23 @@ function Ns() {
                     </td>
                 </tr>
             );
-        }
-        else {
+        } else {
             cNsLst.forEach(req => {
                 let row = <NsState
-                            name={req.time}
-                            place={req.place}
-                            superviser={req.supervisor}
-                            reason={req.reason}
-                            seat={req.lnsSeat}
-                            lnsReq={req.lnsReq}
-                            status={req.status}
-                            showDeleteConfirm={() => setDeleteModalShow(true)}
-                            setTargetNs={setTargetNs}
-                        />
+                    name={req.time}
+                    place={req.place}
+                    superviser={req.supervisor}
+                    reason={req.reason}
+                    seat={req.lnsSeat}
+                    lnsReq={req.lnsReq}
+                    status={req.status}
+                    showDeleteConfirm={() => setDeleteModalShow(true)}
+                    setTargetNs={setTargetNs}
+                />
                 rr.push(row);
             });
         }
-    }
-    else {
+    } else {
         rr.push(
             <tr>
                 <td className='table-danger' colSpan={7}>면불 신청 리스트를 받지 못했습니다.</td>
@@ -136,23 +133,24 @@ function Ns() {
     }
 
     const AREA = ['A', 'B', 'C', 'D', 'E', 'F'];
+
     function submit() {
         let state = 0
 
         // validate
-        if(revTime < 0 || revTime > 2) state = changeBit(state, 0);
-        if(!inRange(1, 30, revPlace.length)) state = changeBit(state, 1);
-        if(!inRange(1, 10, revSup.length)) state = changeBit(state, 2);
-        if(!inRange(1, 30, revRes.length)) state = changeBit(state, 3);
-        if(lnsRoomRequired && lnsSelected === -1) state = changeBit(state, 4);
+        if (revTime < 0 || revTime > 2) state = changeBit(state, 0);
+        if (!inRange(1, 30, revPlace.length)) state = changeBit(state, 1);
+        if (!inRange(1, 10, revSup.length)) state = changeBit(state, 2);
+        if (!inRange(1, 30, revRes.length)) state = changeBit(state, 3);
+        if (lnsRoomRequired && lnsSelected === -1) state = changeBit(state, 4);
 
         setFormState(state);
 
-        if(state === 0) {
+        if (state === 0) {
             setWorking(true);
 
             let time;
-            switch(revTime) {
+            switch (revTime) {
                 case 0:
                     time = 'N8';
                     break;
@@ -164,12 +162,11 @@ function Ns() {
                     break;
             }
             let lns;
-            if(lnsSelected !== -1) {
+            if (lnsSelected !== -1) {
                 let seat = lnsSelected % 10;
                 let area = (lnsSelected - seat) / 10
-                lns = AREA[area-1] + seat;
-            }
-            else {
+                lns = AREA[area - 1] + seat;
+            } else {
                 lns = -1;
             }
 
@@ -188,7 +185,7 @@ function Ns() {
                     loadLns();
                 }).catch(err => {
                     const code = err.response?.data['result'];
-                    switch(code) {
+                    switch (code) {
                         case 4:
                             setSError(2);
                             break;
@@ -200,6 +197,9 @@ function Ns() {
                             break;
                         case 7:
                             setSError(5);
+                            break;
+                        case 8:
+                            setSError(6);
                             break;
                         default:
                             setSError(1);
@@ -221,63 +221,64 @@ function Ns() {
                     ctoken: token
                 }
             })
-            .then(res => {
-                closeDeleteConfirm();
-                loadNsReqs();
-                loadLns();
-            })
-            .catch(err => {
-                switch(err.response?.data['result']) {
-                    case 1:
-                        setDeleteResult(1);
-                        break;
-                    case 2:
-                        setDeleteResult(2);
-                        break;
-                    case 3:
-                        setDeleteResult(3);
-                        break;
-                    case 4:
-                        setDeleteResult(4);
-                        break;
-                    default:
-                        setDeleteResult(5);
-                }
-            })
-            .finally(() => {
-                setDeleting(false);
-            });
+                .then(res => {
+                    closeDeleteConfirm();
+                    loadNsReqs();
+                    loadLns();
+                })
+                .catch(err => {
+                    switch (err.response?.data['result']) {
+                        case 1:
+                            setDeleteResult(1);
+                            break;
+                        case 2:
+                            setDeleteResult(2);
+                            break;
+                        case 3:
+                            setDeleteResult(3);
+                            break;
+                        case 4:
+                            setDeleteResult(4);
+                            break;
+                        default:
+                            setDeleteResult(5);
+                    }
+                })
+                .finally(() => {
+                    setDeleting(false);
+                });
         });
     }
+
     function closeDeleteConfirm() {
         setDeleteModalShow(false);
         setDeleteResult(-1);
     }
 
     function loadLns() {
-        if(lnsRoomRequired) {
+        if (lnsRoomRequired) {
             axios.get('/ns/api/lns/get')
-            .then(res => {
-                const dat = res.data['result'];
-                const tset: any[] = [];
-                dat.forEach(ns => {
-                    let rp = {};
-                    ns.forEach(e => {
-                        if(e['v']) {
-                            rp[e['sn']] = {
-                                name: e['name'],
-                                scode: e['scode']
-                            };
-                        }
+                .then(res => {
+                    const dat = res.data['result'];
+                    const tset: any[] = [];
+                    dat.forEach(ns => {
+                        let rp = {};
+                        ns.forEach(e => {
+                            if (e['v']) {
+                                rp[e['sn']] = {
+                                    name: e['name'],
+                                    scode: e['scode']
+                                };
+                            }
+                        });
+                        tset.push(rp);
                     });
-                    tset.push(rp);
+                    setSeatLst(tset);
+                    setLnsError(1);
+                })
+                .catch(err => {
+                    setLnsError(2);
                 });
-                setSeatLst(tset);
-                setLnsError(1);
-            })
-            .catch(err => {
-                setLnsError(2);
-            });
         }
     }
 
@@ -286,7 +287,7 @@ function Ns() {
         let cs = localStorage.getItem('nsaf') as string;
         let pa = JSON.parse(cs);
 
-        if(state) {
+        if (state) {
             let obj = {
                 at: revPlace,
                 sup: revSup,
@@ -294,8 +295,7 @@ function Ns() {
             };
             pa[id] = obj;
             localStorage.setItem('nsaf', JSON.stringify(pa));
-        }
-        else {
+        } else {
             delete pa[id];
             localStorage.setItem('nsaf', JSON.stringify(pa));
         }
@@ -308,15 +308,15 @@ function Ns() {
                 <div className='table-cover'>
                     <Table className='table-wide'>
                         <thead>
-                            <tr>
-                                <th>면학</th>
-                                <th>장소</th>
-                                <th>담당교사</th>
-                                <th>사유</th>
-                                <th>노면실 자리</th>
-                                <th>상태</th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th>면학</th>
+                            <th>장소</th>
+                            <th>담당교사</th>
+                            <th>사유</th>
+                            <th>노면실 자리</th>
+                            <th>상태</th>
+                            <th></th>
+                        </tr>
                         </thead>
                         <tbody>{rr}</tbody>
                     </Table>
@@ -333,8 +333,8 @@ function Ns() {
                                     <Form.Label htmlFor='time' className='form-label'>면학</Form.Label>
                                     <Form.Select
                                         isInvalid={getBit(formState, 0) === 1}
-                                        aria-label='면학 시간' 
-                                        disabled={working} 
+                                        aria-label='면학 시간'
+                                        disabled={working}
                                         value={revTime}
                                         onChange={e => setRevTime(Number.parseInt(e.target.value))}>
 
@@ -451,6 +451,11 @@ function Ns() {
                     {sErrorState === 5 &&
                         <Alert variant='danger'>
                             <p className='my-0'>사용자 보호를 위해 지금은 신청할 수 없습니다.</p>
+                        </Alert>
+                    }
+                    {sErrorState === 6 &&
+                        <Alert variant='danger'>
+                            <p className='my-0'>교사로 등록되어있으므로 면불을 신청할 수 없습니다.</p>
                         </Alert>
                     }
                 </Form>

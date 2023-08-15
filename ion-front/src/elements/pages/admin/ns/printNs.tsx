@@ -9,7 +9,7 @@ function PrintNs() {
     const [data, setData] = useState<any[]>([]);
     const [grade, setGrade] = useState(1);
     const [date, setDate] = useState('');
-    const [includeDenied, setIncludeDenied ] = useState(false);
+    const [includeDenied, setIncludeDenied] = useState(false);
     const [workState, setWorkState] = useState(-1);
 
     function exportPdf() {
@@ -27,13 +27,13 @@ function PrintNs() {
         doc.setFontSize(10);
         doc.autoTable({
             html: '#prt',
-            headStyles: { halign: "center", valign: "middle", fillColor: [59,59,59] },
-            tableLineColor: [59,59,59],
+            headStyles: {halign: "center", valign: "middle", fillColor: [59, 59, 59]},
+            tableLineColor: [59, 59, 59],
             tableLineWidth: 0.1,
             startX: 10,
             startY: 20,
-            margin: { left: 10, top: 10, right: 10, bottom: 10 },
-            styles: { font: "SpoqaHanSansNeo", fontStyle: "normal" },
+            margin: {left: 10, top: 10, right: 10, bottom: 10},
+            styles: {font: "SpoqaHanSansNeo", fontStyle: "normal"},
         });
 
         doc.save(`면학 지도 일지 ${date}.pdf`);
@@ -43,69 +43,69 @@ function PrintNs() {
         axios.get('/manage/api/ns/print', {
             params: {grade: grade}
         })
-        .then(res => {
-            setData(res.data['result']['ns']);
-            setDate(res.data['result']['qtime']);
-            setWorkState(0);
-        })
-        .catch(err => {
-            switch(err.response?.data['result']) {
-                case 1:
-                    setWorkState(1);
-                    break;
-                default:
-                    setWorkState(2);
-            }
-        });
+            .then(res => {
+                setData(res.data['result']['ns']);
+                setDate(res.data['result']['qtime']);
+                setWorkState(0);
+            })
+            .catch(err => {
+                switch (err.response?.data['result']) {
+                    case 1:
+                        setWorkState(1);
+                        break;
+                    default:
+                        setWorkState(2);
+                }
+            });
     }
-    
+
     let rr: any[] = [];
-    if(workState === 0) {
+    if (workState === 0) {
         data.forEach(e => {
             rr.push(
                 <tr>
                     <td>{e.code}</td>
                     <td>{e.name}</td>
-                    { includeDenied &&
+                    {includeDenied &&
                         <>
-                            { e.n8 !== null &&
+                            {e.n8 !== null &&
                                 <td className={e.n8.a ? 'table-success' : 'table-danger'}>{e.n8.c}</td>
                             }
-                            { e.n8 === null &&
+                            {e.n8 === null &&
                                 <td></td>
                             }
-                            { e.n1 !== null &&
+                            {e.n1 !== null &&
                                 <td className={e.n1.a ? 'table-success' : 'table-danger'}>{e.n1.c}</td>
                             }
-                            { e.n1 === null &&
+                            {e.n1 === null &&
                                 <td></td>
                             }
-                            { e.n2 !== null &&
+                            {e.n2 !== null &&
                                 <td className={e.n2.a ? 'table-success' : 'table-danger'}>{e.n2.c}</td>
                             }
-                            { e.n2 === null &&
+                            {e.n2 === null &&
                                 <td></td>
                             }
                         </>
                     }
-                    { !includeDenied &&
+                    {!includeDenied &&
                         <>
-                            { (e.n8 !== null && e.n8.a) &&
+                            {(e.n8 !== null && e.n8.a) &&
                                 <td>{e.n8.c}</td>
                             }
-                            { (e.n8 === null || !e.n8.a) &&
+                            {(e.n8 === null || !e.n8.a) &&
                                 <td></td>
                             }
-                            { (e.n1 !== null && e.n1.a) &&
+                            {(e.n1 !== null && e.n1.a) &&
                                 <td>{e.n1.c}</td>
                             }
-                            { (e.n1 === null || !e.n1.a) &&
+                            {(e.n1 === null || !e.n1.a) &&
                                 <td></td>
                             }
-                            { (e.n2 !== null && e.n2.a) &&
+                            {(e.n2 !== null && e.n2.a) &&
                                 <td>{e.n2.c}</td>
                             }
-                            { (e.n2 === null || !e.n2.a) &&
+                            {(e.n2 === null || !e.n2.a) &&
                                 <td></td>
                             }
                         </>
@@ -137,27 +137,27 @@ function PrintNs() {
                 />
             </FormGroup>
             <Container className='my-3'>
-                { workState === 0 &&
+                {workState === 0 &&
                     <div className='table-cover'>
                         <Table id='prt'>
                             <thead>
-                                <tr>
-                                    <th>학번</th>
-                                    <th>이름</th>
-                                    <th>8면학</th>
-                                    <th>1면학</th>
-                                    <th>2면학</th>
-                                </tr>
+                            <tr>
+                                <th>학번</th>
+                                <th>이름</th>
+                                <th>8면학</th>
+                                <th>1면학</th>
+                                <th>2면학</th>
+                            </tr>
                             </thead>
                             <tbody>{rr}</tbody>
                         </Table>
                         <p>{date}</p>
                     </div>
                 }
-                { workState === 1 &&
+                {workState === 1 &&
                     <Alert variant='danger'>권한이 부족합니다.</Alert>
                 }
-                { workState === 2 &&
+                {workState === 2 &&
                     <Alert variant='danger'>문제가 발생했습니다.</Alert>
                 }
             </Container>

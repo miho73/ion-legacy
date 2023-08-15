@@ -1,8 +1,9 @@
-package com.github.miho73.ion.service;
+package com.github.miho73.ion.service.auth;
 
 import com.github.miho73.ion.dto.ResetPasswordReq;
 import com.github.miho73.ion.dto.User;
 import com.github.miho73.ion.repository.ResetPasswordRepository;
+import com.github.miho73.ion.service.ionid.UserService;
 import com.github.miho73.ion.utils.RandomCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,10 +36,10 @@ public class ResetPasswordService {
 
     public int getState(String id) {
         Optional<User> userOptional = userService.getUserById(id);
-        if(userOptional.isEmpty()) return 2;
+        if (userOptional.isEmpty()) return 2;
         User user = userOptional.get();
         Optional<ResetPasswordReq> rpq = resetPasswordRepository.findByUuid(user.getUid());
-        if(rpq.isEmpty()) return 0;
+        if (rpq.isEmpty()) return 0;
         else return 3;
     }
 
@@ -59,7 +60,7 @@ public class ResetPasswordService {
     }
 
     public void acceptRequest(int uid, boolean accept) {
-        if(accept) resetPasswordRepository.acceptRequest(uid);
+        if (accept) resetPasswordRepository.acceptRequest(uid);
         else resetPasswordRepository.rejectRequest(uid);
     }
 

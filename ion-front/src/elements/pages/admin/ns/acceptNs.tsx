@@ -9,10 +9,22 @@ function NsReq(props) {
     const deny = props.deny;
 
     let cc, sh;
-    if(props.status === 'APPROVED') {cc = 'table-success text-success text-center'; sh='APPROVED';}
-    if(props.status === 'DENIED') {cc = 'table-danger text-danger text-center'; sh = 'DENIED';}
-    if(props.status === 'REQUESTED') {cc = 'text-center'; sh = 'REQUESTED';}
-    if(props.status === 'NO_SUPERVISOR') {cc = 'table-warning text-danger text-center'; sh = 'NO SUPERVISOR';}
+    if (props.status === 'APPROVED') {
+        cc = 'table-success text-success text-center';
+        sh = 'APPROVED';
+    }
+    if (props.status === 'DENIED') {
+        cc = 'table-danger text-danger text-center';
+        sh = 'DENIED';
+    }
+    if (props.status === 'REQUESTED') {
+        cc = 'text-center';
+        sh = 'REQUESTED';
+    }
+    if (props.status === 'NO_SUPERVISOR') {
+        cc = 'table-warning text-danger text-center';
+        sh = 'NO SUPERVISOR';
+    }
 
     return (
         <tr>
@@ -37,71 +49,67 @@ function AcceptNs() {
     const [ws, setWs] = useState(0);
     const [nsLst, setNsLst] = useState([]);
     const [date, setDate] = useState('');
-    
+
     useEffect(() => {
         loadNs();
     }, []);
 
     function loadNs() {
         axios.get('/manage/api/ns/get')
-        .then(res => {
-            const data = res.data['result'];
-            setDate(data['date']);
-            setNsLst(data['nss']);
-        })
-        .catch(err => {
-            switch(err.response?.data['result']) {
-                case 1:
-                    setWs(1);
-                    break;
-                default:
-                    setWs(-1);
-                    break;
-            }
-        })
+            .then(res => {
+                const data = res.data['result'];
+                setDate(data['date']);
+                setNsLst(data['nss']);
+            })
+            .catch(err => {
+                switch (err.response?.data['result']) {
+                    case 1:
+                        setWs(1);
+                        break;
+                    default:
+                        setWs(-1);
+                        break;
+                }
+            })
     }
 
     const rLst: any[] = [];
-    if(ws === -1) {
+    if (ws === -1) {
         rLst.push(
             <tr className='table-danger'>
                 <td colSpan={8}>문제가 발생했습니다.</td>
             </tr>
         );
-    }
-    else if(ws === 1) {
+    } else if (ws === 1) {
         rLst.push(
             <tr className='table-danger'>
                 <td colSpan={8}>권한이 부족합니다.</td>
             </tr>
         );
-    }
-    else if(nsLst.length === 0) {
+    } else if (nsLst.length === 0) {
         rLst.push(
             <tr>
                 <td colSpan={8}>신청된 면학 불참이 없습니다.</td>
             </tr>
         );
-    }
-    else {
+    } else {
         nsLst.forEach(e => {
-            if(e['v']) {
+            if (e['v']) {
                 rLst.push(
-                <NsReq
-                    id={e['id']}
-                    name={e['name']}
-                    time={e['time']}
-                    scode={e['rscode']}
-                    place={e['place']}
-                    super={e['super']}
-                    reason={e['reason']}
-                    status={e['status']}
-                    accept={(id) => ctrl(id, true)}
-                    deny={(id) => ctrl(id, false)}
-                />
+                    <NsReq
+                        id={e['id']}
+                        name={e['name']}
+                        time={e['time']}
+                        scode={e['rscode']}
+                        place={e['place']}
+                        super={e['super']}
+                        reason={e['reason']}
+                        status={e['status']}
+                        accept={(id) => ctrl(id, true)}
+                        deny={(id) => ctrl(id, false)}
+                    />
                 );
-            }
-            else {
+            } else {
                 rLst.push(
                     <tr className='table-warning'>
                         <td colSpan={8}>유효하지 않은 신청입니다.</td>
@@ -116,25 +124,25 @@ function AcceptNs() {
             id: id,
             ac: accept
         })
-        .then(res => {
-            loadNs();
-        })
-        .catch(err => {
-            switch(err.response?.data['result']) {
-                case 1:
-                    setWs(1);
-                    break;
-                case 2:
-                    setWs(2);
-                    break;
-                case 3:
-                    setWs(3);
-                    break;
-                default:
-                    setWs(-1);
-                    break;
-            }
-        });
+            .then(res => {
+                loadNs();
+            })
+            .catch(err => {
+                switch (err.response?.data['result']) {
+                    case 1:
+                        setWs(1);
+                        break;
+                    case 2:
+                        setWs(2);
+                        break;
+                    case 3:
+                        setWs(3);
+                        break;
+                    default:
+                        setWs(-1);
+                        break;
+                }
+            });
     }
 
     return (
@@ -144,16 +152,16 @@ function AcceptNs() {
             <div className='table-cover'>
                 <Table>
                     <thead>
-                        <tr>
-                            <th>이름</th>
-                            <th>학번</th>
-                            <th>면학</th>
-                            <th>장소</th>
-                            <th>담당교사</th>
-                            <th>사유</th>
-                            <th>상태</th>
-                            <th>승인</th>
-                        </tr>
+                    <tr>
+                        <th>이름</th>
+                        <th>학번</th>
+                        <th>면학</th>
+                        <th>장소</th>
+                        <th>담당교사</th>
+                        <th>사유</th>
+                        <th>상태</th>
+                        <th>승인</th>
+                    </tr>
                     </thead>
                     <tbody>{rLst}</tbody>
                 </Table>

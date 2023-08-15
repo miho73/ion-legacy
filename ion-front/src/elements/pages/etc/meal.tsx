@@ -30,20 +30,19 @@ function MealNoti() {
 
     useEffect(() => {
         axios.get('/etc/api/meal')
-        .then(res => {
-            const content = res.data['result'];
-            if(content.ok) {
-                setData(content.data);
-                setWorkState(0);
-            }
-            else {
+            .then(res => {
+                const content = res.data['result'];
+                if (content.ok) {
+                    setData(content.data);
+                    setWorkState(0);
+                } else {
+                    setWorkState(1);
+                }
+            })
+            .catch(err => {
+                console.error(err);
                 setWorkState(1);
-            }
-        })
-        .catch(err => {
-            console.error(err);
-            setWorkState(1);
-        })
+            })
     }, []);
 
     let elements: any[] = [];
@@ -55,7 +54,7 @@ function MealNoti() {
 
     return (
         <Container className='mt-5 nst'>
-            { workState === 0 &&
+            {workState === 0 &&
                 <div className='text-center meal d-flex justify-between gap-4'>{elements}</div>
             }
             {

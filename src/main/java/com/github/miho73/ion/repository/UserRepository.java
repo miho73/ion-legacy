@@ -35,16 +35,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             @Param("privilege") int privilege
     );
 
-    @Modifying
-    @Query(
-            value = "UPDATE users.users SET last_login=:ll WHERE uid=:uid",
-            nativeQuery = true
-    )
-    void updateLastLogin(
-            @Param("uid") int uid,
-            @Param("ll") Timestamp ll
-    );
-
     Optional<User> findByGradeAndClasAndScode(int grade, int clas, int scode);
 
     List<User> findByGradeAndStatusOrderByClasAscScodeAsc(int grade, User.USER_STATUS status);
@@ -65,31 +55,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     )
     void resetGradeOnPromote();
 
-    @Modifying
-    @Query(
-            value = "DELETE FROM users.users WHERE grade=3",
-            nativeQuery = true
-    )
-    void deleteThirdGrades();
-
-    @Modifying
-    @Query(
-            value = "UPDATE users.users SET clas=:clas, scode=:scode WHERE uid=:uid",
-            nativeQuery = true
-    )
-    void updateScode(
-            @Param("uid") int uid,
-            @Param("clas") int clas,
-            @Param("scode") int scode
-    );
-
-    @Modifying
-    @Query(
-            value = "UPDATE users.users SET scode_cflag=:scodeFlag WHERE uid=:uid",
-            nativeQuery = true
-    )
-    void updateScodeFlag(
-            @Param("uid") int uid,
-            @Param("scodeFlag") boolean scodeFlag
-    );
+    void deleteByGrade(int grade);
 }

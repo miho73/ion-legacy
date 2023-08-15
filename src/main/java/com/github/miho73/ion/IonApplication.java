@@ -11,7 +11,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @EnableEncryptableProperties
 @EnableScheduling
 public class IonApplication {
-	public static void main(String[] args) {
-		SpringApplication.run(IonApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(IonApplication.class, args);
+    }
 }

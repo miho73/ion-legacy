@@ -15,14 +15,14 @@ function ManagementPage() {
         checkPrivilege(setLoginState);
     }, []);
 
-    if(loginState === -1) {
+    if (loginState === -1) {
         return <></>;
     }
-    if(loginState === 1) {
+    if (loginState === 1) {
         navigate('/');
         return <></>;
     }
-    if(loginState === 2) {
+    if (loginState === 2) {
         return <CannotAuthorize/>
     }
 

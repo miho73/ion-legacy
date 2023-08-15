@@ -20,16 +20,16 @@ function AddNs(props) {
         let state = 0
 
         // validate
-        if(revTime < 0 || revTime > 2) state = changeBit(state, 0);
-        if(!inRange(1, 30, revPlace.length)) state = changeBit(state, 1);
-        if(!inRange(1, 30, revRes.length)) state = changeBit(state, 3);
+        if (revTime < 0 || revTime > 2) state = changeBit(state, 0);
+        if (!inRange(1, 30, revPlace.length)) state = changeBit(state, 1);
+        if (!inRange(1, 30, revRes.length)) state = changeBit(state, 3);
 
         setFormState(state);
 
-        if(state !== 0) return;
+        if (state !== 0) return;
 
         let time;
-        switch(revTime) {
+        switch (revTime) {
             case 0:
                 time = 'N8';
                 break;
@@ -48,31 +48,31 @@ function AddNs(props) {
             place: revPlace,
             reason: revRes
         })
-        .then(res => {
-            setWorkError(0);
-        })
-        .catch(err => {
-            const es = err.response?.data['result'];
-            switch(es) {
-                case 1:
-                    setWorkError(1);
-                    break;
-                case 2:
-                    setWorkError(2);
-                    break;
-                case 3:
-                    setWorkError(3);
-                    break;
-                case 4:
-                    setWorkError(4);
-                    break;
-                default:
-                    setWorkError(6);
-            }
-        })
-        .finally(() => {
-            setWorking(false);
-        });
+            .then(res => {
+                setWorkError(0);
+            })
+            .catch(err => {
+                const es = err.response?.data['result'];
+                switch (es) {
+                    case 1:
+                        setWorkError(1);
+                        break;
+                    case 2:
+                        setWorkError(2);
+                        break;
+                    case 3:
+                        setWorkError(3);
+                        break;
+                    case 4:
+                        setWorkError(4);
+                        break;
+                    default:
+                        setWorkError(6);
+                }
+            })
+            .finally(() => {
+                setWorking(false);
+            });
     }
 
     return (
@@ -82,7 +82,8 @@ function AddNs(props) {
                 <Row className='mt-1'>
                     <Form.Group as={Col} className='mb-3'>
                         <Form.Label htmlFor='time' className='form-label'>면학</Form.Label>
-                        <Form.Select isInvalid={getBit(formState, 0) === 1} aria-label='면학 시간' disabled={working} value={revTime} onChange={e => setRevTime(Number.parseInt(e.target.value))}>
+                        <Form.Select isInvalid={getBit(formState, 0) === 1} aria-label='면학 시간' disabled={working}
+                                     value={revTime} onChange={e => setRevTime(Number.parseInt(e.target.value))}>
                             <option value={-1}>면학 시간</option>
                             <option value={0}>8면</option>
                             <option value={1}>1면</option>

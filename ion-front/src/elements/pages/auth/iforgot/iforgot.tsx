@@ -12,11 +12,10 @@ function IForgotDashboard(props) {
         axios.get("/auth/api/reset-passwd/query", {
             params: {id: props.id}
         }).then(res => {
-            if(res.data['result']['status'] === 'REQUESTED') {
+            if (res.data['result']['status'] === 'REQUESTED') {
                 setPrivateCode(res.data['result']['privateCode']);
                 setWorkState(0);
-            }
-            else {
+            } else {
                 setWorkState(1);
             }
         }).catch(err => {
@@ -24,7 +23,7 @@ function IForgotDashboard(props) {
         });
     }, []);
 
-    if(workState === 2) {
+    if (workState === 2) {
         <ErrorPage exp='잘못된 접근입니다.'/>
     }
 
@@ -36,16 +35,16 @@ function IForgotDashboard(props) {
                 <p className={'my-1'}>암호 재설정이 신청되었습니다. 학년 부장 선생님께 찾아가서 재설정 신청을 승인하도록 부탁드리세요. 이 신청은 오늘만 유효합니다.</p>
                 <p className={'my-1'}>재설정 신청이 승인되면 암호를 변경할 수 있는 링크가 생성됩니다. 이 링크를 통해 암호를 변경할 수 있습니다.</p>
                 <p className={'my-1'}>사용자 보호를 위해 암호를 재설정하기 전에 개인 확인 코드를 입력해야 합니다. 코드를 잘 기억해두세요.</p>
-                { workState === -1 &&
+                {workState === -1 &&
                     <p className={'fs-5 fw-bold'}>확인중</p>
                 }
-                { workState === 0 &&
+                {workState === 0 &&
                     <>
                         <p className={'fs-4 fw-bold mt-4 mb-1'}>개인 확인 코드: {privateCode}</p>
                         <p className={'fs-5 fw-bold'}>이 코드는 한 번만 볼 수 있습니다.</p>
                     </>
                 }
-                { workState === 1 &&
+                {workState === 1 &&
                     <p className={'fs-5 fw-bold'}>이미 개인 확인 코드를 확인했습니다.</p>
                 }
             </Stack>
@@ -126,7 +125,7 @@ function IForgot() {
         });
     }
 
-    if(stage === 2) {
+    if (stage === 2) {
         return (
             <IForgotDashboard id={id}/>
         );
@@ -149,7 +148,7 @@ function IForgot() {
                                               value={id}
                                               onChange={e => setId(e.target.value)}
                                               onKeyDown={e => {
-                                                    if(e.key === 'Enter') nxt();
+                                                  if (e.key === 'Enter') nxt();
                                               }}
                                 />
                             </FloatingLabel>
@@ -168,7 +167,7 @@ function IForgot() {
                                               value={name}
                                               onChange={e => setName(e.target.value)}
                                               onKeyDown={e => {
-                                                  if(e.key === 'Enter') submit();
+                                                  if (e.key === 'Enter') submit();
                                               }}
                                 />
                             </FloatingLabel>
@@ -179,7 +178,7 @@ function IForgot() {
                                               value={scode}
                                               onChange={e => setScode(parseInt(e.target.value))}
                                               onKeyDown={e => {
-                                                  if(e.key === 'Enter') submit();
+                                                  if (e.key === 'Enter') submit();
                                               }}
                                 />
                             </FloatingLabel>

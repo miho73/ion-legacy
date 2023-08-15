@@ -1,4 +1,4 @@
-package com.github.miho73.ion.service;
+package com.github.miho73.ion.service.etc;
 
 import com.github.miho73.ion.utils.Requests;
 import jakarta.annotation.PostConstruct;
@@ -32,12 +32,20 @@ public class MealService {
 
     public JSONObject query(Calendar calendar) {
         try {
-            String mx = Integer.toString(calendar.get(Calendar.MONTH)+1), da = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
-            if(mx.length() == 1) mx = "0"+mx;
-            if(da.length() == 1) da = "0"+da;
+            String mx = Integer.toString(calendar.get(Calendar.MONTH) + 1), da = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+            if (mx.length() == 1) mx = "0" + mx;
+            if (da.length() == 1) da = "0" + da;
 
-            String jsn = Requests.sendGetRequest("https://open.neis.go.kr/hub/mealServiceDietInfo?key="+MEAL_KEY+"&type=json&pIndex=1&pSize=3&ATPT_OFCDC_SC_CODE=E10&SD_SCHUL_CODE=7310058&MLSV_YMD="+calendar.get(Calendar.YEAR)+mx+da);
-            JSONArray reply = new JSONObject(jsn).getJSONArray("mealServiceDietInfo").getJSONObject(1).getJSONArray("row");
+            String jsn = Requests.sendGetRequest("https://open.neis.go.kr/hub/mealServiceDietInfo?key=" + MEAL_KEY + "&type=json&pIndex=1&pSize=3&ATPT_OFCDC_SC_CODE=E10&SD_SCHUL_CODE=7310058&MLSV_YMD=" + calendar.get(Calendar.YEAR) + mx + da);
+            JSONObject parsed = new JSONObject(jsn);
+
+            //if meal data does not exists
+            if (!parsed.has("mealServiceDietInfo")) {
+                log.error("Meal data was not found. update failed");
+                return fallback;
+            }
+
+            JSONArray reply = parsed.getJSONArray("mealServiceDietInfo").getJSONObject(1).getJSONArray("row");
 
             JSONArray ret = new JSONArray();
             reply.forEach(ex -> {
@@ -66,7 +74,7 @@ public class MealService {
         Date date = new Date();
         Calendar calendar = GregorianCalendar.getInstance();
         calendar.setTime(date);
-        if(day != calendar.get(Calendar.DAY_OF_MONTH)) {
+        if (day != calendar.get(Calendar.DAY_OF_MONTH)) {
             cache = query(calendar);
             day = calendar.get(Calendar.DAY_OF_MONTH);
         }

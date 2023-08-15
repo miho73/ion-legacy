@@ -36,7 +36,8 @@ function DocsMain() {
                 <div className="col-md-6 mb-3">
                     <div className="h-100 p-5 bg-light border rounded-3">
                         <h2>Ion 개발에 참여하기</h2>
-                        <p>Ion은 오픈소스 프로젝트로 누구든지 개발에 참여할 수 있습니다. 개선사항이나 버그, 문제점을 이슈로 제기해주세요. 혹은 직접 개발한 코드를 기여할 수도 있습니다.</p>
+                        <p>Ion은 오픈소스 프로젝트로 누구든지 개발에 참여할 수 있습니다. 개선사항이나 버그, 문제점을 이슈로 제기해주세요. 혹은 직접 개발한 코드를 기여할 수도
+                            있습니다.</p>
                         <Link className="btn btn-outline-dark" to='/docs/credits'>Ion Credits</Link>
                     </div>
                 </div>
@@ -46,7 +47,7 @@ function DocsMain() {
 }
 
 function NoDocs() {
-    return(
+    return (
         <Container className='nst my-5 text-center'>
             <h1>찾으시는 문서가 없습니다.</h1>
             <Link className='text-decoration-none fs-2' to="/docs">문서 메인</Link>
@@ -56,13 +57,13 @@ function NoDocs() {
 
 function Docs() {
     let param = useParams()['*'];
-    
-    if(param === '') {
+
+    if (param === '') {
         return (
             <DocsMain/>
         );
     }
-    if(!DOC_REGISTRY.hasOwnProperty(param)) {
+    if (!DOC_REGISTRY.hasOwnProperty(param)) {
         return (
             <NoDocs/>
         )

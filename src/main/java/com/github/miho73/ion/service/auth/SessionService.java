@@ -1,4 +1,4 @@
-package com.github.miho73.ion.service;
+package com.github.miho73.ion.service.auth;
 
 import com.github.miho73.ion.exceptions.IonException;
 import jakarta.servlet.http.HttpSession;
@@ -20,28 +20,29 @@ public class SessionService {
 
     public int privilegeOf(boolean user, boolean root) {
         int priv = 0;
-        if(user) priv += 1;
-        if(root) priv += 2;
+        if (user) priv += 1;
+        if (root) priv += 2;
         return priv;
     }
 
     public boolean isLoggedIn(HttpSession session) {
-        if(session == null) return false;
+        if (session == null) return false;
         Object login = session.getAttribute("login");
-        if(login == null) return false;
-        return (boolean)session.getAttribute("login");
+        if (login == null) return false;
+        return (boolean) session.getAttribute("login");
     }
 
     /**
      * check if user has sufficient privilege
-     * @param session session of user to check
+     *
+     * @param session   session of user to check
      * @param privilege privilege that expect to have
      * @return true when user has sufficient privilege
      */
     public boolean checkPrivilege(HttpSession session, int privilege) {
-        if(!isLoggedIn(session)) return false;
-        Integer sp = (Integer)session.getAttribute("priv");
-        if(sp == null) return false;
+        if (!isLoggedIn(session)) return false;
+        Integer sp = (Integer) session.getAttribute("priv");
+        if (sp == null) return false;
         boolean flag = true;
 
         do {
@@ -55,10 +56,10 @@ public class SessionService {
     }
 
     public int getUid(HttpSession session) throws IonException {
-        if(session == null) throw new IonException();
+        if (session == null) throw new IonException();
         Object uid = session.getAttribute("uid");
-        if(uid == null) throw new IonException();
-        return (int)uid;
+        if (uid == null) throw new IonException();
+        return (int) uid;
     }
 
     public String getName(HttpSession session) {
@@ -71,11 +72,11 @@ public class SessionService {
 
     public int getGrade(HttpSession session) {
         Object val = session.getAttribute("grade");
-        return (int)val;
+        return (int) val;
     }
 
     public int getPrivilege(HttpSession session) {
-        Integer sp = (Integer)session.getAttribute("priv");
+        Integer sp = (Integer) session.getAttribute("priv");
         return sp;
     }
 }

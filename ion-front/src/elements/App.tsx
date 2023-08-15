@@ -42,7 +42,8 @@ function App() {
 
                         <Route path='/etc/meal' element={<MealNoti/>}/>
 
-                        <Route path='*' element={<ErrorPage errorTitle='찾으시는 페이지가 없어요.' exp='입력하신 주소가 정확한지 다시 한 번 확인해주세요.'/>}/>
+                        <Route path='*'
+                               element={<ErrorPage errorTitle='찾으시는 페이지가 없어요.' exp='입력하신 주소가 정확한지 다시 한 번 확인해주세요.'/>}/>
                     </Routes>
                 </div>
             </div>
