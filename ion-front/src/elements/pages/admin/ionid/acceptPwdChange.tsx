@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
 import {Alert, Button, Form, InputGroup, Table} from "react-bootstrap";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function AcceptPwdChange() {
     const [usrLoaded, setUsrLoaded] = useState(false);
@@ -12,7 +13,7 @@ function AcceptPwdChange() {
     const [urlToken, setUrlToken] = useState('');
 
     function load() {
-        axios.get('/manage/api/reset-passwd/query', {
+        axios.get(API_PREFIX+'/manage/api/reset-passwd/query', {
             params: {id: id}
         })
             .then(res => {
@@ -44,7 +45,7 @@ function AcceptPwdChange() {
     }
 
     function ctrl(state: boolean) {
-        axios.patch('/manage/api/reset-passwd/accept', {
+        axios.patch(API_PREFIX+'/manage/api/reset-passwd/accept', {
             accept: state,
             reqUid: reqUid
         })

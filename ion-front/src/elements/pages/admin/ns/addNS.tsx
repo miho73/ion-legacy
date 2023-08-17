@@ -3,6 +3,7 @@ import {Alert, Button, Col, Form, InputGroup, Row} from "react-bootstrap";
 import {changeBit, getBit} from "../../../service/bitmask";
 import axios from "axios";
 import {inRange} from "../../../service/checker";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function AddNs(props) {
     const [revTime, setRevTime] = useState(-1);
@@ -42,7 +43,7 @@ function AddNs(props) {
         }
 
         setWorking(true);
-        axios.post('/manage/api/ns/create', {
+        axios.post(API_PREFIX+'/manage/api/ns/create', {
             scode: scode,
             time: time,
             place: revPlace,

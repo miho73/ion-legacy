@@ -1,16 +1,30 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import {Alert, Button, Container, Form, FormGroup, FormSelect, InputGroup, Row, Table} from 'react-bootstrap';
+import {
+    Alert,
+    Button,
+    Container,
+    Form,
+    FormCheck,
+    FormGroup,
+    FormSelect,
+    InputGroup,
+    Row, Stack,
+    Table
+} from 'react-bootstrap';
 import axios from 'axios';
 import font from '../../../types/SpoqaHanSansNeo-normal';
+import {changeBit, getBit} from "../../../service/bitmask";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function PrintNs() {
     const [data, setData] = useState<any[]>([]);
-    const [grade, setGrade] = useState(1);
-    const [date, setDate] = useState('');
-    const [includeDenied, setIncludeDenied] = useState(false);
-    const [workState, setWorkState] = useState(-1);
+    const [grade, setGrade] = useState<number>(1);
+    const [date, setDate] = useState<string>('');
+    const [includeDenied, setIncludeDenied] = useState<boolean>(false);
+    const [workState, setWorkState] = useState<number>(-1);
+    const [filterByClass, setFilterByClass] = useState<number>(15);
 
     function exportPdf() {
         var doc = new jsPDF('portrait', 'mm', 'a4');
@@ -40,7 +54,7 @@ function PrintNs() {
     }
 
     function createTable() {
-        axios.get('/manage/api/ns/print', {
+        axios.get(API_PREFIX+'/manage/api/ns/print', {
             params: {grade: grade}
         })
             .then(res => {
@@ -62,6 +76,8 @@ function PrintNs() {
     let rr: any[] = [];
     if (workState === 0) {
         data.forEach(e => {
+            let clas = (e.code-e.code%100)/100-10*(grade);
+            if(getBit(filterByClass, clas-1) === 0) return;
             rr.push(
                 <tr>
                     <td>{e.code}</td>
@@ -111,8 +127,37 @@ function PrintNs() {
                         </>
                     }
                 </tr>
-            )
+            );
         });
+    }
+
+    useEffect(() => {
+        let c = localStorage.getItem('nlfc');
+        if(c === null) {
+            localStorage.setItem('nlfc', 15);
+            setFilterByClass(15);
+        } else {
+            setFilterByClass(Number.parseInt(c));
+        }
+
+        let g = localStorage.getItem('nlg');
+        if(g === null) {
+            localStorage.setItem('nlg', '1');
+            setGrade(1);
+        }
+        else {
+            setGrade(Number.parseInt(g));
+        }
+    }, []);
+    function updateFilterByClass(clas: number) {
+        let c = 0;
+        c = changeBit(filterByClass, clas);
+        setFilterByClass(c);
+        localStorage.setItem('nlfc', c);
+    }
+    function updateGrade(grade: number) {
+        setGrade(Number.parseInt(grade));
+        localStorage.setItem("nlg", grade);
     }
 
     return (
@@ -120,7 +165,7 @@ function PrintNs() {
             <h2>면학 불참 목록</h2>
             <FormGroup>
                 <InputGroup className='w-25 mgw'>
-                    <FormSelect value={grade} onChange={e => setGrade(Number.parseInt(e.target.value))}>
+                    <FormSelect value={grade} onChange={e => updateGrade(e.target.value)}>
                         <option value={1}>1학년</option>
                         <option value={2}>2학년</option>
                         <option value={3}>3학년</option>
@@ -135,6 +180,32 @@ function PrintNs() {
                     checked={includeDenied}
                     onChange={e => setIncludeDenied(e.target.checked)}
                 />
+                <Stack direction={'horizontal'} gap={3}>
+                    <FormCheck
+                        label={'1반'}
+                        id={'clas-1'}
+                        checked={getBit(filterByClass, 0) === 1}
+                        onChange={() => updateFilterByClass(0)}
+                    />
+                    <FormCheck
+                        label={'2반'}
+                        id={'clas-2'}
+                        checked={getBit(filterByClass, 1) === 1}
+                        onChange={() => updateFilterByClass(1)}
+                    />
+                    <FormCheck
+                        label={'3반'}
+                        id={'clas-3'}
+                        checked={getBit(filterByClass, 2) === 1}
+                        onChange={() => updateFilterByClass(2)}
+                    />
+                    <FormCheck
+                        label={'4반'}
+                        id={'clas-4'}
+                        checked={getBit(filterByClass, 3) === 1}
+                        onChange={() => updateFilterByClass(3)}
+                    />
+                </Stack>
             </FormGroup>
             <Container className='my-3'>
                 {workState === 0 &&

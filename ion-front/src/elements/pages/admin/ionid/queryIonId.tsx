@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useState} from "react";
 import {Alert, Button, Form, InputGroup, Table} from "react-bootstrap";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function QueryIonId() {
     const [id, setId] = useState('');
@@ -8,7 +9,7 @@ function QueryIonId() {
     const [gs, setGs] = useState(0);
 
     function query() {
-        axios.get('/manage/api/ionid/get', {
+        axios.get(API_PREFIX+'/manage/api/ionid/get', {
             params: {id: id}
         })
             .then(res => {

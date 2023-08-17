@@ -3,13 +3,14 @@ import {Alert, Button, FloatingLabel, Form, Stack} from "react-bootstrap";
 import axios from "axios";
 import {ready} from "../../../service/recaptcha";
 import ErrorPage from "../../etc/error";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function IForgotDashboard(props) {
     const [privateCode, setPrivateCode] = useState<string>('');
     const [workState, setWorkState] = useState<number>(-1);
 
     useEffect(() => {
-        axios.get("/auth/api/reset-passwd/query", {
+        axios.get(API_PREFIX+"/auth/api/reset-passwd/query", {
             params: {id: props.id}
         }).then(res => {
             if (res.data['result']['status'] === 'REQUESTED') {
@@ -63,7 +64,7 @@ function IForgot() {
 
     function nxt() {
         setWorking(true);
-        axios.get('/auth/api/reset-passwd/verify', {
+        axios.get(API_PREFIX+'/auth/api/reset-passwd/verify', {
             params: {id: id}
         }).then(res => {
             switch (res.data['result']) {
@@ -92,7 +93,7 @@ function IForgot() {
     function submit() {
         setWorking(true);
         ready('reset_password_request', function (token: string) {
-            axios.post('/auth/api/reset-passwd/request', {
+            axios.post(API_PREFIX+'/auth/api/reset-passwd/request', {
                 id: id,
                 name: name,
                 scode: scode,

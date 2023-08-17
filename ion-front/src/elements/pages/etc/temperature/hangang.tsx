@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function Hangang() {
     const [data, setData] = useState({tem: 0, loc: '', dat: '', tim: ''});
@@ -10,7 +11,7 @@ function Hangang() {
     const h = data.tim.substring(0, 2);
 
     useEffect(() => {
-        axios.get('/etc/api/temp/hangang')
+        axios.get(API_PREFIX+'/etc/api/temp/hangang')
             .then(res => {
                 if (res.data['result']['ok']) {
                     setData(res.data['result']);

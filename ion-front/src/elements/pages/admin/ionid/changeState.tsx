@@ -2,6 +2,7 @@ import axios from "axios";
 import React, {useState} from "react";
 import {Alert, Button, ButtonGroup, Form, ListGroup} from "react-bootstrap";
 import {changeBit, getBit} from "../../../service/bitmask";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function IonIdChangPrivilege() {
     const [usrLoaded, setUsrLoaded] = useState(false);
@@ -11,7 +12,7 @@ function IonIdChangPrivilege() {
     const [wr, setWr] = useState<string[]>([]);
 
     function load() {
-        axios.get('/manage/api/privilege/get', {
+        axios.get(API_PREFIX+'/manage/api/privilege/get', {
             params: {id: id}
         })
             .then(res => {
@@ -34,7 +35,7 @@ function IonIdChangPrivilege() {
     }
 
     function set() {
-        axios.patch('/manage/api/privilege/patch', {
+        axios.patch(API_PREFIX+'/manage/api/privilege/patch', {
             id: id,
             pr: up
         })

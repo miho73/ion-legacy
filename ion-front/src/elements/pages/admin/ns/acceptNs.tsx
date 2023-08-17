@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
 import {Alert, Button, ButtonGroup, Row, Table} from "react-bootstrap";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function NsReq(props) {
     const id = props.id;
@@ -55,7 +56,7 @@ function AcceptNs() {
     }, []);
 
     function loadNs() {
-        axios.get('/manage/api/ns/get')
+        axios.get(API_PREFIX+'/manage/api/ns/get')
             .then(res => {
                 const data = res.data['result'];
                 setDate(data['date']);
@@ -120,7 +121,7 @@ function AcceptNs() {
     }
 
     function ctrl(id, accept) {
-        axios.patch('/manage/api/ns/accept', {
+        axios.patch(API_PREFIX+'/manage/api/ns/accept', {
             id: id,
             ac: accept
         })

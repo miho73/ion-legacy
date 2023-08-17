@@ -5,6 +5,7 @@ import {inRange} from '../../../service/checker';
 import axios from 'axios';
 import {ready} from '../../../service/recaptcha';
 import {useNavigate} from "react-router-dom";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function ResetPassword() {
     const [privateCode, setPrivateCode] = useState<string>('');
@@ -21,7 +22,7 @@ function ResetPassword() {
     function nxt() {
         setWorking(true);
         ready('check_private_code', token => {
-            axios.post('/auth/api/reset-passwd/check-private', {
+            axios.post(API_PREFIX+'/auth/api/reset-passwd/check-private', {
                 token: tokenUrl,
                 privateCode: privateCode,
                 ctoken: token
@@ -66,7 +67,7 @@ function ResetPassword() {
 
         setWorking(true);
         ready("reset_password", token => {
-            axios.patch('/auth/api/reset-passwd/reset', {
+            axios.patch(API_PREFIX+'/auth/api/reset-passwd/reset', {
                 pwd: newPassword,
                 token: tokenUrl,
                 ctoken: token

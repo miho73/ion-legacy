@@ -4,6 +4,7 @@ import {changeBit, getBit} from '../../../service/bitmask';
 import {inRange} from '../../../service/checker';
 import axios from 'axios';
 import {ready} from '../../../service/recaptcha';
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function UpdateScode() {
     const [grade, setGrade] = useState(1);
@@ -16,7 +17,7 @@ function UpdateScode() {
     const yrs = new Date().getFullYear();
 
     useEffect(() => {
-        axios.get('/user/api/scode-change/query')
+        axios.get(API_PREFIX+'/user/api/scode-change/query')
             .then((res: any) => {
                 setGrade(res.data['result']);
                 setWorking(false);
@@ -35,7 +36,7 @@ function UpdateScode() {
 
         setWorking(true);
         ready('update_scode', token => {
-            axios.patch('/user/api/scode-change/change', {
+            axios.patch(API_PREFIX+'/user/api/scode-change/change', {
                 clas: clas,
                 scode: scode,
                 ctoken: token

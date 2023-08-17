@@ -7,6 +7,7 @@ import {changeBit, getBit} from '../../../service/bitmask';
 import {ready} from '../../../service/recaptcha';
 import axios from 'axios';
 import {Stack} from "react-bootstrap";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function LoginSection(props) {
     const [id, setId] = useState('');
@@ -25,7 +26,7 @@ function LoginSection(props) {
 
         setBlock(true);
         ready('login', token => {
-            axios.post('/auth/api/authenticate', {
+            axios.post(API_PREFIX+'/auth/api/authenticate', {
                 id: id,
                 pwd: pwd,
                 ctoken: token

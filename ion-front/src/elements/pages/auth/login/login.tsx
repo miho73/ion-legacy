@@ -3,6 +3,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 import UpdateScode from './updateScode';
 import LoginSection from './loginSection';
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function LoginPage() {
     const [changeFlag, setChangeFlag] = useState(false);
@@ -25,7 +26,7 @@ function SignoutPage(props) {
     const [error, setError] = useState(0);
 
     useEffect(() => {
-        axios.get('/auth/api/signout')
+        axios.get(API_PREFIX+'/auth/api/signout')
             .then(res => {
                 navigate('/');
             })

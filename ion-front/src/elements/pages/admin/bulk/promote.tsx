@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, {useState} from 'react'
 import {Button, Form, Modal, Spinner, Stack} from 'react-bootstrap';
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function Promote() {
     const [confirmModalShow, setConfirmModalShow] = useState(false);
@@ -26,7 +27,7 @@ function Promote() {
             return;
         }
         setWorking(true);
-        axios.patch('/manage/api/bulk/promote')
+        axios.patch(API_PREFIX+'/manage/api/bulk/promote')
             .then(res => {
                 setWorkState(2);
             })

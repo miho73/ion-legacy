@@ -1,13 +1,14 @@
 import axios from "axios";
 import React, {useState} from "react";
 import {Alert, Button, Form, InputGroup} from "react-bootstrap";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function IonIdActivation() {
     const [id, setId] = useState('');
     const [result, setResult] = useState<any[]>([]);
 
     function setActiveState(mode) {
-        axios.patch('/manage/api/ionid/active/patch', {
+        axios.patch(API_PREFIX+'/manage/api/ionid/active/patch', {
             id: id,
             ac: mode
         })

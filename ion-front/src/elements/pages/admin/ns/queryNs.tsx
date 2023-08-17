@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Alert, Button, Col, Form, InputGroup, Modal, Row, Table} from "react-bootstrap";
 import NsState from "../../ns/nsState";
 import axios from "axios";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function QueryNs(props) {
     const [workError, setWorkError] = useState(-1);
@@ -16,7 +17,7 @@ function QueryNs(props) {
     const setScode = props.setScode;
 
     function exe() {
-        axios.get('/manage/api/ns/get-user', {
+        axios.get(API_PREFIX+'/manage/api/ns/get-user', {
             params: {code: scode}
         })
             .then(res => {
@@ -75,7 +76,7 @@ function QueryNs(props) {
 
     function deleteNs() {
         setDeleting(true);
-        axios.delete('/manage/api/ns/delete', {
+        axios.delete(API_PREFIX+'/manage/api/ns/delete', {
             params: {
                 code: scode,
                 time: targetNs[0]

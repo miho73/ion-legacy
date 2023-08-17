@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, {useEffect, useState} from "react";
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function Incheon() {
     const [data, setData] = useState({tem: 0, loc: '', dat: '', tim: ''});
@@ -10,7 +11,7 @@ function Incheon() {
     const h = data.tim.substring(0, 2);
 
     useEffect(() => {
-        axios.get('/etc/api/temp/incheon')
+        axios.get(API_PREFIX+'/etc/api/temp/incheon')
             .then(res => {
                 if (res.data['result']['ok']) {
                     setData(res.data['result']);

@@ -7,6 +7,7 @@ import {FloatingLabel, Form, FormLabel, InputGroup} from 'react-bootstrap';
 import {ready} from '../../service/recaptcha';
 import CaptchaNotice from '../fragments/captchaNotice';
 import Credit from '../fragments/credit';
+import {API_PREFIX} from "../../service/apiUrl";
 
 function SignupPage() {
     const [name, setName] = useState('');
@@ -51,7 +52,7 @@ function SignupPage() {
             if (getBit(st, 4) || getBit(st, 7) || getBit(st, 9)) {
                 setFormState(st);
             } else {
-                axios.get('/user/api/validation/id-duplication', {
+                axios.get(API_PREFIX+'/user/api/validation/id-duplication', {
                     params: {id: id}
                 }).then(res => {
                     if (res.data['result'] === 0) {
@@ -79,7 +80,7 @@ function SignupPage() {
         }
         setBlock(true);
         ready('signup', token => {
-            axios.post('/user/api/create', {
+            axios.post(API_PREFIX+'/user/api/create', {
                 name: name,
                 grade: grade,
                 clas: clas,

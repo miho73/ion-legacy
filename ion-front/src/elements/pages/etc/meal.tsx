@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, {useEffect, useState} from 'react'
 import {Container} from 'react-bootstrap';
 import ErrorPage from './error';
+import {API_PREFIX} from "../../service/apiUrl";
 
 function Meal(props) {
     let time = props.time;
@@ -29,7 +30,7 @@ function MealNoti() {
     const [workState, setWorkState] = useState(-1);
 
     useEffect(() => {
-        axios.get('/etc/api/meal')
+        axios.get(API_PREFIX+'/etc/api/meal')
             .then(res => {
                 const content = res.data['result'];
                 if (content.ok) {

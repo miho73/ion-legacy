@@ -1,13 +1,14 @@
 import axios from 'axios';
 import React, {useState} from 'react'
 import {Alert, Button, FormControl, InputGroup} from 'react-bootstrap';
+import {API_PREFIX} from "../../../service/apiUrl";
 
 function RemoveGrade() {
     const [ionId, setIonId] = useState('');
     const [workState, setWorkState] = useState(-1);
 
     function exe() {
-        axios.patch('/manage/api/ionid/eliminate', {
+        axios.patch(API_PREFIX+'/manage/api/ionid/eliminate', {
             id: ionId
         })
             .then(res => {

@@ -5,6 +5,7 @@ import {LoginPage} from '../auth/login/login';
 import {Link} from 'react-router-dom';
 import ErrorPage from '../etc/error';
 import axios from 'axios';
+import {API_PREFIX} from "../../service/apiUrl";
 
 function LoggedInIndex() {
     const [user, setUser] = useState({name: '', id: '', priv: 0});
@@ -20,7 +21,7 @@ function LoggedInIndex() {
     const [apodDetail, setApodDetail] = useState(false);
 
     useEffect(() => {
-        axios.get('/user/api/idx-iden')
+        axios.get(API_PREFIX+'/user/api/idx-iden')
             .then(res => {
                 setUser(res.data['result']);
             })

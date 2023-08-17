@@ -11,6 +11,7 @@ import CannotAuthorize from '../auth/cannotAuth';
 import {Alert, Button, Col, Container, Form, Modal, Row, Stack, Table} from 'react-bootstrap';
 import NsState from './nsState';
 import {ready} from '../../service/recaptcha';
+import {API_PREFIX} from "../../service/apiUrl";
 
 function Ns() {
     const [lnsRoomRequired, setLnsRoomRequired] = useState(false);
@@ -83,7 +84,7 @@ function Ns() {
     function loadNsReqs() {
         setDeleting(true);
 
-        axios.get('/ns/api/nsr/get')
+        axios.get(API_PREFIX+'/ns/api/nsr/get')
             .then(res => {
                 const reqs = res.data['result'];
                 setUName(reqs['name']);
@@ -171,7 +172,7 @@ function Ns() {
             }
 
             ready('create_ns', token => {
-                axios.post('/ns/api/nsr/create', {
+                axios.post(API_PREFIX+'/ns/api/nsr/create', {
                     time: time,
                     place: revPlace,
                     supervisor: revSup,
@@ -215,7 +216,7 @@ function Ns() {
     function deleteNs() {
         setDeleting(true);
         ready('delete_ns', token => {
-            axios.delete('/ns/api/nsr/delete', {
+            axios.delete(API_PREFIX+'/ns/api/nsr/delete', {
                 params: {
                     time: targetNs[0],
                     ctoken: token
@@ -257,7 +258,7 @@ function Ns() {
 
     function loadLns() {
         if (lnsRoomRequired) {
-            axios.get('/ns/api/lns/get')
+            axios.get(API_PREFIX+'/ns/api/lns/get')
                 .then(res => {
                     const dat = res.data['result'];
                     const tset: any[] = [];
