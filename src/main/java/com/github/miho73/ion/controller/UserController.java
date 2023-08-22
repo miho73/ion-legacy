@@ -55,6 +55,7 @@ public class UserController {
     )
     public String checkIdDuplication(@RequestParam(name = "id") String id) {
         boolean ok = userService.existsUserById(id);
+        log.info("id duplication check. id=" + id + ", result=" + ok);
         return RestResponse.restResponse(HttpStatus.OK, ok ? 0 : 1);
     }
 
@@ -77,6 +78,7 @@ public class UserController {
     ) {
         if (!Validation.checkKeys(body, "clas", "ctoken", "grade", "id", "name", "pwd", "scode")) {
             response.setStatus(400);
+            log.info("create user failed: insufficient parameter");
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
         }
 
@@ -90,6 +92,7 @@ public class UserController {
 
         if (user.getGrade() == 0 || user.getScode() == 0 || user.getClas() == 0) {
             response.setStatus(400);
+            log.info("create user failed: invalid parameter(s)");
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
 
@@ -97,10 +100,12 @@ public class UserController {
             RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "signup");
             if (!recaptchaReply.isOk()) {
                 response.setStatus(400);
+                log.info("create user failed: captcha failed");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
             }
             if (recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
                 response.setStatus(400);
+                log.info("create user failed: too low captcha score");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
             }
         } catch (IOException e) {
@@ -175,6 +180,7 @@ public class UserController {
             @RequestBody Map<String, String> body) {
         if (Validation.checkKeys(body, "clas, scode, ctoken")) {
             response.setStatus(400);
+            log.info("change scode failed: insufficient parameter");
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
         }
 
@@ -182,11 +188,13 @@ public class UserController {
             RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "update_scode");
             if (!recaptchaReply.isOk()) {
                 response.setStatus(400);
+                log.info("change scode failed: captcha failed");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
             }
 
             if (recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
                 response.setStatus(400);
+                log.info("change scode failed: too low captcha score");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
             }
 
@@ -198,8 +206,10 @@ public class UserController {
             );
             if (ret != 0) {
                 response.setStatus(400);
+                log.info("change scode failed");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, ret);
             } else {
+                log.info("change scode success");
                 return RestResponse.restResponse(HttpStatus.OK, ret);
             }
         } catch (IOException e) {

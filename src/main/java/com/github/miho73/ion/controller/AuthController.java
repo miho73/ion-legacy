@@ -88,6 +88,7 @@ public class AuthController {
     ) {
         if (!Validation.checkKeys(body, "id", "pwd", "ctoken")) {
             response.setStatus(400);
+            log.warn("login failed: insufficient parameter(s).");
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST);
         }
 
@@ -95,10 +96,12 @@ public class AuthController {
         try {
             RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "login");
             if (!recaptchaReply.isOk()) {
+                log.info("login failed: recaptcha failed.");
                 return RestResponse.restResponse(HttpStatus.OK, 6);
             }
 
             if (recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
+                log.info("login failed: client recaptcha failed (low score).");
                 return RestResponse.restResponse(HttpStatus.OK, 7);
             }
 
@@ -132,6 +135,7 @@ public class AuthController {
                         session.setAttribute("id", user.getId());
                         session.setAttribute("name", user.getName());
                         session.setAttribute("priv", user.getPrivilege());
+                        log.info("session set. id=" + user.getId());
                     }
 
                     return RestResponse.restResponse(HttpStatus.OK, 0);
@@ -238,6 +242,7 @@ public class AuthController {
     ) {
         if (sessionService.isLoggedIn(session)) {
             response.setStatus(400);
+            log.info("reset password request failed: already logged in.");
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 1);
         }
         if (!Validation.checkKeys(body, "id", "name", "scode", "ctoken")) {
@@ -375,7 +380,7 @@ public class AuthController {
         String privateCode = body.get("privateCode");
 
         try {
-            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "check_private_code");
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(ctoken, "check_private_code");
             if (!recaptchaReply.isOk()) {
                 log.info("check private code request failed: recaptcha failed.");
                 response.setStatus(400);
@@ -412,6 +417,7 @@ public class AuthController {
             session.setAttribute("changingPwd", true);
             session.setAttribute("pwdToken", token);
             reCaptchaAssessment.addAssessmentComment(recaptchaReply.getAssessmentName(), true);
+            log.info("reset password check private code success.");
             return RestResponse.restResponse(HttpStatus.OK);
         } catch (IOException e) {
             log.error("recaptcha failed(IOException).", e);
@@ -493,8 +499,10 @@ public class AuthController {
             int uid = rpqOptional.get().getUuid();
             int res = userService.updatePassword(uid, pwd);
             if (res == 0) {
+                log.info("reset password success. uid=" + uid);
                 return RestResponse.restResponse(HttpStatus.OK);
             } else {
+                log.info("reset password failed");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, res);
             }
         } catch (Exception e) {
