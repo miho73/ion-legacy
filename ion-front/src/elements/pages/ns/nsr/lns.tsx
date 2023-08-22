@@ -6,7 +6,7 @@ import {Button, Form, Stack} from 'react-bootstrap';
 const sigMapping = ['A', 'B', 'C', 'D', 'E', 'F']
 
 function LnsRoomSelect(props) {
-    const [findCommon, setFindCommon] = useState(0);
+    const [findCommon, setFindCommon] = useState<number>(0);
 
     function changeFCF(place) {
         setFindCommon(changeBit(findCommon, place));
@@ -48,11 +48,11 @@ function LnsRoomSelect(props) {
     map.push(
         <p className='w-75 mx-auto my-2 text-center border p-3 rounded' key={0}>면학실</p>
     );
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) { // ROW 1, 2, 3
         let row: any[] = [];
-        for (let j = 1; j <= 2; j++) {
+        for (let j = 1; j <= 2; j++) { // COL 1, 2
             let seat: any[] = [];
-            for (let k = 1; k <= 6; k++) {
+            for (let k = 1; k <= 6; k++) { // SEAT 1 ~ 6
                 // 32: C의 2번
                 let key = i * 20 + j * 10 + k;
                 let cp = sigMapping[i * 2 + j - 1] + k;
@@ -82,11 +82,10 @@ function LnsRoomSelect(props) {
                 }
             }
             row.push(
-                <Stack direction='horizontal' className='mx-4'>
+                <Stack direction='horizontal' gap={4}>
                     <div className='vstack row btn-group-vertical'>{seat.slice(0, 3)}</div>
-                    <div
-                        className='p-5 m-0 border border-dark rounded fs-4 h-100 d-flex align-items-center mx-4'>{sigMapping[i * 2 + j - 1]}</div>
-                    <div className='vstack row btn-group-vertical'>{seat.splice(3, 6)}</div>
+                    <div className='p-5 border border-dark rounded fs-4 h-100 d-flex align-items-center'>{sigMapping[i * 2 + j - 1]}</div>
+                    <div className='vstack row btn-group-vertical'>{seat.slice(3, 6)}</div>
                 </Stack>
             )
         }

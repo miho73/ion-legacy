@@ -8,17 +8,17 @@ import {Button} from 'react-bootstrap';
 function LnsSeatSelect(props) {
     let str = '', tstr = '';
     if (props.value) {
-        str = ' bg-secondary border-secondary';
-        tstr = ' text-light';
+        str = 'bg-secondary border-secondary';
+        tstr = 'text-light';
     } else if (props.common) {
-        tstr = ' text-primary fw-bold';
+        tstr = 'text-primary fw-bold';
     }
 
     return (
         <>
             {!props.rev &&
                 <Button variant='outline-dark' className={'lns-seat ' + str} onClick={props.onSelected}>
-                    <span className={'fs-4 p-2' + tstr}>{props.sn}</span>
+                    <span className={'fs-4 p-2 ' + tstr}>{props.sn}</span>
                 </Button>
             }
             {props.rev &&
