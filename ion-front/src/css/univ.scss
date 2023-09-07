@@ -360,3 +360,10 @@ table {
     text-decoration: none !important;
   }
 }
+
+a.ns-lst-cpy {
+  color: #0d6efd;
+  color: rgba(var(--bs-link-color-rgb),var(--bs-link-opacity,1));
+  text-decoration: none;
+  cursor: pointer;
+}

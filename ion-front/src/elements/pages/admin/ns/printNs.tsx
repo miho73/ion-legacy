@@ -73,6 +73,10 @@ function PrintNs() {
             });
     }
 
+    function copy(str: string) {
+        navigator.clipboard.writeText(str);
+    }
+
     let rr: any[] = [];
     if (workState === 0) {
         data.forEach(e => {
@@ -85,19 +89,25 @@ function PrintNs() {
                     {includeDenied &&
                         <>
                             {e.n8 !== null &&
-                                <td className={e.n8.a ? 'table-success' : 'table-danger'}>{e.n8.c}</td>
+                                <td className={e.n8.a ? 'table-success' : 'table-danger'}>
+                                    <a onClick={()=>copy(e.n8.c)}>{e.n8.c}</a>
+                                </td>
                             }
                             {e.n8 === null &&
                                 <td></td>
                             }
                             {e.n1 !== null &&
-                                <td className={e.n1.a ? 'table-success' : 'table-danger'}>{e.n1.c}</td>
+                                <td className={e.n1.a ? 'table-success' : 'table-danger'}>
+                                    <a onClick={()=>copy(e.n1.c)}>{e.n1.c}</a>
+                                </td>
                             }
                             {e.n1 === null &&
                                 <td></td>
                             }
                             {e.n2 !== null &&
-                                <td className={e.n2.a ? 'table-success' : 'table-danger'}>{e.n2.c}</td>
+                                <td className={e.n2.a ? 'table-success' : 'table-danger'}>
+                                    <a onClick={()=>copy(e.n8.c)}>{e.n2.c}</a>
+                                </td>
                             }
                             {e.n2 === null &&
                                 <td></td>
@@ -107,19 +117,25 @@ function PrintNs() {
                     {!includeDenied &&
                         <>
                             {(e.n8 !== null && e.n8.a) &&
-                                <td>{e.n8.c}</td>
+                                <td>
+                                    <a title={'Copy'} className={'ns-lst-cpy'} onClick={()=>copy(e.n8.c)}>{e.n8.c}</a>
+                                </td>
                             }
                             {(e.n8 === null || !e.n8.a) &&
                                 <td></td>
                             }
                             {(e.n1 !== null && e.n1.a) &&
-                                <td>{e.n1.c}</td>
+                                <td>
+                                    <a title={'Copy'} className={'ns-lst-cpy'} onClick={()=>copy(e.n1.c)}>{e.n1.c}</a>
+                                </td>
                             }
                             {(e.n1 === null || !e.n1.a) &&
                                 <td></td>
                             }
                             {(e.n2 !== null && e.n2.a) &&
-                                <td>{e.n2.c}</td>
+                                <td>
+                                    <a title={'Copy'} className={'ns-lst-cpy'} onClick={()=>copy(e.n2.c)}>{e.n2.c}</a>
+                                </td>
                             }
                             {(e.n2 === null || !e.n2.a) &&
                                 <td></td>
