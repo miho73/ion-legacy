@@ -14,7 +14,6 @@ import {
     Table
 } from 'react-bootstrap';
 import axios from 'axios';
-import font from '../../../types/SpoqaHanSansNeo-normal';
 import {changeBit, getBit} from "../../../service/bitmask";
 import {API_PREFIX} from "../../../service/apiUrl";
 
@@ -27,6 +26,17 @@ function PrintNs() {
     const [filterByClass, setFilterByClass] = useState<number>(15);
 
     function exportPdf() {
+        axios.get(API_PREFIX+'/static/font/SpoqaHanSansNeo-normal.b64')
+            .then(res => {
+                exportPdfAfter(res);
+            })
+            .catch(err => {
+                console.error(err);
+                setWorkState(3);
+            });
+    }
+
+    function exportPdfAfter(font: string) {
         var doc = new jsPDF('portrait', 'mm', 'a4');
 
         doc.addFileToVFS("SpoqaHanSansNeo.ttf", font);
@@ -187,7 +197,6 @@ function PrintNs() {
                         <option value={3}>3학년</option>
                     </FormSelect>
                     <Button onClick={createTable}>로드</Button>
-                    <Button onClick={exportPdf} disabled={workState !== 0 || includeDenied}>인쇄</Button>
                 </InputGroup>
                 <Form.Check
                     label='승인되지 않은 요청 포함'
@@ -246,6 +255,9 @@ function PrintNs() {
                 }
                 {workState === 2 &&
                     <Alert variant='danger'>문제가 발생했습니다.</Alert>
+                }
+                {workState === 3 &&
+                    <Alert variant='danger'>PDF를 만들지 못했습니다.</Alert>
                 }
             </Container>
         </Row>
