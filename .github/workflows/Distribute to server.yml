@@ -25,7 +25,6 @@ jobs:
         run: |
           mkdir to_be_sync
           cp -r ./build/libs/ion-1.0.0.jar ./to_be_sync
-          cp -r ./src/main/resources/static/static/js ./to_be_sync/static
           mv to_be_sync/ion-1.0.0.jar to_be_sync/ion.jar
       - name: Upload to FTP
         uses: SamKirkland/FTP-Deploy-Action@4.1.0
@@ -36,9 +35,6 @@ jobs:
           protocol: ftps
           local-dir: ./to_be_sync/
           server-dir: ./ion/
-          exclude: |
-            **/static/image/**
-            **/static/temp/**
       - name: action-slack
         uses: 8398a7/action-slack@v3.12.0
         with:
