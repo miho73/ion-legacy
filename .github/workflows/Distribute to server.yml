@@ -24,6 +24,7 @@ jobs:
       - name: Prepare to sync
         run: |
           mkdir to_be_sync
+          mkdir to_be_sync/static
           cp -r ./build/libs/ion-1.0.0.jar ./to_be_sync
           cp -r ./src/main/resources/static/static/js ./to_be_sync/static/js
           mv to_be_sync/ion-1.0.0.jar to_be_sync/ion.jar
