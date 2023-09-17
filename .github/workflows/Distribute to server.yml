@@ -33,12 +33,9 @@ jobs:
           server: ionya.cc
           username: ${{ secrets.FTP_USER_NAME }}
           password: ${{ secrets.FTP_USER_PASSWORD }}
-          protocol: ftps
+          protocol: ftp
           local-dir: ./to_be_sync/
           server-dir: ./ion/
-          exclude: |
-            ./to_be_sync/static/image
-            ./to_be_sync/static/temp
       - name: action-slack
         uses: 8398a7/action-slack@v3.12.0
         with:
