@@ -27,7 +27,7 @@ spring:
     prefix: classpath:/static/
 
   datasource:
-    url: ENC(jAIdN34TguJjhY/iBkYO+LOFjhK8X2lbabM2v71XJlfzOzjBw8VuTGEYzlWuQC47GWnJvJPxLgLVs5H+SQkr4nrV2zheC6sfi+oeNM+BGpc=)
+    url: jdbc:postgresql://private-pg.postgres.database.azure.com/iondb
     username: ENC(ONGRKhokanG9GLPXTx+s/xPqb8+HappsAh8ZtPg+7inY8ZmxRuGkpz5lXQljeBXa)
     password: ENC(af64baMK8Pcp1vasX49XYo9U7ajX/MpPCyhqyz8CdlkTnqrW4zPUOCZ05aFBlB444ijhKL43J/thhcDvlFtcNiWbvXSWm9T+Y2sadO4t/6I=)
     driver-class-name: org.postgresql.Driver
