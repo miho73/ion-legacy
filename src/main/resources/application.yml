@@ -10,6 +10,7 @@ server:
         same-site: strict
         http-only: true
         secure: true
+        domain: ionya.cc
   error:
     include-stacktrace: never
     include-exception: false

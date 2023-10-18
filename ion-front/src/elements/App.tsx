@@ -18,8 +18,12 @@ import IForgot from "./pages/auth/iforgot/iforgot";
 import ResetPassword from "./pages/auth/iforgot/resetPassword";
 
 function App() {
+    const TESTING = process.env.REACT_APP_MODE === 'TESTING';
+
+
     return (
         <Router>
+            { TESTING && <p className={'text-center border border-bottom m-0'}>TEST-ENVIRONMENT(REACT)</p> }
             <div className='d-flex h-100 sct'>
                 <Header/>
                 <div className='px-4 py-3 w-100 h-100 mct'>
