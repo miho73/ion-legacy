@@ -13,6 +13,7 @@ public class ResetPwdChangeDb {
     ResetPasswordRepository resetPasswordRepository;
 
     public ResetPwdChangeDb(ResetPasswordRepository resetPasswordRepository) {
+        log.info("Password reset cron scheduled");
         this.resetPasswordRepository = resetPasswordRepository;
     }
 

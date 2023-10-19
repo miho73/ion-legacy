@@ -40,7 +40,6 @@ public class MainController {
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handleResourceNotFoundException(HttpServletRequest request) {
-        log.info(request.getMethod());
         return "index";
     }
 

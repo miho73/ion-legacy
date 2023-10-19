@@ -87,6 +87,7 @@ public class UserService {
     }
 
     public void promoteAll() {
+        log.info("All promoted");
         userRepository.deleteByGrade(3);
         userRepository.resetGradeOnPromote();
     }

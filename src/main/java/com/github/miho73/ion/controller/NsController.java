@@ -78,6 +78,7 @@ public class NsController {
             return RestResponse.restResponse(HttpStatus.OK, reply);
         } catch (IonException e) {
             response.setStatus(401);
+            log.warn("invalid session (to get nsr). unauthorized");
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
     }
@@ -106,14 +107,14 @@ public class NsController {
     ) {
         if (!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
             response.setStatus(401);
-            log.info("invalid session (to create ns)");
+            log.warn("invalid session (to create ns). unauthorized");
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 3);
         }
 
         // check key
         if (!Validation.checkKeys(body, "time", "supervisor", "reason", "place", "lnsReq", "lnsSeat", "ctoken")) {
             response.setStatus(400);
-            log.info("insufficient parameters (to create ns)");
+            log.error("insufficient parameters (to create ns)");
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         }
 
@@ -121,19 +122,19 @@ public class NsController {
             RecaptchaReply reply = recaptchaService.performAssessment(body.get("ctoken"), "create_ns");
             if (!reply.isOk()) {
                 response.setStatus(400);
-                log.info("recaptcha failed (to create ns)");
+                log.warn("failed to create ns request recaptcha failed");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 6);
             }
             if (reply.getScore() <= CAPTCHA_THRESHOLD) {
                 response.setStatus(400);
-                log.info("too low recaptcha score (to create ns)");
+                log.warn("failed to create ns request: too low recaptcha score");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 7);
             }
 
             // if user is registered is a faculty
             if (sessionService.getGrade(session) == 0) {
                 response.setStatus(400);
-                log.info("you are faculty (to create ns)");
+                log.error("failed to create ns request: faculty. uid="+sessionService.getId(session));
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 8);
             }
 
@@ -143,7 +144,7 @@ public class NsController {
             // if user already has request on same time
             if (nsService.existsNsByUuid(uuid, nsTime)) {
                 response.setStatus(400);
-                log.info("ns already requested");
+                log.warn("ns already requested. uuid=" + uuid + ", time=" + nsTime);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
             }
 
@@ -155,7 +156,7 @@ public class NsController {
                 LnsReservation lnsRev = nsService.saveLnsReservation(uuid, nsTime, grade, body.get("lnsSeat"));
                 if (lnsRev == null) {
                     response.setStatus(400);
-                    log.info("Lns reservation failed");
+                    log.error("Lns reservation failed: already reserved. uuid=" + uuid + ", time=" + nsTime + ", seat=" + body.get("lnsSeat"));
                     return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
                 }
 
@@ -199,7 +200,7 @@ public class NsController {
     ) {
         if (!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
             response.setStatus(401);
-            log.info("failed to delete ns: invalid session");
+            log.warn("failed to delete ns: invalid session. unauthorized");
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
@@ -207,12 +208,12 @@ public class NsController {
             RecaptchaReply reply = recaptchaService.performAssessment(captchaToken, "delete_ns");
             if (!reply.isOk()) {
                 response.setStatus(400);
-                log.info("failed to delete ns: recaptcha failed");
+                log.warn("failed to delete ns: recaptcha failed");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
             }
             if (reply.getScore() <= CAPTCHA_THRESHOLD) {
                 response.setStatus(400);
-                log.info("failed to delete ns: too low recaptcha score");
+                log.warn("failed to delete ns: too low recaptcha score");
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
             }
 
@@ -224,16 +225,16 @@ public class NsController {
                 return RestResponse.restResponse(HttpStatus.OK, 0);
             } else {
                 response.setStatus(400);
-                log.info("failed to delete ns: no request on that time");
+                log.error("failed to delete ns: no request on that time. uuid=" + uuid + ", time=" + time);
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
             }
         } catch (IonException e) {
             response.setStatus(400);
-            log.error("failed to delete ns: internal server error", e);
+            log.error("Internal server error", e);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
         } catch (IOException e) {
             response.setStatus(400);
-            log.error("failed to delete ns: IOException", e);
+            log.error("IOException", e);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
         }
     }
