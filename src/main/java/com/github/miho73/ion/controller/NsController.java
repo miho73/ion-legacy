@@ -149,21 +149,19 @@ public class NsController {
             }
 
             boolean lnsReq = Boolean.parseBoolean(body.get("lnsReq"));
-            int lnsReqUid = -1;
+
+            NsRecord createdNs = nsService.saveNsRequest(uuid, nsTime, lnsReq, body);
 
             if (lnsReq) {
                 int grade = sessionService.getGrade(session);
-                LnsReservation lnsRev = nsService.saveLnsReservation(uuid, nsTime, grade, body.get("lnsSeat"));
+                LnsReservation lnsRev = nsService.saveLnsReservation(uuid, nsTime, grade, body.get("lnsSeat"), createdNs.getUid());
                 if (lnsRev == null) {
                     response.setStatus(400);
                     log.error("Lns reservation failed: already reserved. uuid=" + uuid + ", time=" + nsTime + ", seat=" + body.get("lnsSeat"));
                     return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
                 }
-
-                lnsReqUid = lnsRev.getUid();
             }
 
-            nsService.saveNsRequest(uuid, nsTime, lnsReq, lnsReqUid, body);
             recaptchaService.addAssessmentComment(reply.getAssessmentName(), true);
 
             log.info("created ns req uuid=" + uuid + ", time=" + nsTime);

@@ -36,7 +36,7 @@ public class NsService {
         this.userRepository = userRepository;
     }
 
-    public void saveNsRequest(int uuid, NsRecord.NS_TIME nsTime, boolean lnsReq, int lnsReqUid, Map<String, String> body) {
+    public NsRecord saveNsRequest(int uuid, NsRecord.NS_TIME nsTime, boolean lnsReq, Map<String, String> body) {
         NsRecord nsRecord = new NsRecord();
 
         // check if supervisor exists
@@ -56,13 +56,10 @@ public class NsService {
         nsRecord.setNsReason(body.get("reason"));
 
         nsRecord.setLnsReq(lnsReq);
-        if (lnsReq) {
-            nsRecord.setLnsReqUid(lnsReqUid);
-        }
-
         nsRecord.setUuid(uuid);
 
-        nsRepository.save(nsRecord);
+        nsRecord = nsRepository.save(nsRecord);
+        return nsRecord;
     }
 
     public JSONArray getNsList(int uuid) {
@@ -78,7 +75,7 @@ public class NsService {
             ele.put("status", nsRecord.getNsState());
             ele.put("place", nsRecord.getNsPlace());
             if (nsRecord.isLnsReq()) {
-                Optional<LnsReservation> lr = lnsRepository.findById(nsRecord.getLnsReqUid());
+                Optional<LnsReservation> lr = lnsRepository.findByNsLinkUid(nsRecord.getUid());
                 if (lr.isEmpty()) ele.put("lnsSeat", "No Record");
                 else ele.put("lnsSeat", lr.get().getSeat());
             }
@@ -87,7 +84,7 @@ public class NsService {
         return ret;
     }
 
-    public LnsReservation saveLnsReservation(int uuid, NsRecord.NS_TIME nsTime, int grade, String seat) {
+    public LnsReservation saveLnsReservation(int uuid, NsRecord.NS_TIME nsTime, int grade, String seat, int linkUid) {
         if (existsLnsBySeat(nsTime, seat, grade)) {
             return null;
         }
@@ -98,6 +95,7 @@ public class NsService {
         lnsRev.setUuid(uuid);
         lnsRev.setSeat(seat);
         lnsRev.setGrade(grade);
+        lnsRev.setNsLinkUid(linkUid);
 
         return lnsRepository.save(lnsRev);
     }
@@ -114,10 +112,7 @@ public class NsService {
         Optional<NsRecord> nsRecord = nsRepository.findByUuidAndNsDateAndNsTime(uuid, LocalDate.now(), time);
         if (nsRecord.isPresent()) {
             NsRecord toDel = nsRecord.get();
-            if (toDel.isLnsReq()) {
-                lnsRepository.deleteById(toDel.getLnsReqUid());
-            }
-            nsRepository.deleteByUuidAndNsTimeAndNsDate(uuid, time, LocalDate.now());
+            nsRepository.deleteById(toDel.getUid());
         } else {
             throw new IonException();
         }

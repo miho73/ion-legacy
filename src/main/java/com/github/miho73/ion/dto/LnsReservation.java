@@ -32,6 +32,9 @@ public class LnsReservation {
     @Column(name = "uuid", nullable = false)
     private int uuid;
 
+    @Column(name = "ns_link_uid")
+    private int nsLinkUid;
+
     @Min(value = 1, message = "grade not in range")
     @Max(value = 3, message = "grade not in range")
     @Column(name = "grade", nullable = false)

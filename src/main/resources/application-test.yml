@@ -10,6 +10,7 @@ server:
         same-site: Lax
         http-only: true
         secure: false
+        domain: localhost
   error:
     include-stacktrace: never
     include-exception: false

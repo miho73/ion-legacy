@@ -410,7 +410,7 @@ public class ManageController {
         }
 
         body.put("supervisor", sessionService.getName(session));
-        nsService.saveNsRequest(user.getUid(), nsTime, false, -1, body);
+        nsService.saveNsRequest(user.getUid(), nsTime, false, body);
 
         response.setStatus(201);
         return RestResponse.restResponse(HttpStatus.CREATED, 0);

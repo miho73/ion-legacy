@@ -41,9 +41,6 @@ public class NsRecord {
     @Column(name = "lns_req", nullable = false)
     private boolean lnsReq;
 
-    @Column(name = "lns_req_uid")
-    private int lnsReqUid;
-
     @Column(name = "uuid", nullable = false)
     private int uuid;
 

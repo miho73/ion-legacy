@@ -7,7 +7,7 @@ server:
       cookie:
         name: ion-session
         path: /
-        same-site: strict
+        same-site: Strict
         http-only: true
         secure: true
         domain: ionya.cc
