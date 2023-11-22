@@ -102,7 +102,7 @@ public class AuthController {
 
             if (recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
                 log.warn("login failed: client recaptcha failed (low score).");
-                return RestResponse.restResponse(HttpStatus.OK, 7);
+                return RestResponse.restResponse(HttpStatus.OK, 6);
             }
 
             userOptional = userService.getUserById(body.get("id"));
