@@ -96,12 +96,12 @@ public class AuthController {
         try {
             RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "login");
             if (!recaptchaReply.isOk()) {
-                log.warn("login failed: recaptcha failed.");
+                log.warn("login failed: recaptcha failed. id=" + body.get("id"));
                 return RestResponse.restResponse(HttpStatus.OK, 6);
             }
 
             if (recaptchaReply.getScore() <= CAPTCHA_THRESHOLD) {
-                log.warn("login failed: client recaptcha failed (low score).");
+                log.warn("login failed: client recaptcha failed (low score). id=" + body.get("id"));
                 return RestResponse.restResponse(HttpStatus.OK, 6);
             }
 
