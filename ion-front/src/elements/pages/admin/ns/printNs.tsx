@@ -10,7 +10,8 @@ import {
     FormGroup,
     FormSelect,
     InputGroup,
-    Row, Stack,
+    Row,
+    Stack,
     Table
 } from 'react-bootstrap';
 import axios from 'axios';

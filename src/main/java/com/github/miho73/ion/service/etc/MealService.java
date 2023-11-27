@@ -14,7 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-@Service
+@Service("mealService")
 @Slf4j
 public class MealService {
     @Value("${ion.neis.api-key}")
