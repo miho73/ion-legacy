@@ -116,7 +116,8 @@ public class UserController {
 
         user.setPwd(passwordEncoder.encode(user.getPwd()));
         User created = userService.createUser(user);
-        log.info("user created. uid=" + user.getUid() + ", id=" + user.getId());
+        log.info("user created. uid=" + created.getUid() + ", id=" + created.getId());
+        response.setStatus(201);
         return RestResponse.restResponse(HttpStatus.CREATED, created.getId());
     }
 

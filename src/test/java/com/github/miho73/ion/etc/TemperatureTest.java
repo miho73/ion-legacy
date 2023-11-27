@@ -24,7 +24,9 @@ public class TemperatureTest {
     @Test
     @DisplayName("Get Hangang Temperature")
     public void getHangangTemp() throws Exception {
-        mvc.perform(get("/etc/api/temp/hangang"))
+        mvc.perform(
+                get("/etc/api/temp/hangang")
+                )
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.status").value(200),
@@ -40,7 +42,9 @@ public class TemperatureTest {
     @Test
     @DisplayName("Get Incheon Temperature")
     public void getIncheonTemperature() throws Exception {
-        mvc.perform(get("/etc/api/temp/incheon"))
+        mvc.perform(
+                get("/etc/api/temp/incheon")
+                )
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.status").value(200),

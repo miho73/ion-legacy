@@ -30,7 +30,9 @@ public class MealFeatureTest {
     @Test
     @DisplayName("API request to meal data should return a JSONObject with PROPER meal data")
     public void getMealProperAPITest() throws Exception {
-        mvc.perform(get("/etc/api/meal"))
+        mvc.perform(
+                get("/etc/api/meal")
+                )
                 .andExpect(status().isOk())
                 .andExpectAll(
                         jsonPath("$.result.ok").value(true),

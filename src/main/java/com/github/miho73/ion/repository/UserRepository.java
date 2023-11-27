@@ -55,4 +55,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     void resetGradeOnPromote();
 
     void deleteByGrade(int grade);
+    void deleteById(String id);
 }

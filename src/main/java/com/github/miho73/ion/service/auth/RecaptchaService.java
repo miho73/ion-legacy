@@ -20,6 +20,8 @@ public class RecaptchaService {
     String projectId;
     @Value("${ion.recaptcha.site-key}")
     String recaptchaSiteKey;
+    @Value("${ion.recaptcha.bypass}")
+    boolean bypassRecaptcha;
 
     RecaptchaEnterpriseServiceClient client;
 
@@ -29,6 +31,14 @@ public class RecaptchaService {
     }
 
     public RecaptchaReply performAssessment(String token, String recaptchaAction) throws IOException {
+        if(bypassRecaptcha && token.equals("bypass")) {
+            log.info("recaptcha bypassed!");
+            RecaptchaReply rr = new RecaptchaReply();
+            rr.setOk(true);
+            rr.setScore(1.0f);
+            rr.setAssessmentName("bypass");
+            return rr;
+        }
         return createAssessment(projectId, recaptchaSiteKey, token, recaptchaAction);
     }
 
@@ -109,6 +119,11 @@ public class RecaptchaService {
      * @return true when success otherwise, false
      */
     public boolean addAssessmentComment(String assessmentId, boolean type) throws IOException {
+        if(bypassRecaptcha) {
+            log.info("recaptcha annotation bypassed!");
+            return true;
+        }
+
         if (type) return addLegitimateAnnotation(assessmentId);
         else return addSuspiciousAnnotation(assessmentId);
     }

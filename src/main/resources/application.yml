@@ -57,3 +57,4 @@ ion:
     project-id: elemention
     site-key: 6LcXsjInAAAAAFcWxsoV7UKfcxojAeWYbEYvNKg3
     block-threshold: 0.5
+    bypass: true
