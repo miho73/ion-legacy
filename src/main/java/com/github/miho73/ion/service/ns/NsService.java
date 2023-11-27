@@ -157,6 +157,7 @@ public class NsService {
             JSONObject e = new JSONObject();
             if (pla.isPresent()) {
                 User u = pla.get();
+                if(u.getStatus() != User.USER_STATUS.ACTIVATED) return;
                 e.put("id", r.getUid());
                 e.put("time", r.getNsTime());
                 e.put("name", u.getName());
