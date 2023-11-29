@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate, useSearchParams } from 'react-router-dom'
 import CaptchaNotice from '../../fragments/captchaNotice'
 import Credit from '../../fragments/credit'
 import {inRange} from '../../../service/checker';
@@ -15,6 +15,9 @@ function LoginSection(props) {
     const [block, setBlock] = useState(false);
     const [formState, setFormState] = useState(0);
     const [loginError, setLoginError] = useState(0);
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const navigate = useNavigate();
 
     function submit() {
         let state = 0;
@@ -29,11 +32,14 @@ function LoginSection(props) {
             axios.post(API_PREFIX+'/auth/api/authenticate', {
                 id: id,
                 pwd: pwd,
-                ctoken: token
+                ctoken: token,
             }).then(res => {
                 let re = res.data['result'];
                 if (re === 0) {
-                    window.location.reload();
+                    if(searchParams.has('ret')) {
+                        navigate(searchParams.get('ret'));
+                    }
+                    else window.location.reload();
                 } else if (re === 7) {
                     props.setChangeFlag(true);
                 } else setLoginError(re);

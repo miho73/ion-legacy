@@ -74,7 +74,7 @@ function Ns() {
         return <></>;
     }
     if (loginState === 1) {
-        navigate('/');
+        navigate('/?ret=/ns');
         return <></>;
     }
     if (loginState === 2) {
