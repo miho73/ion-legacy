@@ -110,7 +110,7 @@ function UpdateScode() {
             }
             {workState === 2 &&
                 <Alert variant='danger'>
-                    <p className='m-1'>reCAPTCHA를 검증하지 못했습니다.</p>
+                    <p className='m-1'>reCAPTCHA를 확인하지 못했습니다.</p>
                 </Alert>
             }
             {workState === 3 &&

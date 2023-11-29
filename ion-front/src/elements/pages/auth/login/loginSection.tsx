@@ -91,10 +91,10 @@ function LoginSection(props) {
                     {loginError === 3 &&
                         <p className='mb-0'>이 IonID로 로그인 할 수 없습니다.</p>
                     }
-                    {loginError === 6 &&
-                        <p className='mb-0'>reCAPTCHA를 검증하지 못했습니다.</p>
+                    {loginError === 5 &&
+                        <p className='mb-0'>reCAPTCHA를 확인하지 못했습니다.</p>
                     }
-                    {loginError === 7 &&
+                    {loginError === 6 &&
                         <p className='mb-0'>사용자 보호를 위해 지금은 로그인할 수 없습니다.</p>
                     }
                 </div>
