@@ -97,7 +97,7 @@ public class UserController {
         }
 
         try {
-            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "signup");
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "signup", false);
             if (!recaptchaReply.isOk()) {
                 response.setStatus(400);
                 log.warn("create user failed: captcha failed");
@@ -186,7 +186,7 @@ public class UserController {
         }
 
         try {
-            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "update_scode");
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "update_scode", false);
             if (!recaptchaReply.isOk()) {
                 response.setStatus(400);
                 log.warn("change scode failed: captcha failed");

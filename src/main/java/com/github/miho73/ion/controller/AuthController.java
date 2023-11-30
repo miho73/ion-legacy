@@ -86,15 +86,17 @@ public class AuthController {
             @RequestBody Map<String, String> body,
             HttpSession session
     ) {
-        if (!Validation.checkKeys(body, "id", "pwd", "ctoken")) {
+        if (!Validation.checkKeys(body, "id", "pwd", "ctoken", "checkbox")) {
             response.setStatus(400);
             log.error("login failed: insufficient parameter(s).");
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST);
         }
 
+        boolean isCheckboxMode = Boolean.parseBoolean(body.get("checkbox"));
+
         Optional<User> userOptional;
         try {
-            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "login");
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "login", isCheckboxMode);
             if (!recaptchaReply.isOk()) {
                 log.warn("login failed: recaptcha failed. id=" + body.get("id"));
                 return RestResponse.restResponse(HttpStatus.OK, 6);
@@ -252,7 +254,7 @@ public class AuthController {
         }
 
         try {
-            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "reset_password_request");
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "reset_password_request", false);
             if (!recaptchaReply.isOk()) {
                 log.warn("reset password request failed: recaptcha failed.");
                 response.setStatus(400);
@@ -380,7 +382,7 @@ public class AuthController {
         String privateCode = body.get("privateCode");
 
         try {
-            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(ctoken, "check_private_code");
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(ctoken, "check_private_code", false);
             if (!recaptchaReply.isOk()) {
                 log.warn("check private code request failed: recaptcha failed.");
                 response.setStatus(400);
@@ -454,7 +456,7 @@ public class AuthController {
         }
 
         try {
-            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "reset_password");
+            RecaptchaReply recaptchaReply = reCaptchaAssessment.performAssessment(body.get("ctoken"), "reset_password", false);
             if (!recaptchaReply.isOk()) {
                 log.warn("reset password failed: recaptcha failed.");
                 response.setStatus(400);

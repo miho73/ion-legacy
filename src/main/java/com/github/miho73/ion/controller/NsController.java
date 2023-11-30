@@ -119,7 +119,7 @@ public class NsController {
         }
 
         try {
-            RecaptchaReply reply = recaptchaService.performAssessment(body.get("ctoken"), "create_ns");
+            RecaptchaReply reply = recaptchaService.performAssessment(body.get("ctoken"), "create_ns", false);
             if (!reply.isOk()) {
                 response.setStatus(400);
                 log.warn("failed to create ns request recaptcha failed");
@@ -203,7 +203,7 @@ public class NsController {
         }
 
         try {
-            RecaptchaReply reply = recaptchaService.performAssessment(captchaToken, "delete_ns");
+            RecaptchaReply reply = recaptchaService.performAssessment(captchaToken, "delete_ns", false);
             if (!reply.isOk()) {
                 response.setStatus(400);
                 log.warn("failed to delete ns: recaptcha failed");

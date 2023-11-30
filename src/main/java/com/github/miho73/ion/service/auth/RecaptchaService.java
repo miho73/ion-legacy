@@ -20,6 +20,8 @@ public class RecaptchaService {
     String projectId;
     @Value("${ion.recaptcha.site-key}")
     String recaptchaSiteKey;
+    @Value("${ion.recaptcha.checkbox-site-key}")
+    String recaptchaCheckboxSiteKey;
     @Value("${ion.recaptcha.bypass}")
     boolean bypassRecaptcha;
 
@@ -30,7 +32,8 @@ public class RecaptchaService {
         client = RecaptchaEnterpriseServiceClient.create();
     }
 
-    public RecaptchaReply performAssessment(String token, String recaptchaAction) throws IOException {
+    public RecaptchaReply performAssessment(String token, String recaptchaAction, boolean isCheckbox) throws IOException {
+        log.info("recaptcha assessment requested. token=" + token + ", action=" + recaptchaAction, ", checkbox=" + isCheckbox);
         if(bypassRecaptcha && token.equals("bypass")) {
             log.info("recaptcha bypassed!");
             RecaptchaReply rr = new RecaptchaReply();
@@ -39,7 +42,7 @@ public class RecaptchaService {
             rr.setAssessmentName("bypass");
             return rr;
         }
-        return createAssessment(projectId, recaptchaSiteKey, token, recaptchaAction);
+        return createAssessment(projectId, isCheckbox ? recaptchaCheckboxSiteKey : recaptchaSiteKey, token, recaptchaAction);
     }
 
     /**
@@ -119,7 +122,7 @@ public class RecaptchaService {
      * @return true when success otherwise, false
      */
     public boolean addAssessmentComment(String assessmentId, boolean type) throws IOException {
-        if(bypassRecaptcha) {
+        if(bypassRecaptcha && assessmentId.equals("bypass")) {
             log.info("recaptcha annotation bypassed!");
             return true;
         }

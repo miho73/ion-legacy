@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {Link, useNavigate, useSearchParams } from 'react-router-dom'
 import CaptchaNotice from '../../fragments/captchaNotice'
 import Credit from '../../fragments/credit'
@@ -9,6 +9,8 @@ import axios from 'axios';
 import {Stack} from "react-bootstrap";
 import {API_PREFIX} from "../../../service/apiUrl";
 
+const RECAPTCHA_CHECKBOX_KEY = process.env.REACT_APP_CAPTCHA_CHECKBOX_KEY;
+
 function LoginSection(props) {
     const [id, setId] = useState('');
     const [pwd, setPwd] = useState('');
@@ -16,23 +18,45 @@ function LoginSection(props) {
     const [formState, setFormState] = useState(0);
     const [loginError, setLoginError] = useState(0);
     const [searchParams, setSearchParams] = useSearchParams();
+    const [shouldTryCheckbox, setShouldTryCheckbox] = useState(false);
 
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if(shouldTryCheckbox) {
+            grecaptcha.enterprise.render(document.getElementById('recaptcha-field'), {
+                'sitekey' : RECAPTCHA_CHECKBOX_KEY,
+                'action': 'login',
+            });
+        }
+    }, [shouldTryCheckbox]);
 
     function submit() {
         let state = 0;
         if (!inRange(1, 30, id.length)) state = changeBit(state, 0);
         if (!inRange(1, 30, pwd.length)) state = changeBit(state, 1);
+        if(shouldTryCheckbox) {
+            let token = grecaptcha.enterprise.getResponse();
+            if(token == '') {
+                state = changeBit(state, 2);
+            }
+        }
         setFormState(state);
 
         if (state !== 0) return;
 
         setBlock(true);
         ready('login', token => {
+            let tok = token;
+            if(shouldTryCheckbox) {
+                tok = grecaptcha.enterprise.getResponse();
+            }
+
             axios.post(API_PREFIX+'/auth/api/authenticate', {
                 id: id,
                 pwd: pwd,
-                ctoken: token,
+                ctoken: tok,
+                checkbox: shouldTryCheckbox
             }).then(res => {
                 let re = res.data['result'];
                 if (re === 0) {
@@ -42,6 +66,14 @@ function LoginSection(props) {
                     else window.location.reload();
                 } else if (re === 7) {
                     props.setChangeFlag(true);
+                } else if(re == 6) {
+                    if(!shouldTryCheckbox) {
+                        setShouldTryCheckbox(true);
+                        setLoginError(-3)
+                    }
+                    else {
+                        setLoginError(6)
+                    }
                 } else setLoginError(re);
             }).catch(err => {
                 setLoginError(-1);
@@ -75,6 +107,11 @@ function LoginSection(props) {
                        value={pwd} onChange={e => setPwd(e.target.value)} onKeyDown={enterDown}/>
                 <label htmlFor='pwd'>Password</label>
             </div>
+            {shouldTryCheckbox &&
+                <div className={'form-floating my-2'}>
+                    <div id={'recaptcha-field'} className="g-recaptcha"></div>
+                </div>
+            }
             <button className='btn btn-lg btn-primary fs-6' type='button' onClick={submit} disabled={block}>Sign in
             </button>
             {loginError !== 0 &&
@@ -94,7 +131,10 @@ function LoginSection(props) {
                     {loginError === 5 &&
                         <p className='mb-0'>reCAPTCHA를 확인하지 못했습니다.</p>
                     }
-                    {loginError === 6 &&
+                    { loginError === -3 &&
+                        <p className='mb-0'>사용자 보호를 위해 추가 인증이 필요합니다.</p>
+                    }
+                    { loginError === 6 &&
                         <p className='mb-0'>사용자 보호를 위해 지금은 로그인할 수 없습니다.</p>
                     }
                 </div>
