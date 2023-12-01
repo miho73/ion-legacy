@@ -33,7 +33,7 @@ public class RecaptchaService {
     }
 
     public RecaptchaReply performAssessment(String token, String recaptchaAction, boolean isCheckbox) throws IOException {
-        log.info("recaptcha assessment requested. action=" + recaptchaAction, " isV2=" + isCheckbox);
+        log.info("recaptcha assessment requested. action=" + recaptchaAction + " isV2=" + isCheckbox);
         if(bypassRecaptcha && token.equals("bypass")) {
             log.info("recaptcha bypassed!");
             RecaptchaReply rr = new RecaptchaReply();
