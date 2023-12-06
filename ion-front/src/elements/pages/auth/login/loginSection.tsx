@@ -69,10 +69,11 @@ function LoginSection(props) {
                 } else if(re == 6) {
                     if(!shouldTryCheckbox) {
                         setShouldTryCheckbox(true);
-                        setLoginError(-3)
+                        setLoginError(-3);
                     }
                     else {
-                        setLoginError(6)
+                        setLoginError(6);
+                        grecaptcha.enterprise.reset();
                     }
                 } else setLoginError(re);
             }).catch(err => {
@@ -135,7 +136,10 @@ function LoginSection(props) {
                         <p className='mb-0'>사용자 보호를 위해 추가 인증이 필요합니다.</p>
                     }
                     { loginError === 6 &&
-                        <p className='mb-0'>사용자 보호를 위해 지금은 로그인할 수 없습니다.</p>
+                        <>
+                            <p className='mb-2'>사용자 보호를 위해 로그인할 수 없습니다.</p>
+                            <p className='mb-0'>잠시 뒤에 다시 시도해주세요.</p>
+                        </>
                     }
                 </div>
             }
