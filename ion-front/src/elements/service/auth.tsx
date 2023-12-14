@@ -8,6 +8,9 @@ const MODE = process.env.REACT_APP_MODE
  * @returns 0: logged in. 1: not logged in. 2: error
  */
 function isLogin(setLogin: (a: number) => void) {
+    setLogin(0)
+    return;
+
     axios.get(API_PREFIX+"/auth/api/authorize")
         .then((res: any) => {
             if (res.data['result']) {

@@ -16,6 +16,7 @@ import Incheon from './pages/etc/temperature/icn';
 import MealNoti from './pages/etc/meal';
 import IForgot from "./pages/auth/iforgot/iforgot";
 import ResetPassword from "./pages/auth/iforgot/resetPassword";
+import Osu from "./pages/osu/osu";
 
 function App() {
     const TESTING = process.env.REACT_APP_MODE === 'TESTING';
@@ -45,6 +46,7 @@ function App() {
                         <Route path='/etc/temperature/incheon' element={<Incheon/>}/>
 
                         <Route path='/etc/meal' element={<MealNoti/>}/>
+                        <Route path='/osu' element={<Osu/>}/>
 
                         <Route path='*'
                                element={<ErrorPage errorTitle='찾으시는 페이지가 없어요.' exp='입력하신 주소가 정확한지 다시 한 번 확인해주세요.'/>}/>
