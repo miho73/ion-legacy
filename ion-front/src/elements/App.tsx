@@ -24,32 +24,30 @@ function App() {
     return (
         <Router>
             { TESTING && <p className={'text-center border border-bottom m-0'}>TEST-ENVIRONMENT(REACT)</p> }
-            <div className='d-flex h-100 sct'>
-                <Header/>
-                <div className='px-4 py-3 w-100 h-100 mct'>
-                    <Routes>
-                        <Route index path='/' element={<Index/>}/>
+            <Header/>
+            <div className='px-4 py-3 h-100 overflow-x-hidden overflow-y-auto mct'>
+                <Routes>
+                    <Route index path='/' element={<Index/>}/>
 
-                        <Route path='/auth/signup' element={<SignupPage/>}/>
-                        <Route path='/auth/signout' element={<SignoutPage/>}/>
-                        <Route path='/auth/iforgot' element={<IForgot/>}/>
-                        <Route path='/auth/iforgot/reset' element={<ResetPassword/>}/>
+                    <Route path='/auth/signup' element={<SignupPage/>}/>
+                    <Route path='/auth/signout' element={<SignoutPage/>}/>
+                    <Route path='/auth/iforgot' element={<IForgot/>}/>
+                    <Route path='/auth/iforgot/reset' element={<ResetPassword/>}/>
 
-                        <Route path='/docs/*' element={<Docs/>}/>
+                    <Route path='/docs/*' element={<Docs/>}/>
 
-                        <Route path='/ns' element={<Ns/>}/>
+                    <Route path='/ns' element={<Ns/>}/>
 
-                        <Route path='/manage' element={<ManagementPage/>}/>
+                    <Route path='/manage' element={<ManagementPage/>}/>
 
-                        <Route path='/etc/temperature/hangang' element={<Hangang/>}/>
-                        <Route path='/etc/temperature/incheon' element={<Incheon/>}/>
+                    <Route path='/etc/temperature/hangang' element={<Hangang/>}/>
+                    <Route path='/etc/temperature/incheon' element={<Incheon/>}/>
 
-                        <Route path='/etc/meal' element={<MealNoti/>}/>
+                    <Route path='/etc/meal' element={<MealNoti/>}/>
 
-                        <Route path='*'
-                               element={<ErrorPage errorTitle='찾으시는 페이지가 없어요.' exp='입력하신 주소가 정확한지 다시 한 번 확인해주세요.'/>}/>
-                    </Routes>
-                </div>
+                    <Route path='*'
+                           element={<ErrorPage errorTitle='찾으시는 페이지가 없어요.' exp='입력하신 주소가 정확한지 다시 한 번 확인해주세요.'/>}/>
+                </Routes>
             </div>
         </Router>
     );

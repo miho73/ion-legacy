@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {Link, useNavigate, useSearchParams } from 'react-router-dom'
+import {Link, useNavigate, useSearchParams} from 'react-router-dom'
 import CaptchaNotice from '../../fragments/captchaNotice'
 import Credit from '../../fragments/credit'
 import {inRange} from '../../../service/checker';
@@ -37,7 +37,7 @@ function LoginSection(props) {
         if (!inRange(1, 30, pwd.length)) state = changeBit(state, 1);
         if(shouldTryCheckbox) {
             let token = grecaptcha.enterprise.getResponse();
-            if(token == '') {
+            if(token === '') {
                 state = changeBit(state, 2);
             }
         }
@@ -66,16 +66,19 @@ function LoginSection(props) {
                     else window.location.reload();
                 } else if (re === 7) {
                     props.setChangeFlag(true);
-                } else if(re == 6) {
+                } else if(re === 6) {
                     if(!shouldTryCheckbox) {
                         setShouldTryCheckbox(true);
                         setLoginError(-3);
                     }
                     else {
                         setLoginError(6);
-                        grecaptcha.enterprise.reset();
                     }
                 } else setLoginError(re);
+
+                if(shouldTryCheckbox) {
+                    grecaptcha.enterprise.reset();
+                }
             }).catch(err => {
                 setLoginError(-1);
             }).finally(() => {
