@@ -18,6 +18,7 @@ function Osu() {
     const [userAnswer, setUserAnswer] = useState('');
     const [answerState, setAnswerState] = useState(state[1]);
     const [alertState, setAlertState] = useState(0);
+    const [errorState, setErrorState] = useState('API에서 받아오는 정보가 없습니다.');
     useEffect(() => {
         axios.get('https://osu-api.kro.kr:8443/get')
             .then(res => {
@@ -53,6 +54,7 @@ function Osu() {
             })
             .catch(err => {
                 console.error(err);
+                setErrorState(err);
                 setWorkState(1);
             })
     }, [buttonStateAgain]);
@@ -60,17 +62,6 @@ function Osu() {
     const getAnswer = event => {
         setUserAnswer(event.target.value);
     };
-
-    const getUserAnswer = (answer) => {
-        setUserAnswer(answer);
-        if(userAnswer == answer) {
-            alert('정답입니다.');
-        }
-        else {
-            alert('오답입니다.');
-        }
-    };
-
     return (
         <div>
             <h3 className="display-5 fw-bold">수능 수학 문제 풀어보기</h3>
@@ -112,7 +103,7 @@ function Osu() {
             }
             {
                 workState === 1 &&
-                <ErrorPage exp='API에서 받아오는 정보가 없습니다.'/>
+                <ErrorPage exp={errorState}/>
             }
 
         </div>
