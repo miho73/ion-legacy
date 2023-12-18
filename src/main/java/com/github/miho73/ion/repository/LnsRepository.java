@@ -16,4 +16,6 @@ public interface LnsRepository extends JpaRepository<LnsReservation, Integer> {
 
     List<LnsReservation> findByLnsTimeAndSeatAndLnsDateAndGrade(NsRecord.NS_TIME lnsTime, String seat, LocalDate lnsDate, int grade);
     void deleteByNsLinkUid(int nsLinkUid);
+
+    long countByGradeAndLnsDateAndLnsTime(int grade, LocalDate lnsDate, NsRecord.NS_TIME lnsTime);
 }

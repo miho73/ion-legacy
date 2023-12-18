@@ -4,19 +4,20 @@ import {useNavigate} from 'react-router-dom';
 import UpdateScode from './updateScode';
 import LoginSection from './loginSection';
 import {API_PREFIX} from "../../../service/apiUrl";
+import {Container} from "react-bootstrap";
 
 function LoginPage() {
     const [changeFlag, setChangeFlag] = useState(false);
 
     return (
-        <main className='container mt-4'>
+        <Container className='mt-4'>
             {changeFlag &&
                 <UpdateScode/>
             }
             {!changeFlag &&
                 <LoginSection setChangeFlag={setChangeFlag}/>
             }
-        </main>
+        </Container>
     )
 }
 

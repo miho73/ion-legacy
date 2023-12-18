@@ -25,7 +25,7 @@ function App() {
         <Router>
             { TESTING && <p className={'text-center border border-bottom m-0'}>TEST-ENVIRONMENT(REACT)</p> }
             <Header/>
-            <div className='px-4 py-3 h-100 overflow-x-hidden overflow-y-auto mct'>
+            <div className='px-4 py-3 overflow-x-auto mct'>
                 <Routes>
                     <Route index path='/' element={<Index/>}/>
 

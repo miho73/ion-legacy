@@ -187,4 +187,16 @@ public class NsService {
     public List<NsRecord> findByUuid(int uuid) {
         return nsRepository.findByUuidAndNsDateOrderByNsTimeAsc(uuid, LocalDate.now());
     }
+
+    public JSONArray getLnsSeatRemaining(int grade) {
+        long n8 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.N8);
+        long n1 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.N1);
+        long n2 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.N2);
+
+        JSONArray ret = new JSONArray();
+        ret.put(n8);
+        ret.put(n1);
+        ret.put(n2);
+        return ret;
+    }
 }

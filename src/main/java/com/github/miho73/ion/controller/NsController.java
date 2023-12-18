@@ -257,4 +257,29 @@ public class NsController {
         JSONArray ist = nsService.getLnsSeat(sessionService.getGrade(session));
         return RestResponse.restResponse(HttpStatus.OK, ist);
     }
+
+    /**
+     * [data]: success
+     * 1: invalid session
+     *
+     * @param session
+     * @param response
+     * @return
+     */
+    @GetMapping(
+            value = "/lns-idx",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getLnsSeatAtIndex(
+            HttpSession session,
+            HttpServletResponse response
+    ) {
+        if (!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        JSONArray ist = nsService.getLnsSeatRemaining(sessionService.getGrade(session));
+        return RestResponse.restResponse(HttpStatus.OK, ist);
+    }
 }

@@ -6,10 +6,24 @@ import {Link} from 'react-router-dom';
 import ErrorPage from '../etc/error';
 import axios from 'axios';
 import {API_PREFIX} from "../../service/apiUrl";
+import {Container} from "react-bootstrap";
+
+function LnsStatusFrame(props) {
+    return (
+        <div className={'border border-0 px-5 py-3 rounded-4 d-flex justify-content-center align-items-center flex-column'}>
+            <div>
+                <span className={'display-4 mr-2 number'}>{props.cnt}</span>
+                <span className={'number'}>/ 36</span>
+            </div>
+            <p className={'my-2'}>{props.nth}차 예약</p>
+        </div>
+    );
+}
 
 function LoggedInIndex() {
-    const [user, setUser] = useState({name: '', id: '', priv: 0});
     const [workState, setWorkState] = useState(-1);
+
+    const [user, setUser] = useState({name: '', id: '', priv: 0});
     const [picture, setPicture] = useState({
         url: 'https://apod.nasa.gov/apod/image/1708/PerseidsoverPyreneesGraffand1024.jpg',
         type: 'image',
@@ -18,7 +32,9 @@ function LoggedInIndex() {
         cpy: 'Jean-Francois\nGraffand'
     });
     const [apodSet, setApodSet] = useState(false);
-    const [apodDetail, setApodDetail] = useState(false);
+
+    const [lns, setLns] = useState([]);
+    const [lnsSet, setLnsSet] = useState(false);
 
     useEffect(() => {
         axios.get(API_PREFIX+'/user/api/idx-iden')
@@ -29,7 +45,7 @@ function LoggedInIndex() {
                 setWorkState(1);
             });
 
-        axios.get('/idx/apod')
+        axios.get(API_PREFIX+'/idx/apod')
             .then(res => {
                 if (res.data['result']['type'] === 'image') {
                     setPicture(res.data['result']);
@@ -38,9 +54,18 @@ function LoggedInIndex() {
             .catch(err => {
                 console.error(err);
             }).finally(() => {
-            setApodSet(true);
-        });
+                setApodSet(true);
+            });
 
+        axios.get(API_PREFIX+'/ns/api/lns-idx')
+            .then(res => {
+                setLns(res.data['result']);
+            })
+            .catch(err => {
+                console.error(err);
+            }).finally(() => {
+                setLnsSet(true);
+            });
     }, []);
 
     if (workState === 1) {
@@ -50,47 +75,46 @@ function LoggedInIndex() {
     return (
         <>
             {picture.type === 'image' && apodSet &&
-                <div className='w-100 h-100 pict' style={{backgroundImage: ('url(' + picture.url + ')')}}>
-                    <div onClick={() => setApodDetail(!apodDetail)} title='Details'>
-                        <p className='m-0 tit'>{picture.title}</p>
-                        {apodDetail &&
-                            <>
-                                <hr className='my-2'/>
-                                <p className='m-0'>{picture.exp}</p>
-                                {picture.cpy !== '' &&
-                                    <p className='my-1'>Copyright: {picture.cpy}</p>
-                                }
-                            </>
-                        }
-                    </div>
-                </div>
+                <div className='w-100 h-100 pict' style={{backgroundImage: ('url(' + picture.url + ')')}}></div>
             }
             {!apodSet &&
                 <div className='w-100 h-100 pict'/>
             }
-            <main className='d-flex flex-column justify-content-center align-items-center h-100 text-center'>
-                <div className='bdf'>
-                    <h1 className='mb-3 text-white'>Hi {user.name}</h1>
-                    <ul className="nav col-md-auto justify-content-center mb-md-0 gap-2">
-                        <li><Link to="/ns" className="nav-link px-2 rounded fs-5">면불 신청</Link></li>
-                        {user.priv > 1 &&
-                            <li><Link to="/manage" className="nav-link px-2 rounded fs-5">관리자</Link></li>
-                        }
-                        <li><Link to="/auth/signout" className="nav-link px-2 rounded fs-5">로그아웃</Link></li>
-                    </ul>
+            <Container className={'index'}>
+                <div className={'text'}>
+                    <h1 className={'display-3 text-center'}>{picture.title}</h1>
+                    <p>{picture.exp}</p>
                 </div>
-            </main>
+                <div className={'d-flex justify-content-center align-items-stretch gap-5'}>
+                    {lnsSet &&
+                        <>
+                            <LnsStatusFrame cnt={lns[0]} nth={8}/>
+                            <LnsStatusFrame cnt={lns[1]} nth={1}/>
+                            <LnsStatusFrame cnt={lns[2]} nth={2}/>
+                        </>
+                    }
+                    <div className={'border border-0 px-2 py-2 rounded-4 d-flex flex-column profile-href'}>
+                        <Link className={'px-xl-5 py-3 text-center'} to={'/profile'}>프로필</Link>
+                        <hr/>
+                        { user.priv > 1 &&
+                            <>
+                                <Link className={'px-xl-5 py-3 text-center'} to={'/manage'}>관리</Link>
+                                <hr/>
+                            </>
+                        }
+                        <Link className={'px-xl-5 py-3 text-center'} to={'/auth/signout'}>로그아웃</Link>
+                    </div>
+                </div>
+            </Container>
         </>
     );
 }
 
 function Index() {
     const [loginState, setLoginState] = useState(-1);
-
-    useEffect(() => {
-        isLogin(setLoginState);
-    }, []);
-
+        useEffect(() => {
+            isLogin(setLoginState);
+        }, []);
     if (loginState === -1) {
         return <></>;
     } else if (loginState === 0) {
