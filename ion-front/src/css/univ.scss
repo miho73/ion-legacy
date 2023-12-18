@@ -99,6 +99,7 @@ table {
     background-position: center;
     background-color: #333334;
     z-index: -1;
+    height: 100vh;
 
     div {
         cursor: pointer;
@@ -132,21 +133,22 @@ table {
 .index {
     color: $light;
 
-    & p {
-        margin: 4px 0;
+    div {
+        gap: 4%;
     }
 
     .text {
         h1 {
-            margin: 20vh 0 0 0;
             font-family: 'Playfair Display', 'Spoqa Han Sans Neo', 'serif';
+            margin: 10vh 0;
         }
 
         p {
-            margin: 10vh auto;
+            margin: 20px auto 10vh auto;
             font-family: 'Avenir', 'Spoqa Han Sans Neo', 'serif';
             width: 81%;
             text-align: justify;
+            max-height: 200px;
         }
     }
 
@@ -162,7 +164,6 @@ table {
             -moz-transition: background-color .1s linear;
             -o-transition: background-color .1s linear;
             transition: background-color .1s linear;
-            font-size: 1.3em;
 
             &:hover {
                 background-color: hsla(0, 0, 53%, .267);
@@ -179,6 +180,7 @@ table {
 
         hr {
             margin: 0;
+            width: 100%;
         }
     }
 
@@ -224,7 +226,7 @@ table {
         justify-content: space-between;
         padding: 0.7rem !important;
         min-height: 80px;
-        position: absolute;
+        position: relative;
 
         a {
             width: 20% !important;
@@ -255,7 +257,17 @@ table {
     }
     .mct {
         width: 100%;
-        margin: 80px 0 0 0;
+        margin: 0;
+    }
+    .index {
+        div {
+            gap: 10px;
+        }
+        .text {
+            p {
+                display: none;
+            }
+        }
     }
 }
 
@@ -282,6 +294,18 @@ table {
         div {
             height: auto;
             width: 100%;
+        }
+    }
+
+    .index {
+        .text {
+            h1 {
+                margin: 0 0 20px 0;
+            }
+        }
+
+        div {
+            flex-direction: column;
         }
     }
 }

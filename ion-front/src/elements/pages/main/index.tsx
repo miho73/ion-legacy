@@ -10,7 +10,7 @@ import {Container} from "react-bootstrap";
 
 function LnsStatusFrame(props) {
     return (
-        <div className={'border border-0 px-5 py-3 rounded-4 d-flex justify-content-center align-items-center flex-column'}>
+        <div className={'border border-0 px-5 py-2 rounded-4 d-flex justify-content-center align-items-center flex-column'}>
             <div>
                 <span className={'display-4 mr-2 number'}>{props.cnt}</span>
                 <span className={'number'}>/ 36</span>
@@ -75,16 +75,16 @@ function LoggedInIndex() {
     return (
         <>
             {picture.type === 'image' && apodSet &&
-                <div className='w-100 h-100 pict' style={{backgroundImage: ('url(' + picture.url + ')')}}></div>
+                <div className='w-100 pict' style={{backgroundImage: ('url(' + picture.url + ')')}}></div>
             }
             {!apodSet &&
-                <div className='w-100 h-100 pict'/>
+                <div className='w-100 pict'/>
             }
             <Container className={'index'}>
                 {apodSet &&
                     <div className={'text'}>
                         <h1 className={'display-3 text-center'}>{picture.title}</h1>
-                        <p>{picture.exp}</p>
+                        <p className={'overflow-y-auto'}>{picture.exp}</p>
                     </div>
                 }
                 {!apodSet &&
@@ -93,7 +93,7 @@ function LoggedInIndex() {
                         <p></p>
                     </div>
                 }
-                <div className={'d-flex justify-content-center align-items-stretch gap-5'}>
+                <div className={'d-flex justify-content-center align-items-stretch'}>
                     {lnsSet &&
                         <>
                             <LnsStatusFrame cnt={lns[0]} nth={8}/>
@@ -101,16 +101,16 @@ function LoggedInIndex() {
                             <LnsStatusFrame cnt={lns[2]} nth={2}/>
                         </>
                     }
-                    <div className={'border border-0 px-2 py-2 rounded-4 d-flex flex-column profile-href'}>
-                        <Link className={'px-xl-5 py-3 text-center'} to={'/profile'}>프로필</Link>
+                    <div className={'border border-0 px-2 py-2 rounded-4 d-flex flex-column justify-content-center profile-href'}>
+                        <Link className={'px-xl-5 py-3 text-center'} to={'/ns'}>면불</Link>
                         <hr/>
                         { user.priv > 1 &&
                             <>
-                                <Link className={'px-xl-5 py-3 text-center'} to={'/manage'}>관리</Link>
+                                <Link className={'px-5 py-3 text-center'} to={'/manage'}>관리</Link>
                                 <hr/>
                             </>
                         }
-                        <Link className={'px-xl-5 py-3 text-center'} to={'/auth/signout'}>로그아웃</Link>
+                        <Link className={'px-5 py-3 text-center'} to={'/auth/signout'}>로그아웃</Link>
                     </div>
                 </div>
             </Container>
@@ -120,9 +120,11 @@ function LoggedInIndex() {
 
 function Index() {
     const [loginState, setLoginState] = useState(-1);
-        useEffect(() => {
-            isLogin(setLoginState);
-        }, []);
+
+    useEffect(() => {
+        isLogin(setLoginState);
+    }, []);
+
     if (loginState === -1) {
         return <></>;
     } else if (loginState === 0) {
