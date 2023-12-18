@@ -84,13 +84,11 @@ function LoggedInIndex() {
                 {apodSet &&
                     <div className={'text'}>
                         <h1 className={'display-3 text-center'}>{picture.title}</h1>
-                        <p className={'overflow-y-auto'}>{picture.exp}</p>
                     </div>
                 }
                 {!apodSet &&
                     <div className={'text'}>
                         <h1 className={'display-3 text-center'}></h1>
-                        <p></p>
                     </div>
                 }
                 <div className={'d-flex justify-content-center align-items-stretch'}>

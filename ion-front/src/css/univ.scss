@@ -126,7 +126,6 @@ table {
         .tit {
             font-size: 0.9rem;
         }
-    ;
     }
 }
 
@@ -141,14 +140,6 @@ table {
         h1 {
             font-family: 'Playfair Display', 'Spoqa Han Sans Neo', 'serif';
             margin: 10vh 0;
-        }
-
-        p {
-            margin: 20px auto 10vh auto;
-            font-family: 'Avenir', 'Spoqa Han Sans Neo', 'serif';
-            width: 81%;
-            text-align: justify;
-            max-height: 200px;
         }
     }
 
@@ -262,11 +253,6 @@ table {
     .index {
         div {
             gap: 10px;
-        }
-        .text {
-            p {
-                display: none;
-            }
         }
     }
 }
