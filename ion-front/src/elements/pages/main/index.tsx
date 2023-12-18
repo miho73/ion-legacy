@@ -10,10 +10,10 @@ import {Container} from "react-bootstrap";
 
 function LnsStatusFrame(props) {
     return (
-        <div className={'border border-0 px-5 py-2 rounded-4 d-flex justify-content-center align-items-center flex-column'}>
-            <div>
-                <span className={'display-4 mr-2 number'}>{props.cnt}</span>
-                <span className={'number'}>/ 36</span>
+        <div className={'border border-0 py-2 rounded-4 d-flex justify-content-center align-items-center flex-column'}>
+            <div className={'d-flex justify-content-center align-items-end'}>
+                <p className={'display-4 mr-2 number'}>{props.cnt}</p>
+                <p className={'number'}>/ 36</p>
             </div>
             <p className={'my-2'}>{props.nth}차 예약</p>
         </div>
@@ -100,7 +100,7 @@ function LoggedInIndex() {
                         </>
                     }
                     <div className={'border border-0 px-2 py-2 rounded-4 d-flex flex-column justify-content-center profile-href'}>
-                        <Link className={'px-xl-5 py-3 text-center'} to={'/ns'}>면불</Link>
+                        <Link className={'px-5 py-3 text-center'} to={'/ns'}>면불</Link>
                         <hr/>
                         { user.priv > 1 &&
                             <>

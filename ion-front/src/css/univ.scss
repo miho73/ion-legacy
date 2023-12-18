@@ -134,6 +134,12 @@ table {
 
     div {
         gap: 4%;
+        div > div {
+            width: 100%;
+            p {
+                margin: 0;
+            }
+        }
     }
 
     .text {
@@ -177,6 +183,7 @@ table {
 
     & > div > div {
         backdrop-filter: brightness(60%);
+        min-width: 200px;
     }
 }
 
