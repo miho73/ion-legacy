@@ -15,7 +15,7 @@ function LnsStatusFrame(props) {
                 <p className={'display-4 mr-2 number'}>{props.cnt}</p>
                 <p className={'number mb-2'}>/ 36</p>
             </div>
-            <p className={'my-2'}>{props.nth}차 예약</p>
+            <p className={'my-2'}>{props.nth}면 예약</p>
         </div>
     );
 }
