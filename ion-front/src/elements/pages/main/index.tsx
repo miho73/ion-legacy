@@ -10,10 +10,10 @@ import {Container} from "react-bootstrap";
 
 function LnsStatusFrame(props) {
     return (
-        <div className={'border border-0 py-2 rounded-4 d-flex justify-content-center align-items-center flex-column'}>
-            <div className={'d-flex justify-content-center align-items-end'}>
+        <div className={'border border-0 p-2 rounded-4 d-flex justify-content-center align-items-center flex-column gap-0'}>
+            <div className={'d-flex justify-content-center align-items-end gap-2'}>
                 <p className={'display-4 mr-2 number'}>{props.cnt}</p>
-                <p className={'number'}>/ 36</p>
+                <p className={'number mb-2'}>/ 36</p>
             </div>
             <p className={'my-2'}>{props.nth}차 예약</p>
         </div>
@@ -84,6 +84,7 @@ function LoggedInIndex() {
                 {apodSet &&
                     <div className={'text'}>
                         <h1 className={'display-3 text-center'}>{picture.title}</h1>
+                        <p className={'fw-light mb-5'}>{picture.exp}</p>
                     </div>
                 }
                 {!apodSet &&
@@ -91,7 +92,7 @@ function LoggedInIndex() {
                         <h1 className={'display-3 text-center'}></h1>
                     </div>
                 }
-                <div className={'d-flex justify-content-center align-items-stretch'}>
+                <div className={'d-flex justify-content-center info'}>
                     {lnsSet &&
                         <>
                             <LnsStatusFrame cnt={lns[0]} nth={8}/>
@@ -99,16 +100,16 @@ function LoggedInIndex() {
                             <LnsStatusFrame cnt={lns[2]} nth={2}/>
                         </>
                     }
-                    <div className={'border border-0 px-2 py-2 rounded-4 d-flex flex-column justify-content-center profile-href'}>
+                    <div className={'border border-0 px-2 py-2 rounded-4 d-flex flex-column justify-content-center gap-0 profile-href'}>
                         <Link className={'px-5 py-3 text-center'} to={'/ns'}>면불</Link>
                         <hr/>
                         { user.priv > 1 &&
                             <>
-                                <Link className={'px-5 py-3 text-center'} to={'/manage'}>관리</Link>
+                                <Link className={'px-4 py-3 text-center'} to={'/manage'}>관리</Link>
                                 <hr/>
                             </>
                         }
-                        <Link className={'px-5 py-3 text-center'} to={'/auth/signout'}>로그아웃</Link>
+                        <Link className={'px-4 py-3 text-center'} to={'/auth/signout'}>로그아웃</Link>
                     </div>
                 </div>
             </Container>

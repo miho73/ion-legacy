@@ -133,7 +133,7 @@ table {
     color: $light;
 
     div {
-        gap: 4%;
+        gap: 25px;
         div > div {
             width: 100%;
             p {
@@ -149,41 +149,45 @@ table {
         }
     }
 
-    .number {
-        font-family: 'Dancing Script', 'serif';
-    }
+    .info {
 
-    .profile-href {
-        a {
-            color: $light;
-            text-decoration: none;
-            -webkit-transition: background-color .2s linear;
-            -moz-transition: background-color .1s linear;
-            -o-transition: background-color .1s linear;
-            transition: background-color .1s linear;
 
-            &:hover {
-                background-color: hsla(0, 0, 53%, .267);
-                cursor: pointer;
+        .profile-href {
+            a {
+                color: $light;
+                text-decoration: none;
+                -webkit-transition: background-color .2s linear;
+                -moz-transition: background-color .1s linear;
+                -o-transition: background-color .1s linear;
+                transition: background-color .1s linear;
+
+                &:hover {
+                    background-color: hsla(0, 0, 53%, .267);
+                    cursor: pointer;
+                }
+
+                &:nth-child(1) {
+                    border-radius: 10px 10px 0 0;
+                }
+                &:nth-last-child(1) {
+                    border-radius: 0 0 10px 10px;
+                }
             }
 
-            &:nth-child(1) {
-                border-radius: 10px 10px 0 0;
-            }
-            &:nth-last-child(1) {
-                border-radius: 0 0 10px 10px;
+            hr {
+                margin: 0;
+                width: 100%;
             }
         }
 
-        hr {
-            margin: 0;
-            width: 100%;
-        }
-    }
+        div {
+            backdrop-filter: brightness(60%);
+            min-width: 150px;
 
-    & > div > div {
-        backdrop-filter: brightness(60%);
-        min-width: 200px;
+            div .number {
+                font-family: 'Dancing Script', 'serif';
+            }
+        }
     }
 }
 
@@ -257,11 +261,6 @@ table {
         width: 100%;
         margin: 0;
     }
-    .index {
-        div {
-            gap: 10px;
-        }
-    }
 }
 
 @include media-breakpoint-down(md) {
@@ -295,9 +294,13 @@ table {
             h1 {
                 margin: 0 0 20px 0;
             }
+            p {
+                display: none;
+            }
         }
 
-        div {
+        .info {
+            gap: 10px;
             flex-direction: column;
         }
     }
