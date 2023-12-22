@@ -35,7 +35,7 @@ input[type="number"] {
 }
 
 
-nav {
+nav.header {
     width: 200px;
     min-height: 100vh;
     padding: 1rem !important;
@@ -47,6 +47,45 @@ nav {
 
     ul {
         flex-direction: column;
+    }
+
+    button {
+        display: none !important;
+    }
+}
+
+.nav {
+    a {
+        text-align: center;
+
+        img {
+            max-height: 64px;
+            width: auto;
+            height: auto;
+        }
+    }
+}
+
+nav.sidenav {
+    display: none !important;
+    max-height: 0;
+
+    -webkit-transition: max-height .2s ease-out;
+    -moz-transition: max-height .2s ease-out;
+    -o-transition: max-height .2s ease-out;
+    transition: max-height .2s ease-out;
+
+    div {
+        a {
+            display: block;
+            &:hover {
+                background-color: #0001;
+            }
+        }
+    }
+
+    &.expand {
+        max-height: 200px;
     }
 }
 
@@ -76,18 +115,6 @@ table {
 
 .nst {
     width: 70% !important;
-}
-
-.nav {
-    a {
-        text-align: center;
-
-        img {
-            max-height: 64px;
-            width: auto;
-            height: auto;
-        }
-    }
 }
 
 .pict {
@@ -150,8 +177,6 @@ table {
     }
 
     .info {
-
-
         .profile-href {
             a {
                 color: $light;
@@ -220,7 +245,7 @@ table {
     table {
         width: 100% !important;
     }
-    nav {
+    nav.header {
         width: 100%;
         height: 80px;
         flex-direction: row;
@@ -251,6 +276,11 @@ table {
             display: none;
         }
     }
+
+    nav.sidenav {
+        display: flex !important;
+    }
+
     .nst {
         width: 90% !important;
     }
@@ -302,6 +332,16 @@ table {
         .info {
             gap: 10px;
             flex-direction: column;
+        }
+    }
+
+    nav.header {
+        button {
+            display: inline-block !important;
+        }
+
+        ul.nav {
+            display: none !important;
         }
     }
 }
