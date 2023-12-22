@@ -58,7 +58,7 @@ function Header() {
                     <Image src={'/static/image/assets/hamburger.svg'} roundedCircle/>
                 </Button>
             </nav>
-            <nav id={'sidenav'} className={'sidenav overflow-hidden ' + (hamburgerOpen ? 'd-flex' : 'd-none') + (expandFlag ? ' expand' : '')}>
+            <nav id={'sidenav'} className={'sidenav overflow-hidden ' + (hamburgerOpen ? 'open' : 'd-none') + (expandFlag ? ' expand' : '')}>
                 <Col className={'d-flex flex-column border border-bottom border-0'}>
                     <Link className={'py-2 px-3 w-100 text-dark text-decoration-none fw-normal fs-6 border border-1 border-start-0 border-end-0'} to={'/'}>Home</Link>
                     <Link className={'py-2 px-3 w-100 text-dark text-decoration-none fw-normal fs-6 border border-1 border-start-0 border-end-0'} to={'/ns'}>면불신청</Link>

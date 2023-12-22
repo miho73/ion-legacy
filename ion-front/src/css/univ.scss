@@ -67,7 +67,7 @@ nav.header {
 }
 
 nav.sidenav {
-    display: none !important;
+    display: none;
     max-height: 0;
 
     -webkit-transition: max-height .2s ease-out;
@@ -277,8 +277,8 @@ table {
         }
     }
 
-    nav.sidenav {
-        display: flex !important;
+    nav.open {
+        display: none;
     }
 
     .nst {
@@ -343,6 +343,10 @@ table {
         ul.nav {
             display: none !important;
         }
+    }
+
+    nav.open {
+        display: flex;
     }
 }
 
