@@ -69,6 +69,7 @@ nav.header {
 nav.sidenav {
     display: none;
     max-height: 0;
+    background-color: $light-bg-subtle;
 
     -webkit-transition: max-height .2s ease-out;
     -moz-transition: max-height .2s ease-out;
