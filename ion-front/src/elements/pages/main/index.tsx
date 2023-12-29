@@ -73,7 +73,7 @@ function LoggedInIndex() {
     }
 
     return (
-        <>
+        <div>
             {picture.type === 'image' && apodSet &&
                 <div className='w-100 pict' style={{backgroundImage: ('url(' + picture.url + ')')}}></div>
             }
@@ -113,7 +113,7 @@ function LoggedInIndex() {
                     </div>
                 </div>
             </Container>
-        </>
+        </div>
     );
 }
 

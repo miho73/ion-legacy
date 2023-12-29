@@ -355,10 +355,16 @@ table {
     .pict div {
         max-width: 75%;
         font-size: 0.6rem;
+        top: 80px;
 
         .tit {
             font-size: 0.8rem;
         }
+    }
+    .info {
+        height: calc(100vh - 250px);;
+        overflow-y: auto;
+        justify-content: flex-start !important;
     }
     .table-cover {
         overflow-x: auto;
