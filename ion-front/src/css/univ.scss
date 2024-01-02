@@ -213,6 +213,9 @@ table {
             div .number {
                 font-family: 'Dancing Script', 'serif';
             }
+            div {
+                backdrop-filter: none;
+            }
         }
     }
 }
