@@ -15,7 +15,7 @@ function LnsStatusFrame(props) {
                 <p className={'display-4 mr-2 number'}>{props.cnt}</p>
                 <p className={'number mb-2'}>/ 36</p>
             </div>
-            <p className={'my-2'}>{props.nth}면 예약</p>
+            <p className={'my-2'}>{props.nth} 예약</p>
         </div>
     );
 }
@@ -35,6 +35,7 @@ function LoggedInIndex() {
 
     const [lns, setLns] = useState([]);
     const [lnsSet, setLnsSet] = useState(false);
+    const [timePreset, setTimePreset] = useState(-1);
 
     useEffect(() => {
         axios.get(API_PREFIX+'/user/api/idx-iden')
@@ -59,7 +60,8 @@ function LoggedInIndex() {
 
         axios.get(API_PREFIX+'/ns/api/lns-idx')
             .then(res => {
-                setLns(res.data['result']);
+                setLns(res.data['result']['seats']);
+                setTimePreset(res.data['result']['preset'])
             })
             .catch(err => {
                 console.error(err);
@@ -95,9 +97,21 @@ function LoggedInIndex() {
                 <div className={'d-flex justify-content-center info'}>
                     {lnsSet &&
                         <>
-                            <LnsStatusFrame cnt={lns[0]} nth={8}/>
-                            <LnsStatusFrame cnt={lns[1]} nth={1}/>
-                            <LnsStatusFrame cnt={lns[2]} nth={2}/>
+                            {timePreset === 0 &&
+                                <>
+                                    <LnsStatusFrame cnt={lns[0]} nth={'8면'}/>
+                                    <LnsStatusFrame cnt={lns[1]} nth={'1면'}/>
+                                    <LnsStatusFrame cnt={lns[2]} nth={'2면'}/>
+                                </>
+                            }
+                            {timePreset === 1 &&
+                                <>
+                                    <LnsStatusFrame cnt={lns[0]} nth={'오후 1차'}/>
+                                    <LnsStatusFrame cnt={lns[1]} nth={'오후 2차'}/>
+                                    <LnsStatusFrame cnt={lns[2]} nth={'야간 1차'}/>
+                                    <LnsStatusFrame cnt={lns[3]} nth={'야간 2차'}/>
+                                </>
+                            }
                         </>
                     }
                     <div className={'border border-0 px-2 py-2 rounded-4 d-flex flex-column justify-content-center gap-0 profile-href'}>

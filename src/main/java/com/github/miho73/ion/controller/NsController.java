@@ -282,10 +282,6 @@ public class NsController {
     /**
      * [data]: success
      * 1: invalid session
-     *
-     * @param session
-     * @param response
-     * @return
      */
     @GetMapping(
             value = "/lns-idx",
@@ -300,7 +296,10 @@ public class NsController {
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
+        JSONObject body = new JSONObject();
         JSONArray ist = nsService.getLnsSeatRemaining(sessionService.getGrade(session));
-        return RestResponse.restResponse(HttpStatus.OK, ist);
+        body.put("seats", ist);
+        body.put("preset", nsService.getTimePreset());
+        return RestResponse.restResponse(HttpStatus.OK, body);
     }
 }

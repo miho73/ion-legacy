@@ -220,6 +220,14 @@ public class NsService {
     }
 
     public JSONArray getLnsSeatRemaining(int grade) {
+        if(timePreset == TIMETABLE_TEMPLATE.NS3) {
+            return getLnsSeatRemainingNs3(grade);
+        } else {
+            return getLnsSeatRemainingNs4(grade);
+        }
+    }
+
+    private JSONArray getLnsSeatRemainingNs3(int grade) {
         long n8 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.N8);
         long n1 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.N1);
         long n2 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.N2);
@@ -228,6 +236,20 @@ public class NsService {
         ret.put(n8);
         ret.put(n1);
         ret.put(n2);
+        return ret;
+    }
+
+    private JSONArray getLnsSeatRemainingNs4(int grade) {
+        long nd1 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.ND1);
+        long nd2 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.ND2);
+        long nn1 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.NN1);
+        long nn2 = lnsRepository.countByGradeAndLnsDateAndLnsTime(grade, LocalDate.now(), NsRecord.NS_TIME.NN2);
+
+        JSONArray ret = new JSONArray();
+        ret.put(nd1);
+        ret.put(nd2);
+        ret.put(nn1);
+        ret.put(nn2);
         return ret;
     }
 }
