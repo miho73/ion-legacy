@@ -11,6 +11,7 @@ import {Alert, Button, Col, Container, Form, Modal, Row, Stack, Table} from 'rea
 import NsState from './nsState';
 import {ready} from '../../service/recaptcha';
 import {API_PREFIX} from "../../service/apiUrl";
+import {isLogin} from "../../service/auth";
 
 function Ns() {
     const [lnsRoomRequired, setLnsRoomRequired] = useState(false);
@@ -45,8 +46,7 @@ function Ns() {
 
     const [loginState, setLoginState] = useState(-1);
     useEffect(() => {
-        //isLogin(setLoginState);
-        setLoginState(0);
+        isLogin(setLoginState);
     }, []);
 
     useEffect(() => {

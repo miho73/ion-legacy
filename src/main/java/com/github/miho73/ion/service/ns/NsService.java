@@ -42,7 +42,7 @@ public class NsService {
         this.lnsRepository = lnsRepository;
         this.userRepository = userRepository;
 
-        this.timePreset = TIMETABLE_TEMPLATE.NS4;
+        this.timePreset = TIMETABLE_TEMPLATE.NS3;
     }
 
     public void setTimePreset(int timePreset) {
