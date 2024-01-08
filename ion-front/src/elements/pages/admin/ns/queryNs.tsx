@@ -53,7 +53,7 @@ function QueryNs(props) {
         } else {
             nsLst.forEach(req => {
                 let row = <NsState
-                    name={req.time}
+                    time={req.time}
                     place={req.place}
                     superviser={req.supervisor}
                     reason={req.reason}

@@ -30,10 +30,33 @@ public class NsService {
     final
     UserRepository userRepository;
 
+    public enum TIMETABLE_TEMPLATE {
+        NS3, // n8, n1 n2
+        NS4 // 오전1, 오전2, 오후1, 오후2
+    }
+
+    public TIMETABLE_TEMPLATE timePreset;
+
     public NsService(NsRepository nsRepository, LnsRepository lnsRepository, UserRepository userRepository) {
         this.nsRepository = nsRepository;
         this.lnsRepository = lnsRepository;
         this.userRepository = userRepository;
+
+        this.timePreset = TIMETABLE_TEMPLATE.NS4;
+    }
+
+    public void setTimePreset(int timePreset) {
+        switch (timePreset) {
+            case 0 -> this.timePreset = TIMETABLE_TEMPLATE.NS3;
+            case 1 -> this.timePreset = TIMETABLE_TEMPLATE.NS4;
+        }
+    }
+
+    public int getTimePreset() {
+        return switch (timePreset) {
+            case NS3 -> 0;
+            case NS4 -> 1;
+        };
     }
 
     public NsRecord saveNsRequest(int uuid, NsRecord.NS_TIME nsTime, boolean lnsReq, Map<String, String> body) {
@@ -68,7 +91,7 @@ public class NsService {
         JSONArray ret = new JSONArray();
         for (NsRecord nsRecord : rec) {
             JSONObject ele = new JSONObject();
-            ele.put("time", nsRecord.getNsTime());
+            ele.put("time", NsRecord.nsTimeToInt(nsRecord.getNsTime()));
             ele.put("supervisor", nsRecord.getNsSupervisor());
             ele.put("reason", nsRecord.getNsReason());
             ele.put("lnsReq", nsRecord.isLnsReq());
@@ -121,11 +144,15 @@ public class NsService {
     public JSONArray getLnsSeat(int grade) {
         List<LnsReservation> lrev = lnsRepository.findByLnsDateAndGrade(LocalDate.now(), grade);
 
-        JSONArray[] byNsTime = new JSONArray[3];
+        JSONArray[] byNsTime = new JSONArray[7];
 
         byNsTime[0] = new JSONArray();
         byNsTime[1] = new JSONArray();
         byNsTime[2] = new JSONArray();
+        byNsTime[3] = new JSONArray();
+        byNsTime[4] = new JSONArray();
+        byNsTime[5] = new JSONArray();
+        byNsTime[6] = new JSONArray();
 
         lrev.forEach(e -> {
             JSONObject rev = new JSONObject();
@@ -146,6 +173,10 @@ public class NsService {
         ret.put(byNsTime[0]);
         ret.put(byNsTime[1]);
         ret.put(byNsTime[2]);
+        ret.put(byNsTime[3]);
+        ret.put(byNsTime[4]);
+        ret.put(byNsTime[5]);
+        ret.put(byNsTime[6]);
         return ret;
     }
 
@@ -159,7 +190,7 @@ public class NsService {
                 User u = pla.get();
                 if(u.getStatus() != User.USER_STATUS.ACTIVATED) return;
                 e.put("id", r.getUid());
-                e.put("time", r.getNsTime());
+                e.put("time", NsRecord.nsTimeToInt(r.getNsTime()));
                 e.put("name", u.getName());
                 e.put("rscode", u.getGrade() * 1000 + u.getClas() * 100 + u.getScode());
                 e.put("place", r.getNsPlace());

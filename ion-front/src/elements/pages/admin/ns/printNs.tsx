@@ -18,7 +18,36 @@ import axios from 'axios';
 import {changeBit, getBit} from "../../../service/bitmask";
 import {API_PREFIX} from "../../../service/apiUrl";
 
-function PrintNs() {
+function RecordRow(props) {
+    function copy(str: string) {
+        navigator.clipboard.writeText(str);
+    }
+
+    const data = props.data;
+
+    if(!props.has || (!props.includeDenied && !data.a)) {
+        return (
+            <td></td>
+        )
+    }
+
+    return (
+        <>
+            { props.includeDenied &&
+                <td className={data.a ? 'table-success' : 'table-danger'}>
+                    <a onClick={() => copy(data.c)}>{data.c}</a>
+                </td>
+            }
+            { (!props.includeDenied && data.a) &&
+                <td>
+                    <a title={'Copy'} className={'ns-lst-cpy'} onClick={() => copy(data.c)}>{data.c}</a>
+                </td>
+            }
+        </>
+    )
+}
+
+function PrintNs(props) {
     const [data, setData] = useState<any[]>([]);
     const [grade, setGrade] = useState<number>(1);
     const [date, setDate] = useState<string>('');
@@ -64,6 +93,8 @@ function PrintNs() {
         doc.save(`면학 지도 일지 ${date}.pdf`);
     }
 
+    const timePreset = props.timePreset;
+
     function createTable() {
         axios.get(API_PREFIX+'/manage/api/ns/print', {
             params: {grade: grade}
@@ -84,10 +115,6 @@ function PrintNs() {
             });
     }
 
-    function copy(str: string) {
-        navigator.clipboard.writeText(str);
-    }
-
     let rr: any[] = [];
     if (workState === 0) {
         data.forEach(e => {
@@ -97,60 +124,19 @@ function PrintNs() {
                 <tr>
                     <td>{e.code}</td>
                     <td>{e.name}</td>
-                    {includeDenied &&
+                    {timePreset === 0 &&
                         <>
-                            {e.n8 !== null &&
-                                <td className={e.n8.a ? 'table-success' : 'table-danger'}>
-                                    <a onClick={()=>copy(e.n8.c)}>{e.n8.c}</a>
-                                </td>
-                            }
-                            {e.n8 === null &&
-                                <td></td>
-                            }
-                            {e.n1 !== null &&
-                                <td className={e.n1.a ? 'table-success' : 'table-danger'}>
-                                    <a onClick={()=>copy(e.n1.c)}>{e.n1.c}</a>
-                                </td>
-                            }
-                            {e.n1 === null &&
-                                <td></td>
-                            }
-                            {e.n2 !== null &&
-                                <td className={e.n2.a ? 'table-success' : 'table-danger'}>
-                                    <a onClick={()=>copy(e.n8.c)}>{e.n2.c}</a>
-                                </td>
-                            }
-                            {e.n2 === null &&
-                                <td></td>
-                            }
+                            <RecordRow has={e.hasOwnProperty("0")} data={e['0']} includeDenied={includeDenied}/>
+                            <RecordRow has={e.hasOwnProperty("1")} data={e['1']} includeDenied={includeDenied}/>
+                            <RecordRow has={e.hasOwnProperty("2")} data={e['2']} includeDenied={includeDenied}/>
                         </>
                     }
-                    {!includeDenied &&
+                    {timePreset === 1 &&
                         <>
-                            {(e.n8 !== null && e.n8.a) &&
-                                <td>
-                                    <a title={'Copy'} className={'ns-lst-cpy'} onClick={()=>copy(e.n8.c)}>{e.n8.c}</a>
-                                </td>
-                            }
-                            {(e.n8 === null || !e.n8.a) &&
-                                <td></td>
-                            }
-                            {(e.n1 !== null && e.n1.a) &&
-                                <td>
-                                    <a title={'Copy'} className={'ns-lst-cpy'} onClick={()=>copy(e.n1.c)}>{e.n1.c}</a>
-                                </td>
-                            }
-                            {(e.n1 === null || !e.n1.a) &&
-                                <td></td>
-                            }
-                            {(e.n2 !== null && e.n2.a) &&
-                                <td>
-                                    <a title={'Copy'} className={'ns-lst-cpy'} onClick={()=>copy(e.n2.c)}>{e.n2.c}</a>
-                                </td>
-                            }
-                            {(e.n2 === null || !e.n2.a) &&
-                                <td></td>
-                            }
+                            <RecordRow has={e.hasOwnProperty("3")} data={e['3']} includeDenied={includeDenied}/>
+                            <RecordRow has={e.hasOwnProperty("4")} data={e['4']} includeDenied={includeDenied}/>
+                            <RecordRow has={e.hasOwnProperty("5")} data={e['5']} includeDenied={includeDenied}/>
+                            <RecordRow has={e.hasOwnProperty("6")} data={e['6']} includeDenied={includeDenied}/>
                         </>
                     }
                 </tr>
@@ -241,9 +227,21 @@ function PrintNs() {
                             <tr>
                                 <th>학번</th>
                                 <th>이름</th>
-                                <th>8면학</th>
-                                <th>1면학</th>
-                                <th>2면학</th>
+                                { timePreset === 0 &&
+                                    <>
+                                        <th>8면학</th>
+                                        <th>1면학</th>
+                                        <th>2면학</th>
+                                    </>
+                                }
+                                { timePreset === 1 &&
+                                    <>
+                                        <th>오후 1차</th>
+                                        <th>오후 2치</th>
+                                        <th>야간 1차</th>
+                                        <th>야간 2차</th>
+                                    </>
+                                }
                             </tr>
                             </thead>
                             <tbody>{rr}</tbody>

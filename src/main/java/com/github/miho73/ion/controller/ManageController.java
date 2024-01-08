@@ -8,6 +8,7 @@ import com.github.miho73.ion.service.auth.ResetPasswordService;
 import com.github.miho73.ion.service.auth.SessionService;
 import com.github.miho73.ion.service.ionid.IonIdManageService;
 import com.github.miho73.ion.service.ionid.UserService;
+import com.github.miho73.ion.service.manage.NsManageService;
 import com.github.miho73.ion.service.ns.NsService;
 import com.github.miho73.ion.utils.RandomCode;
 import com.github.miho73.ion.utils.RestResponse;
@@ -26,7 +27,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -52,13 +52,17 @@ public class ManageController {
     final
     ResetPasswordService resetPasswordService;
 
-    public ManageController(SessionService sessionService, UserService userService, IonIdManageService ionIdManageService, NsService nsService, ResetPasswordService resetPasswordService, RandomCode randomCode) {
+    final
+    NsManageService nsManageService;
+
+    public ManageController(SessionService sessionService, UserService userService, IonIdManageService ionIdManageService, NsService nsService, ResetPasswordService resetPasswordService, RandomCode randomCode, NsManageService nsManageService) {
         this.sessionService = sessionService;
         this.userService = userService;
         this.ionIdManageService = ionIdManageService;
         this.nsService = nsService;
         this.resetPasswordService = resetPasswordService;
         this.randomCode = randomCode;
+        this.nsManageService = nsManageService;
     }
 
     /**
@@ -373,6 +377,7 @@ public class ManageController {
      * 2: insufficient property
      * 3: no user with such scode
      * 4: already requested
+     * 5: invalid time for current preset
      */
     @PostMapping(
             value = "/ns/create",
@@ -395,7 +400,7 @@ public class ManageController {
         }
 
         int scode = Integer.parseInt(body.get("scode"));
-        NsRecord.NS_TIME nsTime = NsRecord.NS_TIME.valueOf(body.get("time"));
+        NsRecord.NS_TIME nsTime = NsRecord.intToNsTime(Integer.parseInt(body.get("time")));
 
         Optional<User> userOptional = userService.getUserByScode(scode);
         if (userOptional.isEmpty()) {
@@ -407,6 +412,28 @@ public class ManageController {
         if (nsService.existsNsByUuid(user.getUid(), nsTime)) {
             response.setStatus(400);
             return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 4);
+        }
+
+        if(nsService.timePreset == NsService.TIMETABLE_TEMPLATE.NS3) {
+            if(
+                    nsTime != NsRecord.NS_TIME.N8 &&
+                            nsTime != NsRecord.NS_TIME.N1 &&
+                            nsTime != NsRecord.NS_TIME.N2
+            ) {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
+            }
+        }
+        if(nsService.timePreset == NsService.TIMETABLE_TEMPLATE.NS4) {
+            if(
+                    nsTime != NsRecord.NS_TIME.ND1 &&
+                    nsTime != NsRecord.NS_TIME.ND2 &&
+                    nsTime != NsRecord.NS_TIME.NN1 &&
+                    nsTime != NsRecord.NS_TIME.NN2
+            ) {
+                response.setStatus(400);
+                return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 5);
+            }
         }
 
         body.put("supervisor", sessionService.getName(session));
@@ -473,33 +500,77 @@ public class ManageController {
             return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
         }
 
-        List<User> users = userService.getUserByGrade(grade);
-        JSONArray ret = new JSONArray();
-        users.forEach(e -> {
-            List<NsRecord> records = nsService.findByUuid(e.getUid());
-            JSONObject element = new JSONObject();
-            element.put("code", e.getGrade() * 1000 + e.getClas() * 100 + e.getScode());
-            element.put("name", e.getName());
-            records.forEach(s -> {
-                String str = s.getNsPlace() + "/" + s.getNsSupervisor() + "/" + s.getNsReason();
-                boolean aprv = (s.getNsState() == NsRecord.NS_STATE.APPROVED);
-                JSONObject pt = new JSONObject();
-                pt.put("c", str);
-                pt.put("a", aprv);
-                if (s.getNsTime() == NsRecord.NS_TIME.N8) element.put("n8", pt);
-                if (s.getNsTime() == NsRecord.NS_TIME.N1) element.put("n1", pt);
-                if (s.getNsTime() == NsRecord.NS_TIME.N2) element.put("n2", pt);
-            });
-            if (!element.has("n8")) element.put("n8", JSONObject.NULL);
-            if (!element.has("n1")) element.put("n1", JSONObject.NULL);
-            if (!element.has("n2")) element.put("n2", JSONObject.NULL);
-            ret.put(element);
-        });
+        JSONArray ret;
+        if(nsService.timePreset == NsService.TIMETABLE_TEMPLATE.NS3) {
+            ret = nsManageService.printNsListNS3(grade);
+        }
+        else if (nsService.timePreset == NsService.TIMETABLE_TEMPLATE.NS4) {
+            ret = nsManageService.printNsListNS4(grade);
+        }
+        else {
+            ret = new JSONArray();
+        }
 
         JSONObject reply = new JSONObject();
         reply.put("ns", ret);
         reply.put("qtime", new SimpleDateFormat("yyyy.MM.dd HH.mm.ss").format(new Date()));
         return RestResponse.restResponse(HttpStatus.OK, reply);
+    }
+
+    /**
+     * [data]: ok
+     * 1: invalid session
+     */
+    @GetMapping(
+            value = "/ns/mode/get",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String getNsMode(
+            HttpSession session,
+            HttpServletResponse response
+    ) {
+        if (!sessionService.checkPrivilege(session, SessionService.FACULTY_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+        return RestResponse.restResponse(HttpStatus.OK, nsService.getTimePreset());
+    }
+
+    /**
+     * 0: ok
+     * 1: invalid session
+     * 2: insufficient parameter
+     * 3: invalid mode
+     */
+    @PatchMapping(
+            value = "/ns/mode/set",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public String updateNsTimePreset(
+            HttpSession session,
+            HttpServletResponse response,
+            @RequestBody Map<String, String> body
+    ) {
+        if(!sessionService.checkPrivilege(session, SessionService.ROOT_PRIVILEGE)) {
+            response.setStatus(401);
+            return RestResponse.restResponse(HttpStatus.UNAUTHORIZED, 1);
+        }
+
+        if(!Validation.checkKeys(body, "mode")) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 2);
+        }
+
+        int mode = Integer.parseInt(body.get("mode"));
+
+        if(mode != 0 && mode != 1) {
+            response.setStatus(400);
+            return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 3);
+        }
+
+        nsService.setTimePreset(mode);
+        return RestResponse.restResponse(HttpStatus.OK, 0);
     }
 
     /**

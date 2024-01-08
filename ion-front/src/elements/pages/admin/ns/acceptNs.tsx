@@ -27,11 +27,35 @@ function NsReq(props) {
         sh = 'NO SUPERVISOR';
     }
 
+    let nsTime = '알 수 없음';
+    switch (props.time) {
+        case 0:
+            nsTime = '8면';
+            break;
+        case 1:
+            nsTime = '1면';
+            break;
+        case 2:
+            nsTime = '2면';
+            break;
+        case 3:
+            nsTime = '오전 1차';
+            break;
+        case 4:
+            nsTime = '오전 2차';
+            break;
+        case 5:
+            nsTime = '오후 1차';
+            break;
+        case 6:
+            nsTime = '오후 2차';
+    }
+
     return (
         <tr>
             <td>{props.name}</td>
             <td>{props.scode}</td>
-            <td>{props.time}</td>
+            <td>{nsTime}</td>
             <td>{props.place}</td>
             <td>{props.super}</td>
             <td>{props.reason}</td>

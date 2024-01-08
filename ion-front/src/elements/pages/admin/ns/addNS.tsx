@@ -16,12 +16,20 @@ function AddNs(props) {
 
     const scode = props.scode;
     const setScode = props.setScode;
+    const timePreset = props.timePreset;
 
     function exe() {
         let state = 0
 
         // validate
-        if (revTime < 0 || revTime > 2) state = changeBit(state, 0);
+        if (!(
+            timePreset == 0 && (
+                revTime == 0 || revTime == 1 || revTime == 2
+            ) ||
+            timePreset == 1 && (
+                revTime == 3 || revTime == 4 || revTime == 5 || revTime == 6
+            )
+        )) state = changeBit(state, 0);
         if (!inRange(1, 30, revPlace.length)) state = changeBit(state, 1);
         if (!inRange(1, 30, revRes.length)) state = changeBit(state, 3);
 
@@ -29,23 +37,10 @@ function AddNs(props) {
 
         if (state !== 0) return;
 
-        let time;
-        switch (revTime) {
-            case 0:
-                time = 'N8';
-                break;
-            case 1:
-                time = 'N1';
-                break;
-            case 2:
-                time = 'N2';
-                break;
-        }
-
         setWorking(true);
         axios.post(API_PREFIX+'/manage/api/ns/create', {
             scode: scode,
-            time: time,
+            time: revTime,
             place: revPlace,
             reason: revRes
         })
@@ -86,9 +81,21 @@ function AddNs(props) {
                         <Form.Select isInvalid={getBit(formState, 0) === 1} aria-label='면학 시간' disabled={working}
                                      value={revTime} onChange={e => setRevTime(Number.parseInt(e.target.value))}>
                             <option value={-1}>면학 시간</option>
-                            <option value={0}>8면</option>
-                            <option value={1}>1면</option>
-                            <option value={2}>2면</option>
+                            {timePreset === 0 &&
+                                <>
+                                    <option value={0}>8면</option>
+                                    <option value={1}>1면</option>
+                                    <option value={2}>2면</option>
+                                </>
+                            }
+                            {timePreset === 1 &&
+                                <>
+                                    <option value={3}>오후 1차</option>
+                                    <option value={4}>오후 2차</option>
+                                    <option value={5}>야간 1차</option>
+                                    <option value={6}>야간 2차</option>
+                                </>
+                            }
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} className='mb-3'>

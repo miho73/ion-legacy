@@ -75,6 +75,8 @@ public class NsController {
             reply.put("id", sessionService.getId(session));
             reply.put("grade", sessionService.getGrade(session));
             reply.put("date", LocalDate.now().format(dtf));
+            reply.put("preset", nsService.getTimePreset());
+
             return RestResponse.restResponse(HttpStatus.OK, reply);
         } catch (IonException e) {
             response.setStatus(401);
@@ -93,6 +95,7 @@ public class NsController {
      * 6: recaptcha failed
      * 7: too low recaptcha score
      * 8: you are faculty
+     * 9: invalid time for current preset
      */
     @PostMapping(
             value = "/nsr/create",
@@ -138,8 +141,24 @@ public class NsController {
                 return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 8);
             }
 
+            int time = Integer.parseInt(body.get("time"));
+
+            if(nsService.timePreset == NsService.TIMETABLE_TEMPLATE.NS3) {
+                if(time != 0 && time != 1 && time != 2) {
+                    response.setStatus(400);
+                    log.error("failed to create ns request: invalid time for current preset. uid="+sessionService.getId(session));
+                    return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 9);
+                }
+            } else if(nsService.timePreset == NsService.TIMETABLE_TEMPLATE.NS4) {
+                if(time != 3 && time != 4 && time != 5 && time != 6) {
+                    response.setStatus(400);
+                    log.error("failed to create ns request: invalid time for current preset. uid="+sessionService.getId(session));
+                    return RestResponse.restResponse(HttpStatus.BAD_REQUEST, 9);
+                }
+            }
+
             int uuid = sessionService.getUid(session);
-            NsRecord.NS_TIME nsTime = NsRecord.NS_TIME.valueOf(body.get("time"));
+            NsRecord.NS_TIME nsTime = NsRecord.intToNsTime(time);
 
             // if user already has request on same time
             if (nsService.existsNsByUuid(uuid, nsTime)) {
@@ -193,7 +212,7 @@ public class NsController {
     public String deleteNs(
             HttpSession session,
             HttpServletResponse response,
-            @RequestParam("time") NsRecord.NS_TIME time,
+            @RequestParam("time") int timeInt,
             @RequestParam("ctoken") String captchaToken
     ) {
         if (!sessionService.checkPrivilege(session, SessionService.USER_PRIVILEGE)) {
@@ -216,6 +235,8 @@ public class NsController {
             }
 
             int uuid = sessionService.getUid(session);
+
+            NsRecord.NS_TIME time = NsRecord.intToNsTime(timeInt);
 
             if (nsService.existsNsByUuid(uuid, time)) {
                 nsService.deleteNs(uuid, time);

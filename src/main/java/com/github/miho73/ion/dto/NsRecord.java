@@ -57,7 +57,11 @@ public class NsRecord {
     public enum NS_TIME {
         N8,
         N1,
-        N2
+        N2,
+        ND1,
+        ND2,
+        NN1,
+        NN2
     }
 
     public static int nsTimeToInt(NsRecord.NS_TIME nsTime) {
@@ -65,6 +69,23 @@ public class NsRecord {
             case N8 -> 0;
             case N1 -> 1;
             case N2 -> 2;
+            case ND1 -> 3;
+            case ND2 -> 4;
+            case NN1 -> 5;
+            case NN2 -> 6;
+        };
+    }
+
+    public static NsRecord.NS_TIME intToNsTime(int nsTime) {
+        return switch (nsTime) {
+            case 0 -> NsRecord.NS_TIME.N8;
+            case 1 -> NsRecord.NS_TIME.N1;
+            case 2 -> NsRecord.NS_TIME.N2;
+            case 3 -> NsRecord.NS_TIME.ND1;
+            case 4 -> NsRecord.NS_TIME.ND2;
+            case 5 -> NsRecord.NS_TIME.NN1;
+            case 6 -> NsRecord.NS_TIME.NN2;
+            default -> null;
         };
     }
 }

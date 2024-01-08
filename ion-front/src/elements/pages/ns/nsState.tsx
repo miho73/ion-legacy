@@ -24,20 +24,35 @@ const NsState = function (props) {
     }
 
     let time;
-    switch (props.name) {
-        case 'N8':
+    switch (props.time) {
+        case 0:
             time = '8면'
             break;
-        case 'N1':
+        case 1:
             time = '1면'
             break;
-        case 'N2':
+        case 2:
             time = '2면'
+            break;
+        case 3:
+            time = '오후 1차'
+            break;
+        case 4:
+            time = '오후 2차'
+            break;
+        case 5:
+            time = '야간 1차'
+            break;
+        case 6:
+            time = '야간 2차'
+            break;
+        default:
+            time = '알 수 없음'
             break;
     }
 
     function deleteNs() {
-        props.setTargetNs([props.name, time]);
+        props.setTargetNs([props.time, time]);
         props.showDeleteConfirm();
     }
 

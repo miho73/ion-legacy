@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
 
-import LnsRoomSelect from './nsr/lns';
+import LnsRoomSelect from './lns/lns';
 import {changeBit, getBit} from '../../service/bitmask';
 import {inRange} from '../../service/checker';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
-import {isLogin} from '../../service/auth'
 import CannotAuthorize from '../auth/cannotAuth';
 
 import {Alert, Button, Col, Container, Form, Modal, Row, Stack, Table} from 'react-bootstrap';
@@ -29,6 +28,7 @@ function Ns() {
     const [cNsErr, setNsErr] = useState(false);
     const [date, setDate] = useState('');
     const [uName, setUName] = useState('');
+    const [timePreset, setTimePreset] = useState<number>(-1);
 
     const [deleteModalShow, setDeleteModalShow] = useState(false);
     const [targetNs, setTargetNs] = useState([]);
@@ -45,9 +45,15 @@ function Ns() {
 
     const [loginState, setLoginState] = useState(-1);
     useEffect(() => {
-        isLogin(setLoginState);
-        loadNsReqs();
+        //isLogin(setLoginState);
+        setLoginState(0);
     }, []);
+
+    useEffect(() => {
+        if(loginState == 0) {
+            loadNsReqs();
+        }
+    }, [loginState]);
 
     useEffect(() => {
         loadLns();
@@ -91,6 +97,7 @@ function Ns() {
                 setDate(reqs['date']);
                 setNsLst(reqs['reqs']);
                 setId(reqs['id']);
+                setTimePreset(reqs['preset']);
             })
             .catch(err => {
                 setNsErr(true);
@@ -112,7 +119,7 @@ function Ns() {
         } else {
             cNsLst.forEach(req => {
                 let row = <NsState
-                    name={req.time}
+                    time={req.time}
                     place={req.place}
                     superviser={req.supervisor}
                     reason={req.reason}
@@ -139,7 +146,14 @@ function Ns() {
         let state = 0
 
         // validate
-        if (revTime < 0 || revTime > 2) state = changeBit(state, 0);
+        if (!(
+            timePreset == 0 && (
+                revTime == 0 || revTime == 1 || revTime == 2
+            ) ||
+            timePreset == 1 && (
+                revTime == 3 || revTime == 4 || revTime == 5 || revTime == 6
+            )
+        )) state = changeBit(state, 0);
         if (!inRange(1, 30, revPlace.length)) state = changeBit(state, 1);
         if (!inRange(1, 10, revSup.length)) state = changeBit(state, 2);
         if (!inRange(1, 30, revRes.length)) state = changeBit(state, 3);
@@ -150,18 +164,6 @@ function Ns() {
         if (state === 0) {
             setWorking(true);
 
-            let time;
-            switch (revTime) {
-                case 0:
-                    time = 'N8';
-                    break;
-                case 1:
-                    time = 'N1';
-                    break;
-                case 2:
-                    time = 'N2';
-                    break;
-            }
             let lns;
             if (lnsSelected !== -1) {
                 let seat = lnsSelected % 10;
@@ -173,7 +175,7 @@ function Ns() {
 
             ready('create_ns', token => {
                 axios.post(API_PREFIX+'/ns/api/nsr/create', {
-                    time: time,
+                    time: revTime,
                     place: revPlace,
                     supervisor: revSup,
                     reason: revRes,
@@ -340,9 +342,21 @@ function Ns() {
                                         onChange={e => setRevTime(Number.parseInt(e.target.value))}>
 
                                         <option value={-1}>면학 시간</option>
-                                        <option value={0}>8면</option>
-                                        <option value={1}>1면</option>
-                                        <option value={2}>2면</option>
+                                        { timePreset === 0 &&
+                                            <>
+                                                <option value={0}>8면</option>
+                                                <option value={1}>1면</option>
+                                                <option value={2}>2면</option>
+                                            </>
+                                        }
+                                        { timePreset === 1 &&
+                                            <>
+                                                <option value={3}>오후 1차</option>
+                                                <option value={4}>오후 2차</option>
+                                                <option value={5}>야간 1차</option>
+                                                <option value={5}>야간 2차</option>
+                                            </>
+                                        }
                                     </Form.Select>
                                 </Form.Group>
                                 <Form.Group as={Col} className='mb-3'>
@@ -412,6 +426,7 @@ function Ns() {
                                     lnsState={lnsError}
                                     seatLst={seatLst}
                                     reloadFunc={loadLns}
+                                    timePreset={timePreset}
                                 />
                             }
                         </div>
