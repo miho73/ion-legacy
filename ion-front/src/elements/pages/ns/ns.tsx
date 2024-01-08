@@ -354,7 +354,7 @@ function Ns() {
                                                 <option value={3}>오후 1차</option>
                                                 <option value={4}>오후 2차</option>
                                                 <option value={5}>야간 1차</option>
-                                                <option value={5}>야간 2차</option>
+                                                <option value={6}>야간 2차</option>
                                             </>
                                         }
                                     </Form.Select>
