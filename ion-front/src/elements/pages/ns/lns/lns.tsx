@@ -71,10 +71,9 @@ function LnsRoomSelect(props) {
 
     let map: any[] = [];
     map.push(
-        <p className='w-75 mx-auto my-2 text-center border p-3 rounded' key={0}>면학실</p>
+        <p className='w-100 mx-auto my-2 text-center border p-3 rounded' key={0}>면학실</p>
     );
     for (let i = 0; i < 3; i++) { // ROW 1, 2, 3
-        let row: any[] = [];
         for (let j = 1; j <= 2; j++) { // COL 1, 2
             let seat: any[] = [];
             for (let k = 1; k <= 6; k++) { // SEAT 1 ~ 6
@@ -106,49 +105,44 @@ function LnsRoomSelect(props) {
                     );
                 }
             }
-            row.push(
-                <Stack direction='horizontal' gap={4}>
-                    <div className='vstack row btn-group-vertical'>{seat.slice(0, 3)}</div>
+            map.push(
+                <div className={"elem"}>
+                    <div className='btn-group-vertical'>{seat.slice(0, 3)}</div>
                     <div className='p-5 border border-dark rounded fs-4 h-100 d-flex align-items-center'>{sigMapping[i * 2 + j - 1]}</div>
-                    <div className='vstack row btn-group-vertical'>{seat.slice(3, 6)}</div>
-                </Stack>
+                    <div className='btn-group-vertical'>{seat.slice(3, 6)}</div>
+                </div>
             )
         }
-        map.push(
-            <div className='d-flex justify-content-evenly my-4' key={i + 1}>{row}</div>
-        )
     }
     return (
-        <>
+        <div>
             {map}
-            <Stack className='mt-3'>
-                <div className='border p-2'>
-                    <p className='mb-1 fw-bold'>공통자리 찾기</p>
-                    { timePreset === 0 &&
-                        <Stack direction='horizontal' gap={3}>
-                            <Form.Check id='csf0' checked={getBit(findCommon, 0) === 1} onChange={() => changeFCF(0)}
-                                        label='8면'/>
-                            <Form.Check id='csf1' checked={getBit(findCommon, 1) === 1} onChange={() => changeFCF(1)}
-                                        label='1면'/>
-                            <Form.Check id='csf2' checked={getBit(findCommon, 2) === 1} onChange={() => changeFCF(2)}
-                                        label='2면'/>
-                        </Stack>
-                    }
-                    { timePreset === 1 &&
-                        <Stack direction='horizontal' gap={3}>
-                            <Form.Check id='csf3' checked={getBit(findCommon, 3) === 1} onChange={() => changeFCF(3)}
-                                        label='오후 1차'/>
-                            <Form.Check id='csf4' checked={getBit(findCommon, 4) === 1} onChange={() => changeFCF(4)}
-                                        label='오후 2차'/>
-                            <Form.Check id='csf5' checked={getBit(findCommon, 5) === 1} onChange={() => changeFCF(5)}
-                                        label='야간 1차'/>
-                            <Form.Check id='csf6' checked={getBit(findCommon, 6) === 1} onChange={() => changeFCF(6)}
-                                        label='야간 2차'/>
-                        </Stack>
-                    }
-                </div>
-            </Stack>
-        </>
+            <div className='border p-2'>
+                <p className='mb-1 fw-bold'>공통자리 찾기</p>
+                { timePreset === 0 &&
+                    <Stack direction='horizontal' gap={3}>
+                        <Form.Check id='csf0' checked={getBit(findCommon, 0) === 1} onChange={() => changeFCF(0)}
+                                    label='8면'/>
+                        <Form.Check id='csf1' checked={getBit(findCommon, 1) === 1} onChange={() => changeFCF(1)}
+                                    label='1면'/>
+                        <Form.Check id='csf2' checked={getBit(findCommon, 2) === 1} onChange={() => changeFCF(2)}
+                                    label='2면'/>
+                    </Stack>
+                }
+                { timePreset === 1 &&
+                    <Stack direction='horizontal' gap={3}>
+                        <Form.Check id='csf3' checked={getBit(findCommon, 3) === 1} onChange={() => changeFCF(3)}
+                                    label='오후 1차'/>
+                        <Form.Check id='csf4' checked={getBit(findCommon, 4) === 1} onChange={() => changeFCF(4)}
+                                    label='오후 2차'/>
+                        <Form.Check id='csf5' checked={getBit(findCommon, 5) === 1} onChange={() => changeFCF(5)}
+                                    label='야간 1차'/>
+                        <Form.Check id='csf6' checked={getBit(findCommon, 6) === 1} onChange={() => changeFCF(6)}
+                                    label='야간 2차'/>
+                    </Stack>
+                }
+            </div>
+        </div>
     )
 }
 
