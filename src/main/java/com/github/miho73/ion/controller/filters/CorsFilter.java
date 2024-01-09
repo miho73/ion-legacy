@@ -4,6 +4,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -11,6 +12,9 @@ import java.io.IOException;
 
 @Component
 public class CorsFilter extends OncePerRequestFilter {
+    @Value("${ion.config.allow-cors-localhost}")
+    boolean allowCorsLocalhost;
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
@@ -24,5 +28,10 @@ public class CorsFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Requested-With, Accept, Origin, Access-Control-Request-Method, Access-Control-Request-Headers");
 
         filterChain.doFilter(request, response);
+    }
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        return allowCorsLocalhost;
     }
 }

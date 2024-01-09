@@ -59,4 +59,6 @@ ion:
     checkbox-site-key: 6Le9aCEpAAAAANF90W_DYqXmcfEtzztiRjYYLkZ1
     block-threshold: 0.5
     bypass: false
+  config:
+    allow-cors-localhost: false
 
