@@ -1,9 +1,23 @@
+logs
+frontend.iml
+IonApp.iml
+
 HELP.md
+keystore.p12
 .gradle
 build/
+logs/
+.run/
 !gradle/wrapper/gradle-wrapper.jar
+elemention-379e349592d1.json
 !**/src/main/**/build/
 !**/src/test/**/build/
+frontend/.env
+frontend/.env*
+frontend/node_modules
+frontend/build
+backend/gradle
+backend/build
 
 ### STS ###
 .apt_generated
