@@ -1,0 +1,735 @@
+[2024-02-13 23:16:28.020] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:16:28.077] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:16:28.196] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:16:28.215] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 39149 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:16:28.216] [restartedMain] INFO  c.github.miho73.ion.IonApplication - No active profile set, falling back to 1 default profile: "default"
+[2024-02-13 23:16:28.241] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:16:28.241] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:16:28.564] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:16:28.565] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:16:28.576] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:16:28.577] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:16:28.577] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:16:28.577] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:16:28.578] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:16:28.581] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:16:28.582] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:16:28.630] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 47 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:16:28.636] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:16:28.636] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:16:28.640] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:16:28.640] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:16:28.640] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:16:28.640] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:16:28.640] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 1 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:16:28.765] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:16:28.834] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:16:28.838] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:16:28.839] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:16:28.956] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:16:28.960] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:16:28.960] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:16:28.960] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:16:28.979] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:16:28.979] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 737 ms
+[2024-02-13 23:16:28.996] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:16:28.997] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@1a48d21f with name: jasyptStringEncryptor
+[2024-02-13 23:16:28.998] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:16:29.008] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:16:29.011] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:16:29.016] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:16:29.023] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:18:29.645] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:18:29.707] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:18:29.830] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:18:29.850] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 39299 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:18:29.850] [restartedMain] INFO  c.github.miho73.ion.IonApplication - The following 1 profile is active: "test"
+[2024-02-13 23:18:29.873] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:18:29.873] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:18:30.246] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:18:30.246] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:18:30.259] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:18:30.259] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:18:30.259] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:18:30.260] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:18:30.260] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:18:30.265] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:18:30.265] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:18:30.322] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 55 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:18:30.330] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:18:30.331] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:18:30.336] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:18:30.337] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:18:30.337] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:18:30.337] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:18:30.337] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:18:30.487] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application-test.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:18:30.488] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:18:30.562] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:18:30.566] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:18:30.567] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:18:30.676] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:18:30.680] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:18:30.681] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:18:30.681] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:18:30.701] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:18:30.701] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 827 ms
+[2024-02-13 23:18:30.720] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:18:30.720] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@4e604a00 with name: jasyptStringEncryptor
+[2024-02-13 23:18:30.721] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:18:30.733] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:18:30.737] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:18:30.742] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:18:30.752] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:21:12.912] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:21:12.969] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:21:13.088] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:21:13.108] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 39678 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:21:13.109] [restartedMain] INFO  c.github.miho73.ion.IonApplication - The following 1 profile is active: "test"
+[2024-02-13 23:21:13.130] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:21:13.130] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:21:13.510] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:21:13.510] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:21:13.524] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:21:13.525] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:21:13.525] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:21:13.526] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:21:13.526] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:21:13.532] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:21:13.532] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:21:13.592] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 58 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:21:13.600] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:21:13.601] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:21:13.606] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:21:13.606] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:21:13.606] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:21:13.607] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:21:13.607] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application-test.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:21:13.750] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:21:13.820] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:21:13.824] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:21:13.825] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:21:13.927] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:21:13.931] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:21:13.931] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:21:13.931] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:21:13.952] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:21:13.952] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 822 ms
+[2024-02-13 23:21:13.971] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:21:13.972] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@35460351 with name: jasyptStringEncryptor
+[2024-02-13 23:21:13.973] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:21:13.985] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:21:13.989] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:21:13.994] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:21:14.003] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:28:25.379] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:28:25.444] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:28:25.576] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:28:25.597] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 41296 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:28:25.598] [restartedMain] INFO  c.github.miho73.ion.IonApplication - The following 1 profile is active: "test"
+[2024-02-13 23:28:25.622] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:28:25.622] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:28:26.248] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:28:26.248] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:28:26.263] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:28:26.263] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:28:26.264] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:28:26.264] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:28:26.264] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:28:26.270] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:28:26.270] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:28:26.332] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 60 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:28:26.341] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:28:26.342] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:28:26.348] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:28:26.348] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:28:26.348] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:28:26.348] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:28:26.348] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:28:26.501] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:28:26.501] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource commandLineArgs [org.springframework.core.env.SimpleCommandLinePropertySource] to EncryptableEnumerablePropertySourceWrapper
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application-test.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:28:26.502] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:28:26.568] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:28:26.573] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:28:26.575] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:28:26.769] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:28:26.779] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:28:26.781] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:28:26.781] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:28:26.813] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:28:26.813] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1190 ms
+[2024-02-13 23:28:26.835] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:28:26.836] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@1f6ca87a with name: jasyptStringEncryptor
+[2024-02-13 23:28:26.837] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:28:26.851] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:28:26.857] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:28:26.862] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:28:26.872] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:29:08.102] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:29:08.162] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:29:08.296] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:29:08.334] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 41322 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:29:08.335] [restartedMain] INFO  c.github.miho73.ion.IonApplication - The following 1 profile is active: "test"
+[2024-02-13 23:29:08.374] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:29:08.374] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:29:09.017] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:29:09.017] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:29:09.044] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:29:09.045] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:29:09.046] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:29:09.047] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:29:09.051] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:29:09.063] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:29:09.064] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:29:09.138] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 71 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:29:09.152] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:29:09.153] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:29:09.159] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:29:09.159] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:29:09.159] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:29:09.160] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:29:09.160] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:29:09.359] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:29:09.359] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:29:09.359] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:29:09.359] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:29:09.360] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:29:09.360] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:29:09.360] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:29:09.360] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application-test.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:29:09.360] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:29:09.360] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:29:09.429] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:29:09.433] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:29:09.434] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:29:09.549] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:29:09.554] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:29:09.554] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:29:09.554] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:29:09.581] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:29:09.581] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1206 ms
+[2024-02-13 23:29:09.603] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:29:09.604] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@1b627b53 with name: jasyptStringEncryptor
+[2024-02-13 23:29:09.605] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:29:09.617] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:29:09.622] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:29:09.627] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:29:09.638] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:31:54.109] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:31:54.166] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:31:54.292] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:31:54.314] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 41426 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:31:54.315] [restartedMain] INFO  c.github.miho73.ion.IonApplication - The following 1 profile is active: "test"
+[2024-02-13 23:31:54.336] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:31:54.336] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:31:54.704] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:31:54.705] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:31:54.719] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:31:54.719] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:31:54.720] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:31:54.720] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:31:54.720] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:31:54.725] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:31:54.725] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:31:54.784] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 57 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:31:54.792] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:31:54.792] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:31:54.798] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:31:54.798] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:31:54.798] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:31:54.798] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:31:54.798] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:31:54.946] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:31:54.946] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:31:54.946] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:31:54.946] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:31:54.947] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:31:54.947] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:31:54.947] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:31:54.947] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application-test.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:31:54.947] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:31:54.947] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:31:55.013] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:31:55.016] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:31:55.017] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:31:55.118] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:31:55.122] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:31:55.122] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:31:55.122] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:31:55.142] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:31:55.142] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 805 ms
+[2024-02-13 23:31:55.160] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:31:55.161] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@a578e45 with name: jasyptStringEncryptor
+[2024-02-13 23:31:55.161] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:31:55.174] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:31:55.178] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:31:55.183] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:31:55.193] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:33:01.052] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:33:01.112] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:33:01.228] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:33:01.248] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 41478 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:33:01.249] [restartedMain] INFO  c.github.miho73.ion.IonApplication - The following 1 profile is active: "test"
+[2024-02-13 23:33:01.274] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:33:01.274] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:33:01.632] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:33:01.632] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:33:01.645] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:33:01.645] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:33:01.646] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:33:01.646] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:33:01.646] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 12 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:33:01.651] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:33:01.651] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:33:01.708] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 55 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:33:01.716] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:33:01.716] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:33:01.722] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:33:01.722] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:33:01.722] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:33:01.722] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:33:01.722] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:33:01.865] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application-test.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:33:01.866] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:33:01.938] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:33:01.942] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:33:01.942] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:33:02.043] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:33:02.047] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:33:02.047] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:33:02.047] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:33:02.066] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:33:02.066] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 792 ms
+[2024-02-13 23:33:02.085] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:33:02.086] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@609e66dd with name: jasyptStringEncryptor
+[2024-02-13 23:33:02.086] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:33:02.098] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:33:02.101] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:33:02.106] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:33:02.115] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:36:22.478] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:36:22.540] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:36:22.679] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:36:22.702] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 41743 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:36:22.703] [restartedMain] INFO  c.github.miho73.ion.IonApplication - The following 1 profile is active: "test"
+[2024-02-13 23:36:22.729] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:36:22.729] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:36:23.077] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:36:23.078] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:36:23.090] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:36:23.090] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:36:23.091] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:36:23.091] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:36:23.091] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:36:23.096] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:36:23.096] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:36:23.154] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 56 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:36:23.162] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:36:23.163] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:36:23.168] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:36:23.168] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:36:23.168] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:36:23.168] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:36:23.168] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:36:23.307] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application-test.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:36:23.308] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:36:23.378] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:36:23.382] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:36:23.383] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:36:23.494] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:36:23.499] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:36:23.499] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:36:23.499] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:36:23.522] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:36:23.522] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 792 ms
+[2024-02-13 23:36:23.541] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:36:23.542] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@773aecab with name: jasyptStringEncryptor
+[2024-02-13 23:36:23.542] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:36:23.554] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:36:23.558] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:36:23.562] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:36:23.573] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:37:31.726] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:37:31.783] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:37:31.907] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:37:31.928] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 41788 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:37:31.928] [restartedMain] INFO  c.github.miho73.ion.IonApplication - The following 1 profile is active: "test"
+[2024-02-13 23:37:31.949] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:37:31.949] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:37:32.315] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:37:32.315] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:37:32.327] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:37:32.328] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:37:32.328] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:37:32.329] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:37:32.329] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 11 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:37:32.333] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:37:32.334] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:37:32.390] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 55 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:37:32.400] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:37:32.400] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:37:32.406] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:37:32.406] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:37:32.406] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:37:32.406] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:37:32.406] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:37:32.546] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application-test.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:37:32.547] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:37:32.613] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:37:32.617] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:37:32.617] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:37:32.718] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:37:32.722] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:37:32.722] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:37:32.722] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:37:32.743] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:37:32.743] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 794 ms
+[2024-02-13 23:37:32.761] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:37:32.761] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@39908ce9 with name: jasyptStringEncryptor
+[2024-02-13 23:37:32.762] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:37:32.774] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:37:32.779] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:37:32.784] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:37:32.793] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:38:44.376] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:38:44.450] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:38:44.581] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:38:44.611] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 41825 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:38:44.611] [restartedMain] INFO  c.github.miho73.ion.IonApplication - No active profile set, falling back to 1 default profile: "default"
+[2024-02-13 23:38:44.636] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:38:44.637] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:38:45.019] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:38:45.020] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:38:45.035] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:38:45.035] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:38:45.036] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:38:45.037] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:38:45.037] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:38:45.046] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:38:45.047] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:38:45.110] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 61 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:38:45.120] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:38:45.121] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:38:45.128] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:38:45.128] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:38:45.128] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:38:45.128] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:38:45.128] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 3 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:38:45.284] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:38:45.359] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:38:45.364] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:38:45.365] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:38:45.486] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:38:45.490] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:38:45.490] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:38:45.491] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:38:45.521] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:38:45.521] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 884 ms
+[2024-02-13 23:38:45.546] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:38:45.547] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@64cbbd62 with name: jasyptStringEncryptor
+[2024-02-13 23:38:45.548] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:38:45.561] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:38:45.566] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:38:45.574] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:38:45.584] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
+[2024-02-13 23:38:54.207] [main] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:38:54.292] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting Ion...
+[2024-02-13 23:38:54.417] [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.0.Final
+[2024-02-13 23:38:54.438] [restartedMain] INFO  c.github.miho73.ion.IonApplication - Starting IonApplication using Java 17.0.10 with PID 41896 (/Users/yeji/dev/Ion/IonApp/backend/build/classes/java/main started by yeji in /Users/yeji/dev/Ion/IonApp)
+[2024-02-13 23:38:54.439] [restartedMain] INFO  c.github.miho73.ion.IonApplication - No active profile set, falling back to 1 default profile: "default"
+[2024-02-13 23:38:54.461] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+[2024-02-13 23:38:54.461] [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+[2024-02-13 23:38:54.798] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:38:54.798] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JDBC repositories in DEFAULT mode.
+[2024-02-13 23:38:54.812] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:38:54.813] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:38:54.813] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:38:54.813] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data JDBC - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a JDBC repository, consider annotating your entities with one of these annotations: org.springframework.data.relational.core.mapping.Table.
+[2024-02-13 23:38:54.814] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 13 ms. Found 0 JDBC repository interfaces.
+[2024-02-13 23:38:54.822] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:38:54.823] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2024-02-13 23:38:54.880] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 55 ms. Found 4 JPA repository interfaces.
+[2024-02-13 23:38:54.889] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+[2024-02-13 23:38:54.890] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+[2024-02-13 23:38:54.897] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.LnsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:38:54.897] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.NsRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:38:54.897] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.ResetPasswordRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:38:54.897] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.github.miho73.ion.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+[2024-02-13 23:38:54.897] [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 2 ms. Found 0 Redis repository interfaces.
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.c.EnableEncryptablePropertiesBeanFactoryPostProcessor - Post-processing PropertySource instances
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource configurationProperties [class org.springframework.boot.context.properties.source.ConfigurationPropertySourcesPropertySource
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletConfigInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Skipping PropertySource servletContextInitParams [class org.springframework.core.env.PropertySource$StubPropertySource
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemProperties [org.springframework.core.env.PropertiesPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource systemEnvironment [org.springframework.boot.env.SystemEnvironmentPropertySourceEnvironmentPostProcessor$OriginAwareSystemEnvironmentPropertySource] to EncryptableSystemEnvironmentPropertySourceWrapper
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource random [org.springframework.boot.env.RandomValuePropertySource] to EncryptablePropertySourceWrapper
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource Config resource 'class path resource [application.yml]' via location 'optional:classpath:/' [org.springframework.boot.env.OriginTrackedMapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:38:55.044] [restartedMain] INFO  c.u.j.EncryptablePropertySourceConverter - Converting PropertySource devtools [org.springframework.core.env.MapPropertySource] to EncryptableMapPropertySourceWrapper
+[2024-02-13 23:38:55.112] [restartedMain] INFO  c.u.j.f.DefaultLazyPropertyFilter - Property Filter custom Bean not found with name 'encryptablePropertyFilter'. Initializing Default Property Filter
+[2024-02-13 23:38:55.117] [restartedMain] INFO  c.u.j.r.DefaultLazyPropertyResolver - Property Resolver custom Bean not found with name 'encryptablePropertyResolver'. Initializing Default Property Resolver
+[2024-02-13 23:38:55.118] [restartedMain] INFO  c.u.j.d.DefaultLazyPropertyDetector - Property Detector custom Bean not found with name 'encryptablePropertyDetector'. Initializing Default Property Detector
+[2024-02-13 23:38:55.236] [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 3001 (http)
+[2024-02-13 23:38:55.240] [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-3001"]
+[2024-02-13 23:38:55.240] [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+[2024-02-13 23:38:55.240] [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.8]
+[2024-02-13 23:38:55.263] [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+[2024-02-13 23:38:55.263] [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 802 ms
+[2024-02-13 23:38:55.279] [restartedMain] INFO  c.g.miho73.ion.config.JasyptConfig - Jasypt Encryptor Initialized
+[2024-02-13 23:38:55.279] [restartedMain] INFO  c.u.j.encryptor.DefaultLazyEncryptor - Found Custom Encryptor Bean org.jasypt.encryption.pbe.StandardPBEStringEncryptor@1f676fd0 with name: jasyptStringEncryptor
+[2024-02-13 23:38:55.280] [restartedMain] ERROR o.s.b.w.e.tomcat.TomcatStarter - Error starting Tomcat context. Exception: org.springframework.beans.factory.UnsatisfiedDependencyException. Message: Error creating bean with name 'sessionRepositoryFilterRegistration' defined in class path resource [org/springframework/boot/autoconfigure/session/SessionRepositoryFilterConfiguration.class]: Unsatisfied dependency expressed through method 'sessionRepositoryFilterRegistration' parameter 1: Error creating bean with name 'springSessionRepositoryFilter' defined in org.springframework.session.config.annotation.web.http.SpringHttpSessionConfiguration: Unsatisfied dependency expressed through method 'springSessionRepositoryFilter' parameter 0: Error creating bean with name 'org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration': Error creating bean with name 'org.springframework.boot.autoconfigure.data.redis.LettuceConnectionConfiguration': Unsatisfied dependency expressed through constructor parameter 0: Error creating bean with name 'spring.data.redis-org.springframework.boot.autoconfigure.data.redis.RedisProperties': Could not bind properties to 'RedisProperties' : prefix=spring.data.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+[2024-02-13 23:38:55.290] [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+[2024-02-13 23:38:55.293] [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Unable to start web server
+[2024-02-13 23:38:55.298] [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+[2024-02-13 23:38:55.306] [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Failed to bind properties under 'spring.data.redis.password' to java.lang.String:
+
+    Reason: java.lang.NullPointerException: Cannot read the array length because "this.password" is null
+
+Action:
+
+Update your application's configuration
+
